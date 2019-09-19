@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <Preference
+        app:iconSpaceReserved="false"
+        android:key="pref_static_field_key"
+        android:selectable="true"
+        android:persistent="false"
+        android:title="Kebijakan Privasi dan Keamanan Data"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true">
+    <intent android:action="android.intent.action.VIEW"
+        android:data="https://www.topanlabs.com/unsoed-pass/kebijakan-privasi-dan-keamanan-data#data" />
+    </Preference>
+    <Preference
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false"
+        android:key="logoutbutt"
+        android:selectable="true"
+        android:persistent="false"
+        android:title="Log out"/>
+
+    <Preference
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false"
+        android:key="pref_static_field_key"
+        android:selectable="false"
+        android:persistent="false"
+        android:title="Versi Aplikasi"
+        android:summary="v 1.0 (lily)\nTopanLabs LLC. - topanlabs.com"/>
+
+</PreferenceScreen>

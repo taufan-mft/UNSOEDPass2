@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".checkoutPay">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/firareg"
+                android:gravity="center"
+                android:text="Beli UNSOED Pass Premium"
+                android:textColor="#2e2e2e"
+
+                android:textSize="20dp" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#c0c0c0" />
+
+            <TextView
+                android:id="@+id/editText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/fira"
+                android:gravity="left"
+                android:text="Detail pembelian:"
+                android:textColor="#2e2e2e"
+
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/txtdet1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="UNSOED Pass Premium - Rp. 10.000 \nUntuk NIM: H1E018040"
+                android:textColor="#2e2e2e" />
+
+            <TextView
+                android:id="@+id/txtdet2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="0dp"
+                android:text="Pembelian akan dikaitkan dengan NIM: H1E018040 dan aktif selamanya." />
+
+            <View
+                android:id="@+id/view11"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#c0c0c0" />
+
+            <TextView
+                android:id="@+id/editText23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/fira"
+                android:gravity="left"
+                android:text="Pilih metode pembayaran:"
+                android:textColor="#2e2e2e"
+                android:textSize="20dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="5dp">
+
+
+                <ImageButton
+                    android:id="@+id/bni"
+                    android:layout_width="130dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/buttonselector"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/bnilogo" />
+
+                <ImageButton
+                    android:id="@+id/bca"
+                    android:layout_width="130dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginLeft="36dp"
+                    android:background="@drawable/buttonselector"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintStart_toEndOf="@+id/bni"
+                    app:srcCompat="@drawable/bcalogo"
+                    tools:layout_editor_absoluteY="0dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Tidak punya rekening yang sama dengan bank diatas? Tidak perlu khawatir,
+keduanya menerima transfer dari bank manapun." />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Nominal transfer serta nomor rekening akan muncul ketika checkout." />
+
+            <View
+                android:id="@+id/view11"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#c0c0c0" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginbutton"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="285dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="checkout"
+                app:backgroundTint="@color/MASH" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/orderber"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/fira"
+                android:gravity="left"
+                android:text="Order berhasil dibuat!"
+                android:textColor="#2e2e2e"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/awaltrf"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Silakan lakukan transfer ke rekening berikut:"
+                android:textColor="#2e2e2e" />
+
+            <TextView
+                android:id="@+id/rektopan"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:text="BNI - 043 136 627"
+                android:textColor="#2e2e2e"
+                android:textSize="20dp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/copyrek"
+                android:visibility="gone"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Salin Rekening"/>
+
+            <TextView
+                android:id="@+id/atasnama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:gravity="center"
+                android:text="Atas nama: Taufan Muhammad F. T. \ndengan nominal (mohon transfer tepat hingga 3 digit terakhir:"
+                android:textColor="#2e2e2e"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/nominal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:text="Rp. 10.454"
+                android:textColor="#2e2e2e"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/copynom"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:text="Salin Nominal"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

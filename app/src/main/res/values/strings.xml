@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">MyUNSOED</string>
+    <string name="title_activity_login">Login</string>
+    <string name="stalasan"><u>Lihat mengapa kami tidak memasang iklan banner.</u></string>
+    <string name="stalasan2"><u>Lihat info lebih lanjut disini.</u></string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">OKE</string>
+    <string name="quote">\"Sometimes life is going to hit you in the head with a brick. Don\'t lose faith\" - Steve Jobs</string>
+    <string name="slide_1_title">Selamat datang di MyUNSOED!</string>
+    <string name="slide_1_desc">Sebuah app yang bertujuan untuk memudahkan kehidupan kuliahmu di UNSOED. Gaperlu lagi cek SIA yang ribet.</string>
+
+    <string name="slide_2_title">Lihat Jadwal Kuliah</string>
+    <string name="slide_2_desc">Sekali tap, jadwal kamu langsung muncul. Gaperlu login lagi.</string>
+
+    <string name="slide_3_title">Cek Absensi</string>
+    <string name="slide_3_desc">Cek absen gampang, hati tenang, kuliah nyaman. #pejuangabsen3kali</string>
+
+    <string name="slide_4_title">Coba gratis premium selama 30 hari</string>
+    <string name="slide_4_desc">Merasa cocok? Cukup beli sekali seharga 10 ribu, aktif selamanya.</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings2">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+</resources>

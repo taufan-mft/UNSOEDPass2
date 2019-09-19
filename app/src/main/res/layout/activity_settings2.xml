@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".settings2">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+            android:id="@+id/btnkebijakan"
+            android:backgroundTint="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:textColor="#000000"
+            android:gravity="left|center_vertical"
+            android:textAllCaps="false"
+            android:layout_height="60dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:text="Kebijakan Privasi dan Keamanan Data" />
+            <View
+                android:id="@+id/view17"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#c0c0c0" />
+            <Button
+                android:id="@+id/btncall"
+                android:backgroundTint="@android:color/transparent"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:textColor="#000000"
+                android:gravity="left|center_vertical"
+                android:textAllCaps="false"
+                android:layout_height="60dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Hubungi Kami" />
+
+            <View
+                android:id="@+id/view17"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#c0c0c0" />
+            <Button
+                android:id="@+id/btnlogout"
+                android:backgroundTint="@android:color/transparent"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:textColor="#000000"
+                android:gravity="left|center_vertical"
+                android:textAllCaps="false"
+                android:layout_height="60dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Logout" />
+            <View
+                android:id="@+id/view17"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#c0c0c0" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="v 1.1 (ryujin3) \nTopanLabs LLC. - topanlabs.com" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".waitTransfer">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/orderber"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/fira"
+                android:gravity="left"
+                android:text="Order berhasil dibuat!"
+                android:textColor="#2e2e2e"
+                android:textSize="20dp" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#c0c0c0" />
+
+            <TextView
+                android:id="@+id/awaltrf"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Silakan lakukan transfer ke rekening berikut:"
+                android:textColor="#2e2e2e" />
+
+            <TextView
+                android:id="@+id/rektopan"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:text="BNI - 043 1366 227"
+                android:textColor="#2e2e2e"
+                android:textSize="20dp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/copyrek"
+
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Salin Rekening"/>
+
+            <TextView
+                android:id="@+id/atasnama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:gravity="center"
+                android:text="Atas nama: Taufan Muhammad F. T. \ndengan nominal (mohon transfer tepat hingga 3 digit terakhir):"
+                android:textColor="#2e2e2e"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/nominal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:text="Rp. 10.454"
+                android:textColor="#2e2e2e"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/copynom"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:text="Salin Nominal"/>
+            <TextView
+                android:id="@+id/trfsebelum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:text="Mohon transfer sebelum: "
+                android:textColor="#2e2e2e"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/status"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/fira"
+                android:gravity="left"
+                android:text="Status: Menunggu verifikasi transfer"
+                android:textColor="#2e2e2e"
+                android:textSize="20dp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/statusbutton"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="285dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="cek status"
+                app:backgroundTint="@color/MASH" />
+            <View
+                android:id="@+id/view17"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#c0c0c0" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/helpbutton"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="285dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Butuh bantuan?"
+                app:backgroundTint="@color/help" />
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Kamu dapat menutup halaman ini dan kembali lagi dengan membuka aplikasi MyUNSOED > Cek Absen." />
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
