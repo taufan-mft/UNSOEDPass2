@@ -41,6 +41,7 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="introsinkron">Untuk dapat masuk ke offline-mode serta tetap up to date dengan SIA UNSOED, kami perlu melakukan sinkronisasi data awal.
-        \nUntuk selanjutnya, silakan pilih frekuensi sinkronisasi dibawah. Mohon ingat, untuk setiap sinkronisasi, kamu perlu memasukan capcay yang muncul.</string>
+    <string name="introsinkron">Pilih jadwal sinkronisasi kamu:</string>
+    <string name="jelassinkron">Sinkronisasi diperlukan agar jadwal serta absen bisa dilihat secara offline. Serta agar tidak perlu memasukan capcay.
+    \n\nPerlu diingat, setiap kali melakukan sinkron, kamu harus memasukan capcay yang muncul (kami benci capcay, tapi apa boleh buat). Silakan atur agar tidak mengganggu.</string>
 </resources>
