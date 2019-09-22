@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.topanlabs.unsoedpass">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,41 +10,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".sinkronisasi"></activity>
         <activity
             android:name=".SettingsActivity2"
-            android:label="@string/title_activity_settings2"></activity>
-        <activity android:name="com.topanlabs.unsoedpass.settings2" />
+            android:label="@string/title_activity_settings2" />
+        <activity android:name=".settings2" />
         <activity
-            android:name="com.topanlabs.unsoedpass.waitTransfer"
+            android:name=".waitTransfer"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.topanlabs.unsoedpass.checkoutPay"
+            android:name=".checkoutPay"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.topanlabs.unsoedpass.logout"
+            android:name=".logout"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.topanlabs.unsoedpass.SettingsActivity"
+            android:name=".SettingsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".settingus" />
         <activity android:name=".settingsui" />
         <activity
-            android:name="com.topanlabs.unsoedpass.welcome"
+            android:name=".welcome"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.topanlabs.unsoedpass.TrialHabis"
+            android:name=".TrialHabis"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.topanlabs.unsoedpass.login"
+            android:name=".login"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.topanlabs.unsoedpass.cekAbsen"
+            android:name=".cekAbsen"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.topanlabs.unsoedpass.jadwalKuliah"
+            android:name=".jadwalKuliah"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.topanlabs.unsoedpass.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,5 +54,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
