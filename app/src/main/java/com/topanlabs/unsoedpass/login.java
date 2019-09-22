@@ -318,7 +318,7 @@ public class login extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 //toast.show();
-                final Intent i = new Intent(login.this, MainActivity.class);
+                final Intent i = new Intent(login.this, sinkronisasi.class);
                 i.putExtra("kukis", (Serializable) kukis);
                 editor.putString("nim", nim2);
                 editor.putString("pass", pass);
@@ -426,7 +426,8 @@ public class login extends AppCompatActivity {
 
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-                    final Intent i = new Intent(login.this, MainActivity.class);
+                    final Intent i = new Intent(login.this, sinkronisasi.class);
+                i.putExtra("kukis", (Serializable) kukis);
                 if(dialog.isShowing())
                     dialog.dismiss();
                     startActivity(i);

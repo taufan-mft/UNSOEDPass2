@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".sinkronizer"></activity>
+        <activity android:name=".masukCapcay"></activity>
+        <activity android:name=".sinkronizer" />
         <activity android:name=".sinkronisasi" />
         <activity
             android:name=".SettingsActivity2"

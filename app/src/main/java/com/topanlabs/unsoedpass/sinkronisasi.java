@@ -2,11 +2,15 @@ package com.topanlabs.unsoedpass;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.Serializable;
+import java.util.Map;
 
 public class sinkronisasi extends AppCompatActivity {
     Button btnSimpan, btnMin, btnPlus;
@@ -14,6 +18,7 @@ public class sinkronisasi extends AppCompatActivity {
     Integer hari;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
+    Map<String, String> kukis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +29,7 @@ public class sinkronisasi extends AppCompatActivity {
         txthari = findViewById(R.id.txtHari);
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
+        kukis = (Map) getIntent().getSerializableExtra("kukis");
 
         btnPlus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -48,6 +54,10 @@ public class sinkronisasi extends AppCompatActivity {
             public void onClick(View v) {
                editor.putInt("intSinkron", hari);
                editor.apply();
+                Intent i = new Intent(sinkronisasi.this, sinkronizer.class);
+                i.putExtra("kukis", (Serializable) kukis);
+                startActivity(i);
+                finish();
                 }
 
 
