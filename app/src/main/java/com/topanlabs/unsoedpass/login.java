@@ -26,6 +26,7 @@ import org.jsoup.select.Elements;
 import androidx.appcompat.app.AlertDialog;
 
 import java.io.ByteArrayInputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -206,7 +207,7 @@ public class login extends AppCompatActivity {
 
             image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.getWidth(),
                     image.getHeight(), false));
-            winnyau.setText(kukis.toString());
+           // winnyau.setText(kukis.toString());
 
 
 
@@ -235,12 +236,12 @@ public class login extends AppCompatActivity {
 
 //This will get you cookies
 
-                 cookies = document.cookies();
-                Log.d("Winny2", cookies.toString());
+                 kukis = document.cookies();
+                Log.d("Winny2", kukis.toString());
 
                 Document page = Jsoup
                         .connect("https://akademik.unsoed.ac.id/index.php")
-                        .cookies(cookies) //use this with any page you parse. it will log you in
+                        .cookies(kukis) //use this with any page you parse. it will log you in
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36")
                         .get();
                 Elements eldosen = page.select("#content > div > table > tbody > tr:nth-child(6) > td:nth-child(1)");
@@ -318,6 +319,7 @@ public class login extends AppCompatActivity {
                 Toast toast = Toast.makeText(context, text, duration);
                 //toast.show();
                 final Intent i = new Intent(login.this, MainActivity.class);
+                i.putExtra("kukis", (Serializable) kukis);
                 editor.putString("nim", nim2);
                 editor.putString("pass", pass);
                 editor.putString("logged", "tidak");
