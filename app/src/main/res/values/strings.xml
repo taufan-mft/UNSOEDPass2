@@ -44,4 +44,7 @@
     <string name="introsinkron">Pilih jadwal sinkronisasi kamu:</string>
     <string name="jelassinkron">Sinkronisasi diperlukan agar jadwal serta absen bisa dilihat secara offline. Serta agar tidak perlu memasukan capcay.
     \n\nPerlu diingat, setiap kali melakukan sinkron, kamu harus memasukan capcay yang muncul (kami benci capcay, tapi apa boleh buat). Silakan atur agar tidak mengganggu.</string>
+    <string name="jelasCapcay">Jika capcay susah dibaca, silakan tekan Refresh Capcay. Jika sudah dapat dibaca, silakan ketik di tempat yang tersedia, kemudian tekan Lanjutkan.</string>
+
+    <string name="inAppVersion">v 2.0 (brigita). TopanLabs LLC. - topanlabs.com</string>
 </resources>

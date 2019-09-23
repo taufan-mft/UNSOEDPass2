@@ -29,8 +29,10 @@ public class sinkronisasi extends AppCompatActivity {
         txthari = findViewById(R.id.txtHari);
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
-        kukis = (Map) getIntent().getSerializableExtra("kukis");
-
+        final Intent intent = getIntent();
+        if(intent.hasExtra("kukis")) {
+            kukis = (Map) getIntent().getSerializableExtra("kukis");
+        }
         btnPlus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             hari = Integer.parseInt(txthari.getText().toString());
@@ -54,10 +56,16 @@ public class sinkronisasi extends AppCompatActivity {
             public void onClick(View v) {
                editor.putInt("intSinkron", hari);
                editor.apply();
-                Intent i = new Intent(sinkronisasi.this, sinkronizer.class);
-                i.putExtra("kukis", (Serializable) kukis);
-                startActivity(i);
-                finish();
+                if(intent.hasExtra("kukis")) {
+                    Intent i = new Intent(sinkronisasi.this, sinkronizer.class);
+                    i.putExtra("kukis", (Serializable) kukis);
+                    startActivity(i);
+                    finish();
+                } else {
+                    Intent i = new Intent(sinkronisasi.this, masukCapcay.class);
+                    startActivity(i);
+                    finish();
+                }
                 }
 
 
