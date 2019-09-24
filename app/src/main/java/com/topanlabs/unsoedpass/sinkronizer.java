@@ -39,12 +39,15 @@ public class sinkronizer extends AppCompatActivity {
 
                 Connection.Response initial = Jsoup
                         .connect(params[0])
+                        .cookies(kukis)
                         .method(Connection.Method.GET).execute();
                 Connection.Response document = Jsoup.connect(params[0])
 
                         .data("LoginForm[username]", nim)
                         .data("LoginForm[password]", pass)
-                        //.cookies(document.cookies())
+                        .data("LoginForm[verifyCode]", capcay)
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36")
+                        .cookies(kukis)
                         .method(Connection.Method.POST)
                         .execute();
 
@@ -56,6 +59,7 @@ public class sinkronizer extends AppCompatActivity {
                 Document page = Jsoup
                         .connect("https://akademik.unsoed.ac.id/index.php?r=krskhs/entrikrsmhs")
                         .cookies(cookies)
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36")
                         .get();
 
                 for (int i = 1; i <= 10; i++) {
@@ -119,21 +123,14 @@ public class sinkronizer extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog=new ProgressDialog(jadwalKuliah.this);
-            dialog.setProgress(0);
-            dialog.setMessage("Santai, kuliah bukan cuma nilai...");
-            dialog.setCancelable(false);
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.show();
+
 
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(dialog.isShowing())
-                dialog.dismiss();
-            adapter.notifyDataSetChanged();
+
 
         }
     }
