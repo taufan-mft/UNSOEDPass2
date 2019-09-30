@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class sinkronisasi extends AppCompatActivity {
     Button btnSimpan, btnMin, btnPlus;
-    TextView txthari;
+    TextView txthari, info;
     Integer hari;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
@@ -27,11 +27,13 @@ public class sinkronisasi extends AppCompatActivity {
         btnMin = findViewById(R.id.btnMin);
         btnPlus = findViewById(R.id.btnPlus);
         txthari = findViewById(R.id.txtHari);
+        info = findViewById(R.id.textView10);
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
         final Intent intent = getIntent();
         if(intent.hasExtra("kukis")) {
             kukis = (Map) getIntent().getSerializableExtra("kukis");
+            info.setText(kukis.toString());
         }
         btnPlus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

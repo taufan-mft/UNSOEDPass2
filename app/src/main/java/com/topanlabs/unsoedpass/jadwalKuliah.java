@@ -1,6 +1,9 @@
 package com.topanlabs.unsoedpass;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import org.apache.commons.text.WordUtils;
@@ -10,6 +13,7 @@ import org.jsoup.select.Elements;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 
+import java.util.List;
 import java.util.Map;
 import java.lang.String;
 import android.app.ProgressDialog;
@@ -27,7 +31,8 @@ public class jadwalKuliah extends AppCompatActivity {
     private Context context;
     private RecyclerView recyclerView;
     private MahasiswaAdapter adapter;
-    private ArrayList<matkul> mahasiswaArrayList;
+    private List<matkuldb> mahasiswaArrayList;
+    private  matkulViewModel matkulViewModel;
     GetMatkul getmatkullist;
     ProgressDialog dialog;
     String nim, pass;
@@ -40,7 +45,7 @@ public class jadwalKuliah extends AppCompatActivity {
         mSettings = getSharedPreferences("Settings",0);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         addData();
-        adapter = new MahasiswaAdapter(mahasiswaArrayList);
+        adapter = new MahasiswaAdapter(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(jadwalKuliah.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,10 +55,22 @@ public class jadwalKuliah extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         nim = mSettings.getString("nim", "nim");
         pass = mSettings.getString("pass", "pass");
+        matkulViewModel = ViewModelProviders.of(this).get(matkulViewModel.class);
+
+        // Add an observer on the LiveData returned by getAlphabetizedWords.
+        // The onChanged() method fires when the observed data changes and the activity is
+        // in the foreground.
+        matkulViewModel.getAll().observe(this, new Observer<List<matkuldb>>() {
+            @Override
+            public void onChanged(@Nullable final List<matkuldb> words) {
+                // Update the cached copy of the words in the adapter.
+                adapter.setWords(words);
+            }
+        });
 
 
-        getmatkullist =new GetMatkul();
-        getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
+        //getmatkullist =new GetMatkul();
+        //getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
     }
     void addData() {
         mahasiswaArrayList = new ArrayList<>();
@@ -109,7 +126,7 @@ public class jadwalKuliah extends AppCompatActivity {
                     String hari4 = hari3.text();
                     Elements element4 = page.select(urlelement4);
                     String title4 = element4.text();
-                    mahasiswaArrayList.add(new matkul(winnyku2, hari4, eldosen2, title4));
+                    matkulViewModel.insert(new matkuldb(winnyku2, hari4, eldosen2, title4));
 
                 }
                 /*

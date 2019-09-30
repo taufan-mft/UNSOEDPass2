@@ -1,8 +1,10 @@
 package com.topanlabs.unsoedpass;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,7 +21,9 @@ public class sinkronizer extends AppCompatActivity {
     Map<String, String> kukis;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
+    private matkulViewModel matkulViewModel;
     String nim, pass;
+    GetMatkul getmatkullist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,9 @@ public class sinkronizer extends AppCompatActivity {
         editor = mSettings.edit();
        nim = mSettings.getString("nim", "nim");
        pass = mSettings.getString("pass","pass");
+        matkulViewModel = ViewModelProviders.of(this).get(matkulViewModel.class);
+        getmatkullist =new GetMatkul();
+        getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
     }
 
     private class GetMatkul extends AsyncTask<String,String,String> {
@@ -37,37 +44,18 @@ public class sinkronizer extends AppCompatActivity {
         protected String doInBackground(String... params) {//using params[0]
             try{
 
-                Connection.Response initial = Jsoup
-                        .connect(params[0])
-                        .cookies(kukis)
-                        .method(Connection.Method.GET).execute();
-                Connection.Response document = Jsoup.connect(params[0])
-
-                        .data("LoginForm[username]", nim)
-                        .data("LoginForm[password]", pass)
-                        .data("LoginForm[verifyCode]", capcay)
-                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36")
-                        .cookies(kukis)
-                        .method(Connection.Method.POST)
-                        .execute();
-
-//This will get you cookies
-                Map<String, String> cookies = document.cookies();
-
-
 
                 Document page = Jsoup
-                        .connect("https://akademik.unsoed.ac.id/index.php?r=krskhs/entrikrsmhs")
-                        .cookies(cookies)
-                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36")
+                        .connect("https://akademik.unsoed.ac.id/index.php?r=krskhs/detailkrspermhs&kodetahunakadkul=201920201")
+                        .cookies(kukis)
                         .get();
 
                 for (int i = 1; i <= 10; i++) {
                     //int i = 1;
-                    String urldosen = "#krskini-grid > table > tbody > tr:nth-child(" + i + ") > td:nth-child(9)";
-                    String urlwinnykul = "#krskini-grid > table > tbody > tr:nth-child(" + i + ") > td:nth-child(2)";
-                    String urlhari3 = "#krskini-grid > table > tbody > tr:nth-child(" + i + ") > td:nth-child(7)";
-                    String urlelement4 = "#krskini-grid > table > tbody > tr:nth-child(" + i + ") > td:nth-child(8)";
+                    String urldosen = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
+                    String urlwinnykul = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
+                    String urlhari3 = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
+                    String urlelement4 = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
 
                     Elements eldosen = page.select(urldosen);
                     String eldosen2 = eldosen.text();
@@ -82,7 +70,7 @@ public class sinkronizer extends AppCompatActivity {
                     String hari4 = hari3.text();
                     Elements element4 = page.select(urlelement4);
                     String title4 = element4.text();
-                    mahasiswaArrayList.add(new matkul(winnyku2, hari4, eldosen2, title4));
+                    matkulViewModel.insert(new matkuldb(winnyku2, hari4, eldosen2, title4));
 
                 }
                 /*
@@ -130,7 +118,9 @@ public class sinkronizer extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            final Intent i = new Intent(sinkronizer.this, MainActivity.class);
+            startActivity(i);
+            finish();
 
         }
     }
