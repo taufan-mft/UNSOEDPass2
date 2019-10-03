@@ -38,7 +38,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         holder.txtNama.setText(current.getNamakul());
         holder.txtNpm.setText(current.getRuangan());
         holder.txtNoHp.setText(current.getHari());
-        holder.txtJam.setText(current.getJam());
+        holder.txtJam.setText(current.getJam().replaceAll("..", "$0:"));
     }
 
     @Override

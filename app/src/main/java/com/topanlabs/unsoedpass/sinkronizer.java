@@ -54,8 +54,8 @@ public class sinkronizer extends AppCompatActivity {
                     //int i = 1;
                     String urldosen = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
                     String urlwinnykul = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
-                    String urlhari3 = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
-                    String urlelement4 = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
+                    String urlhari3 = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(8)";
+                    String urlelement4 = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(8)";
 
                     Elements eldosen = page.select(urldosen);
                     String eldosen2 = eldosen.text();
@@ -67,9 +67,9 @@ public class sinkronizer extends AppCompatActivity {
                     Elements winnykul = page.select(urlwinnykul);
                     String winnyku2 = winnykul.text();
                     Elements hari3 = page.select(urlhari3);
-                    String hari4 = hari3.text();
+                    String hari4 = hari3.text().replaceAll("[^a-zA-Z].*", "");
                     Elements element4 = page.select(urlelement4);
-                    String title4 = element4.text();
+                    String title4 = element4.text().replaceAll("\\D+","");
                     matkulViewModel.insert(new matkuldb(winnyku2, hari4, eldosen2, title4));
 
                 }
@@ -118,7 +118,7 @@ public class sinkronizer extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            final Intent i = new Intent(sinkronizer.this, MainActivity.class);
+            final Intent i = new Intent(sinkronizer.this, setReminder.class);
             startActivity(i);
             finish();
 

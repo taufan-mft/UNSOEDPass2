@@ -12,6 +12,10 @@ import org.jsoup.Connection.Method;
 
 import androidx.appcompat.app.AlertDialog;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,9 +25,11 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 //import android.widget.GridLayout;
+import androidx.core.app.NotificationCompat;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +37,8 @@ import java.lang.String;
 
 import android.view.View;
 import android.widget.Toast;
+
+import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,6 +77,10 @@ String nama;
     ImageView imgpremium;
     String token;
     Boolean warntrial;
+    private NotificationManager mNotificationManager;
+    private static final int NOTIFICATION_ID = 0;
+    private static final String PRIMARY_CHANNEL_ID =
+            "primary_notification_channel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +168,10 @@ String nama;
         if (nim != "nim") {
             updateStat();
         }
+        mNotificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+        createNotificationChannel();
+        deliverNotification();
 }
     @Override
     public void onResume(){
@@ -419,5 +435,56 @@ String nama;
             }
         });
 
+    }
+    public void createNotificationChannel() {
+
+        // Create a notification manager object.
+        mNotificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Notification channels are only available in OREO and higher.
+        // So, add a check on SDK version.
+        if (android.os.Build.VERSION.SDK_INT >=
+                android.os.Build.VERSION_CODES.O) {
+
+            // Create the NotificationChannel with all the parameters.
+            NotificationChannel notificationChannel = new NotificationChannel
+                    (PRIMARY_CHANNEL_ID,
+                            "Winny notification",
+                            NotificationManager.IMPORTANCE_HIGH);
+
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setDescription
+                    ("Notifies every 15 minutes to stand up and walk");
+            mNotificationManager.createNotificationChannel(notificationChannel);
+        }
+    }
+    private void deliverNotification() {
+        AlarmManager manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent myIntent;
+        PendingIntent pendingIntent;
+        Log.d("aurel", "memek");
+        for (int i = 0; i < 2; i++) {
+            String[] winnyk = {"Winny", "Brigita"};
+            String[] kongten = {"Anaknya sipit", "Crush nya whimpi"};
+            // SET TIME HERE
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, 15);
+            calendar.set(Calendar.MINUTE, 42);
+
+
+            myIntent = new Intent(this, AlarmReceiver.class);
+            myIntent.putExtra("Judul", winnyk[i]);
+            myIntent.putExtra("konten", kongten[i]);
+            myIntent.putExtra("notifID", i);
+            pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            Log.d("aurel", "uda");
+        }
     }
 }

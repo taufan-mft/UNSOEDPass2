@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.topanlabs.unsoedpass">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".masukCapcay"></activity>
+        <activity android:name=".setReminder"></activity>
+        <activity android:name=".masukCapcay" />
         <activity android:name=".sinkronizer" />
         <activity android:name=".sinkronisasi" />
         <activity
@@ -55,8 +58,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+        <receiver
+            android:name=".broadcast.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+    </application>
 
 </manifest>

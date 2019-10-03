@@ -9,7 +9,7 @@ import java.util.List;
 
 @Dao
 public interface matkulDAO {
-    @Query("SELECT * FROM matkuldb")
+    @Query("SELECT * FROM matkuldb ORDER BY CASE hari when 'SENIN' then 0 when 'SELASA' then 1 when 'RABU' then 2 when 'KAMIS' then 3 when 'JUMAT' then 4 end, jam")
     LiveData<List<matkuldb>> getAll();
 
     @Insert
