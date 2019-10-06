@@ -20,6 +20,9 @@ public class matkulRepository {
     LiveData<List<matkuldb>> getAll() {
         return matkulDB;
     }
+    public LiveData<Integer> getCount() {
+        return matkulDao.getCount();
+    }
 
     public void insert (matkuldb matkuldb) {
         new insertAsyncTask(matkulDao).execute(matkuldb);

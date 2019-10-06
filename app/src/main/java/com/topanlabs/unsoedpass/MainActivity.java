@@ -171,7 +171,7 @@ String nama;
         mNotificationManager = (NotificationManager)
                 getSystemService(NOTIFICATION_SERVICE);
         createNotificationChannel();
-        deliverNotification();
+        //deliverNotification();
 }
     @Override
     public void onResume(){
@@ -469,11 +469,14 @@ String nama;
         for (int i = 0; i < 2; i++) {
             String[] winnyk = {"Winny", "Brigita"};
             String[] kongten = {"Anaknya sipit", "Crush nya whimpi"};
+            Integer[] gita = {05,07};
             // SET TIME HERE
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 15);
-            calendar.set(Calendar.MINUTE, 42);
+            calendar.set(Calendar.HOUR_OF_DAY, 11);
+            calendar.set(Calendar.MINUTE, gita[i]);
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+            calendar.set(Calendar.SECOND, 0);
 
 
             myIntent = new Intent(this, AlarmReceiver.class);
@@ -483,7 +486,7 @@ String nama;
             pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             Log.d("aurel", "uda");
         }
     }
