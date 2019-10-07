@@ -97,7 +97,7 @@ public class setReminder extends AppCompatActivity {
             Calendar calNow = Calendar.getInstance();
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 11);
+            calendar.set(Calendar.HOUR_OF_DAY, jam);
             calendar.set(Calendar.MINUTE, menit);
             calendar.set(Calendar.DAY_OF_WEEK, winul);
             calendar.set(Calendar.SECOND, 0);
