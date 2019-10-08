@@ -35,6 +35,7 @@ public class sinkronisasi extends AppCompatActivity {
             kukis = (Map) getIntent().getSerializableExtra("kukis");
             info.setText(kukis.toString());
         }
+        hari = Integer.parseInt(txthari.getText().toString());
         btnPlus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             hari = Integer.parseInt(txthari.getText().toString());

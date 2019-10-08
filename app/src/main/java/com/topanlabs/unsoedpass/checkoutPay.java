@@ -102,7 +102,7 @@ SimpleDateFormat formatter;
        }
 
     private void initRetro() {
-        final String BASE_URL = "https://geni.topanlabs.com";
+        final String BASE_URL = "http://sandbox.topanlabs.com:8123";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

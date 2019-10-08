@@ -56,14 +56,12 @@ public class setReminder extends AppCompatActivity {
         matkulViewModel.getCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
+
                 matkulcount = integer;
 
             }
         });
-
-
     }
-
     public void setingWin() {
         for (int i = 0; i <= matkulcount - 1; i++) {
             AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -90,10 +88,12 @@ public class setReminder extends AppCompatActivity {
 
             }
             Integer jam = Integer.parseInt(dataList.get(i).getJam().substring(0, 2));
+            jam = jam - 1;
             String jam2 = dataList.get(i).getJam().substring(0, 2);
             String menit2 = dataList.get(i).getJam().substring(2, 4);
             Integer menit = Integer.parseInt(dataList.get(i).getJam().substring(2, 4));
-            String brigita = "Kuliah dimulai jam: " + jam2 + ":" + menit2;
+            String ruangan = dataList.get(i).getRuangan();
+            String brigita = "Kuliah dimulai jam " + jam2 + "." + menit2 + ", di "+ ruangan;
             Calendar calNow = Calendar.getInstance();
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
@@ -111,6 +111,10 @@ public class setReminder extends AppCompatActivity {
             myIntent.putExtra("Judul", namatkul);
             myIntent.putExtra("konten", brigita);
             myIntent.putExtra("notifID", i);
+            myIntent.putExtra("hour", jam);
+            myIntent.putExtra("minute", menit);
+            myIntent.putExtra("dayofweek", winul);
+
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 

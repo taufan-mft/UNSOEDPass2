@@ -52,7 +52,7 @@ public class sinkronizer extends AppCompatActivity {
 
                 for (int i = 1; i <= 10; i++) {
                     //int i = 1;
-                    String urldosen = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
+                    String urldosen = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(7)";
                     String urlwinnykul = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
                     String urlhari3 = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(8)";
                     String urlelement4 = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(8)";

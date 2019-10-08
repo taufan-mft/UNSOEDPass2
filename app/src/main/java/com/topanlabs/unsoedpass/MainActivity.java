@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 //import android.widget.GridLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
@@ -81,6 +82,7 @@ String nama;
     private static final int NOTIFICATION_ID = 0;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
+    ConstraintLayout aha, aha2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +90,27 @@ String nama;
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        gridLayout=(GridLayout)findViewById(R.id.mainGrid);
+        aha = findViewById(R.id.aha);
+        aha2 = findViewById(R.id.aha2);
+
+        aha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent w = new Intent(MainActivity.this, jadwalKuliah.class);
+                startActivity(w);
+
+            }
+        });
+
+        aha2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent w = new Intent(MainActivity.this, settings2.class);
+                startActivity(w);
+
+            }
+        });
+       /** gridLayout=(GridLayout)findViewById(R.id.mainGrid);
          CardView cardView=(CardView)gridLayout.getChildAt(0);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +189,7 @@ String nama;
         }
         if (nim != "nim") {
             updateStat();
-        }
+        }**/
         mNotificationManager = (NotificationManager)
                 getSystemService(NOTIFICATION_SERVICE);
         createNotificationChannel();
@@ -176,12 +198,12 @@ String nama;
     @Override
     public void onResume(){
         super.onResume();
-        String yourLocked = mSettings.getString("logged", "ya");
+/**        String yourLocked = mSettings.getString("logged", "ya");
         if (yourLocked.equals("ya")) {
             Intent i = new Intent(this, login.class);
             startActivity(i);
             finish();
-        }
+        }**/
 
 
     }
@@ -296,7 +318,7 @@ String nama;
         }
     }
     private void updateStat() {
-        final String BASE_URL = "https://geni.topanlabs.com";
+        final String BASE_URL = "http://sandbox.topanlabs.com:8123";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

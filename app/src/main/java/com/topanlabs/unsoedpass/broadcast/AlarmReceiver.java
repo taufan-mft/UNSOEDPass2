@@ -1,5 +1,6 @@
 package com.topanlabs.unsoedpass.broadcast;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -11,6 +12,11 @@ import androidx.core.app.NotificationCompat;
 
 import com.topanlabs.unsoedpass.MainActivity;
 import com.topanlabs.unsoedpass.R;
+import com.topanlabs.unsoedpass.setReminder;
+
+import java.util.Calendar;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class AlarmReceiver extends BroadcastReceiver {
     //private static final int NOTIFICATION_ID = 0;
@@ -23,6 +29,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         String judul = intent.getStringExtra("Judul");
         String konten = intent.getStringExtra("konten");
         int NOTIFICATION_ID = intent.getIntExtra("notifID", 0);
+        int jam = intent.getIntExtra("hour",0);
+        int menit = intent.getIntExtra("minute", 0);
+        int dayofweek = intent.getIntExtra("dayofweek", 0);
 
         mNotificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -39,6 +48,30 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setDefaults(NotificationCompat.DEFAULT_ALL);
         mNotificationManager.notify(NOTIFICATION_ID, builder.build());
         Log.d("aurel","oke");
+        Calendar calNow = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, jam);
+        calendar.set(Calendar.MINUTE, menit);
+        calendar.set(Calendar.DAY_OF_WEEK, dayofweek);
+        calendar.set(Calendar.SECOND, 0);
+        if(calendar.before(calNow))
+        {
+            // If it's in the past increment by one week.
+            calendar.add(Calendar.DATE, 7);
+        }
+        Intent myIntent = new Intent(context, AlarmReceiver.class);
+        myIntent.putExtra("Judul", judul);
+        myIntent.putExtra("konten", konten);
+        myIntent.putExtra("notifID",NOTIFICATION_ID);
+        myIntent.putExtra("hour", jam);
+        myIntent.putExtra("minute", menit);
+        myIntent.putExtra("dayofweek", dayofweek);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
     }
 }
