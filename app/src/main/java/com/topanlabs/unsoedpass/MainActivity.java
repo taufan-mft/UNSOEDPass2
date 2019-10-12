@@ -32,6 +32,9 @@ import android.view.WindowManager;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.gridlayout.widget.GridLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.lang.String;
@@ -39,11 +42,13 @@ import java.lang.String;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -63,6 +68,8 @@ ProgressDialog dialog;
 String nama;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
+    List<beritaModel> beritaModelk;
+    private beritaAdapter beritaAdapter;
     String nim;
     String pass;
     GetMatkul getmatkullist;
@@ -74,6 +81,7 @@ String nama;
     Intent hasyu;
     statint statint;
     tokenint authenticator;
+    beritaInt beritaint;
     String ifpremium;
     ImageView imgpremium;
     String token;
@@ -83,6 +91,7 @@ String nama;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
     ConstraintLayout aha, aha2;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +119,14 @@ String nama;
 
             }
         });
+
+        recyclerView = (RecyclerView) findViewById(R.id.beritarec);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        beritaAdapter = new beritaAdapter(beritaModelk, this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(beritaAdapter);
+    getBerita();
+
        /** gridLayout=(GridLayout)findViewById(R.id.mainGrid);
          CardView cardView=(CardView)gridLayout.getChildAt(0);
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -330,6 +347,43 @@ String nama;
         getToken();
 
     }
+    private void getBerita() {
+        final String BASE_URL = "http://sandbox.topanlabs.com:8123";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                //.client(httpClient.build())
+                .build();
+
+        statint = retrofit.create(statint.class);
+        authenticator = retrofit.create(tokenint.class);
+        beritaint = retrofit.create(beritaInt.class);
+        Call<List<beritaModel>> call = beritaint.getBerita();
+        call.enqueue(new Callback<List<beritaModel>>() {
+            @Override
+            public void onResponse(Call<List<beritaModel>> call, Response<List<beritaModel>> response) {
+
+                List<beritaModel> changesList = response.body();
+                beritaAdapter.setBerita(changesList);
+            }
+
+            @Override
+            public void onFailure(Call<List<beritaModel>> call, Throwable t) {
+
+                Context context = getApplicationContext();
+                CharSequence text = "Error DVN12. Mohon klik bantuan jika berlanjut.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
+
+            //showDialog();
+        });
+    }
+
+
     private void getToken() {
         tokenmodel tokenmodel = new tokenmodel("admin","WhyIveBeenCryingOverYou123!@#");
         Call<tokenmodel> call = authenticator.getToken(tokenmodel);
