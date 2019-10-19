@@ -1,6 +1,7 @@
 package com.topanlabs.unsoedpass;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -19,8 +20,20 @@ public class matkulViewModel extends AndroidViewModel {
         count = mRepository.getCount();
     }
 
-    LiveData<List<matkuldb>> getAll() { return allMatkul; }
-    public LiveData<Integer> getCount() { return mRepository.getCount(); }
+    LiveData<List<matkuldb>> getAll() {
+
+            allMatkul = mRepository.getAll();
+
+         return allMatkul; }
+    public LiveData<Integer> getCount() {
+        if (count == null){
+            count = mRepository.getCount();
+        }
+        return mRepository.getCount(); }
 
     public void insert(matkuldb matkuldb) { mRepository.insert(matkuldb); }
+
+
+
+
 }

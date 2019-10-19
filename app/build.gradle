@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
@@ -12,8 +16,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+
         release {
             minifyEnabled true
+            shrinkResources true // Remove unused resources
+               // Remove unused codes
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,6 +39,8 @@ android {
         // If issues with severity "fatal" are found, the release build is aborted.
         checkReleaseBuilds false
     }
+
+
 }
 
 dependencies {
@@ -55,10 +65,12 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.0-rc01'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
+    implementation "com.stringcare:library:$stringcare_version"
 
 // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
@@ -66,4 +78,5 @@ dependencies {
 
 // Testig
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+
 }

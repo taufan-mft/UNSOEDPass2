@@ -38,7 +38,15 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         holder.txtNama.setText(current.getNamakul());
         holder.txtNpm.setText(current.getRuangan());
         holder.txtNoHp.setText(current.getHari());
-        holder.txtJam.setText(current.getJam().replaceAll("..", "$0:"));
+        int jumlah = current.getJam().length();
+        if (jumlah == 8) {
+            String win = current.getJam().substring(0,2) +":" +current.getJam().substring(2,4) + " - " + current.getJam().substring(4,6) +":"+current.getJam().substring(6,8);
+            holder.txtJam.setText(win);
+        }
+        if (jumlah == 4) {
+            String win = current.getJam().substring(0,2) +":" +current.getJam().substring(2,4);
+            holder.txtJam.setText(win);
+        }
     }
 
     @Override

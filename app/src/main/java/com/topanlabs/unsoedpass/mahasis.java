@@ -14,7 +14,7 @@ public class mahasis {
     @SerializedName("NIM")
     @Expose
     private String nIM;
-    @SerializedName("beli")
+    @SerializedName("kodekelas")
     @Expose
     private String beli;
     @SerializedName("noorder")

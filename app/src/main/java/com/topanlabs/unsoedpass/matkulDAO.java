@@ -15,6 +15,12 @@ public interface matkulDAO {
     @Query("SELECT COUNT(namakul) FROM matkuldb")
     LiveData<Integer> getCount();
 
+    @Query("SELECT COUNT(*) FROM matkuldb")
+    Integer getCount2();
+
+    @Query("SELECT * FROM matkuldb WHERE hari = :hari")
+    List<matkuldb> getTodayMatk(String hari);
+
     @Insert
     void insert(matkuldb matkuldb);
 

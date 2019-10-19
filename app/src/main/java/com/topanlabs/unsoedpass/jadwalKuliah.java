@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import org.apache.commons.text.WordUtils;
@@ -26,6 +27,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+
+import static android.widget.GridLayout.HORIZONTAL;
 
 public class jadwalKuliah extends AppCompatActivity {
     private Context context;

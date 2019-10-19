@@ -286,7 +286,7 @@
                             app:srcCompat="@drawable/uplashbook" />
 
                         <TextView
-                            android:id="@+id/textView20"
+                            android:id="@+id/txtNamatkul"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -300,7 +300,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/textView21"
+                            android:id="@+id/textRuangan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -311,10 +311,10 @@
                             android:textColor="#FFFFFF"
                             android:textSize="22sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+                            app:layout_constraintTop_toBottomOf="@+id/txtNamatkul" />
 
                         <TextView
-                            android:id="@+id/textView22"
+                            android:id="@+id/textJamkul"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -325,7 +325,7 @@
                             android:textColor="#FFFFFF"
                             android:textSize="22sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+                            app:layout_constraintTop_toBottomOf="@+id/textRuangan" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>

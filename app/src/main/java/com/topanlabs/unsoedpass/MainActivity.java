@@ -50,6 +50,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -62,10 +64,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.time.LocalDate.now;
+
 public class MainActivity extends AppCompatActivity {
 TextView txtnama;
 ProgressDialog dialog;
 String nama;
+    matkulRepository mRepository;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
     List<beritaModel> beritaModelk;
@@ -92,6 +97,7 @@ String nama;
             "primary_notification_channel";
     ConstraintLayout aha, aha2;
     RecyclerView recyclerView;
+    TextView todayMat, todayJam, todayRuangan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +105,24 @@ String nama;
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        mSettings = getSharedPreferences("Settings",0);
+        todayMat = findViewById(R.id.txtNamatkul);
+        todayJam = findViewById(R.id.textJamkul);
+        todayRuangan=findViewById(R.id.textRuangan);
+        editor = mSettings.edit();
+        String yourLocked = mSettings.getString("logged", "ya");
+        String firstTime = mSettings.getString("pertama", "ya");
+        if (firstTime == "ya") {
+            Intent i = new Intent(this, welcome.class);
+            startActivity(i);
+            finish();
+            return;
+        }else if (yourLocked == "ya") {
+            Intent i = new Intent(this, login.class);
+            startActivity(i);
+            finish();
+            return;
+        }
         aha = findViewById(R.id.aha);
         aha2 = findViewById(R.id.aha2);
 
@@ -126,6 +150,9 @@ String nama;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(beritaAdapter);
     getBerita();
+    mRepository = new matkulRepository(getApplication());
+    updJadwal();
+
 
        /** gridLayout=(GridLayout)findViewById(R.id.mainGrid);
          CardView cardView=(CardView)gridLayout.getChildAt(0);
@@ -215,6 +242,7 @@ String nama;
     @Override
     public void onResume(){
         super.onResume();
+        updJadwal();
 /**        String yourLocked = mSettings.getString("logged", "ya");
         if (yourLocked.equals("ya")) {
             Intent i = new Intent(this, login.class);
@@ -383,6 +411,154 @@ String nama;
         });
     }
 
+    private void updJadwal() {
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
+                Date date = new Date(System.currentTimeMillis());
+                String date2 = formatter.format(date);
+                Date waktu1 = new Date();
+                try {
+                    waktu1 = formatter.parse(date2);
+                } catch (Exception e) {
+                    //
+                }
+
+
+                Log.d("winal", "devina");
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_WEEK);
+                String harini = "ha";
+
+                switch (day) {
+                    case Calendar.SUNDAY:
+                        harini = "MINGGU";
+                        break;
+                    case Calendar.MONDAY:
+                        harini = "SENIN";
+                        break;
+                    case Calendar.TUESDAY:
+                        harini = "SELASA";
+                        break;
+                    case Calendar.WEDNESDAY:
+                        harini = "RABU";
+                        break;
+                    case Calendar.THURSDAY:
+                        harini = "KAMIS";
+                        break;
+                    case Calendar.FRIDAY:
+                        harini = "JUMAT";
+                        break;
+                    case Calendar.SATURDAY:
+                        harini = "SABTU";
+                        break;
+
+                }
+                Log.d("winal", harini);
+                List<matkuldb> win = mRepository.getTodayMat(harini);
+                // Log.d("winal", win.get(2).getNamakul());
+                /**for (matkuldb wins : win) {
+                 Log.d("winal", wins.getNamakul());
+                 }**/
+                long[] milisec = new long[win.size()];
+                if (!win.isEmpty()) {
+                    for (int i = 0; i < win.size(); i++) {
+                        Log.d("winal", win.get(i).getJam().substring(0, 4));
+                        String date3 = win.get(i).getJam().substring(0, 4);
+                        Date waktu2 = new Date();
+                        try {
+                            waktu2 = formatter.parse(date3);
+                        } catch (Exception e) {
+                            //
+                        }
+                        long difference = waktu2.getTime() - waktu1.getTime();
+                        milisec[i] = difference;
+                        Log.d("winal", Long.toString(difference));
+
+                    }
+                    long min = Long.MAX_VALUE;
+                    int index = 0;
+                    String minus = "ya";
+
+                    for (int i = 0; i < milisec.length; i++) {
+                        Log.d("winal", "ini " + i);
+                        if (min > milisec[i] && milisec[i] > 0) {
+                            min = milisec[i];
+                            Log.d("winal", "Ini value min & max" + min + "&" + milisec[i]);
+                            index = i;
+                            minus = "ga";
+                        }
+                    }
+
+                    if (minus.equals("ga")) {
+                        final int index2 = index;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                todayMat.setText(win.get(index2).getNamakul());
+                            }
+                        });
+
+                        String jamentah = win.get(index).getJam();
+                        if (jamentah.length() == 8 ) {
+                            String jamateng = win.get(index).getJam().substring(0,2) +":" +win.get(index).getJam().substring(2,4) + " - " + win.get(index).getJam().substring(4,6) +":"+win.get(index).getJam().substring(6,8);
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    todayJam.setText(jamateng);
+                                }
+                            });
+
+                        } else {
+                            String jamateng = win.get(index).getJam().substring(0,2) +":" +win.get(index).getJam().substring(2,4);
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    todayJam.setText(jamateng);
+                                }
+                            });
+                        }
+
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                todayRuangan.setText(win.get(index2).getRuangan());
+                            }
+                        });
+
+
+                    } else {
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                todayMat.setText("Great job!");
+                                todayJam.setText("tidak ada kuliah lagi.");
+                                todayRuangan.setText("selamat istirahat,");
+                            }
+                        });
+
+                    }
+                } else {
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            todayMat.setText("Great job!");
+                            todayJam.setText("tidak ada kuliah lagi.");
+                            todayRuangan.setText("selamat istirahat,");
+                        }
+                    });
+                }
+            }
+
+            ;
+        });
+    }
 
     private void getToken() {
         tokenmodel tokenmodel = new tokenmodel("admin","WhyIveBeenCryingOverYou123!@#");

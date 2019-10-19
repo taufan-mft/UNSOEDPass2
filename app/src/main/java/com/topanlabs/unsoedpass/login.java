@@ -50,6 +50,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
 public class login extends AppCompatActivity {
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
@@ -78,10 +79,15 @@ public class login extends AppCompatActivity {
     TextView winnyau;
     Bitmap bmp;
     Boolean tersedia;
+    String winul = "WhyIveBeenCryingOverYou123!@#";
+    String obfuscated;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Log.d("winal", "btncapcay nih");
+
+
         Date todayDate = Calendar.getInstance().getTime();
          formatter = new SimpleDateFormat("dd MM yyyy");
         todayString = formatter.format(todayDate);
@@ -126,6 +132,7 @@ public class login extends AppCompatActivity {
 
         btncapcay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.d("raisa", "btncapcay nih");
                 getcapcuy =new GetCapcay();
                 getcapcuy.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
             }
@@ -177,6 +184,8 @@ public class login extends AppCompatActivity {
                         .ignoreContentType(true) // Needed for fetching image
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36")
                         .execute();
+                Log.d("raisa",linkURL2);
+                Log.d("raisa", "Kukis " + kukis);
                 //kukis.clear();
                 //kukis = response.cookies();
 
@@ -203,7 +212,7 @@ public class login extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            ImageView image = (ImageView) findViewById(R.id.tempatCapcay);
+            ImageView image = (ImageView) findViewById(R.id.tempatCapcay2);
 
             image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.getWidth(),
                     image.getHeight(), false));

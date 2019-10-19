@@ -32,13 +32,13 @@ public class setReminder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_reminder);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+       /** recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         adapter = new MahasiswaAdapter(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(setReminder.this);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);**/
         matkulViewModel = ViewModelProviders.of(this).get(matkulViewModel.class);
 
         // Add an observer on the LiveData returned by getAlphabetizedWords.
@@ -48,9 +48,10 @@ public class setReminder extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable final List<matkuldb> words) {
                 // Update the cached copy of the words in the adapter.
-                adapter.setWords(words);
+               // adapter.setWords(words);
                 dataList = words;
-                setingWin();
+
+
             }
         });
         matkulViewModel.getCount().observe(this, new Observer<Integer>() {
@@ -59,8 +60,17 @@ public class setReminder extends AppCompatActivity {
 
                 matkulcount = integer;
 
+
             }
         });
+
+        /**while (true) {
+            if ((matkulcount != null) & (dataList !=null )) {
+                setingWin();
+                break;
+            }
+        }**/
+
     }
     public void setingWin() {
         for (int i = 0; i <= matkulcount - 1; i++) {

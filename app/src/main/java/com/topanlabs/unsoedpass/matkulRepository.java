@@ -24,9 +24,18 @@ public class matkulRepository {
         return matkulDao.getCount();
     }
 
+    public Integer getCount2() {
+        return matkulDao.getCount2();
+    }
+
+    public List<matkuldb> getTodayMat (String hari) {
+        return matkulDao.getTodayMatk(hari);
+    }
+
     public void insert (matkuldb matkuldb) {
         new insertAsyncTask(matkulDao).execute(matkuldb);
     }
+    public void ambilCount () {}
 
     private static class insertAsyncTask extends AsyncTask<matkuldb, Void, Void> {
 
@@ -42,5 +51,13 @@ public class matkulRepository {
             return null;
         }
     }
+
+
+
+
+
+
+
+
 
 }
