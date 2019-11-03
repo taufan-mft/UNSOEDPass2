@@ -6,11 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.List;
+
 public class absenAdapter extends RecyclerView.Adapter<absenAdapter.absenViewHolder>  {
 
-    private ArrayList<absen> dataList;
+    //private ArrayList<absen> dataList;
+    private List<absendb> dataList;
 
-    public absenAdapter(ArrayList<absen> dataList) {
+    public absenAdapter(List<absendb> dataList) {
         this.dataList = dataList;
     }
 
@@ -23,9 +26,11 @@ public class absenAdapter extends RecyclerView.Adapter<absenAdapter.absenViewHol
 
     @Override
     public void onBindViewHolder(absenViewHolder holder, int position) {
-        holder.txtNama.setText(dataList.get(position).getNamatkul());
-        holder.txtAbsen.setText(dataList.get(position).getAbsen());
-        holder.txtTotal.setText(dataList.get(position).getTotpertemuan());
+        String p1 = "Pertemuan ke - " + (position + 1);
+        holder.txtNama.setText(p1);
+        holder.txtAbsen.setText(dataList.get(position).getHari());
+        holder.txtTotal.setText(dataList.get(position).getTanggal());
+        holder.txtHadir.setText(dataList.get(position).getKehadiran());
 
     }
 
@@ -35,13 +40,14 @@ public class absenAdapter extends RecyclerView.Adapter<absenAdapter.absenViewHol
     }
 
     public class absenViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtNama, txtAbsen, txtTotal, txtJam;
+        private TextView txtNama, txtAbsen, txtTotal, txtHadir;
 
         public absenViewHolder(View itemView) {
             super(itemView);
             txtNama = (TextView) itemView.findViewById(R.id.txt_namatkul);
-            txtAbsen = (TextView) itemView.findViewById(R.id.txt_absen);
-            txtTotal = (TextView) itemView.findViewById(R.id.txt_total);
+            txtAbsen = (TextView) itemView.findViewById(R.id.txt_hari);
+            txtTotal = (TextView) itemView.findViewById(R.id.txt_tanggal);
+            txtHadir = (TextView) itemView.findViewById(R.id.txt_hadir);
             //txtJam = (TextView) itemView.findViewById(R.id.txt_jam);
         }
     }

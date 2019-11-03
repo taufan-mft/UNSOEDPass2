@@ -21,6 +21,9 @@ public interface matkulDAO {
     @Query("SELECT * FROM matkuldb WHERE hari = :hari")
     List<matkuldb> getTodayMatk(String hari);
 
+    @Query("SELECT * FROM matkuldb")
+    List<matkuldb> getAllMat();
+
     @Insert
     void insert(matkuldb matkuldb);
 

@@ -23,19 +23,21 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
+import java.util.List;
+import java.util.concurrent.Executors;
 
 
 public class cekAbsen extends AppCompatActivity {
     private Context context;
     private RecyclerView recyclerView;
     private absenAdapter adapter;
-    private ArrayList<absen> mahasiswaArrayList;
-    GetMatkul getmatkullist;
+    private List<absendb> mahasiswaArrayList;
+    //GetMatkul getmatkullist;
     ProgressDialog dialog;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
@@ -43,16 +45,27 @@ public class cekAbsen extends AppCompatActivity {
     SimpleDateFormat formatter;
     Date winny;
     Date date2;
-    String todayString;
-    int winny2;
+    String todayString, namakul;
+    private absenRepository absenRepository;
+    int winny2, pertemuan, kehadiran;
+    TextView txtKehadiran, txtPertemuan, txtNamakul;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cek_absen);
+        txtKehadiran = findViewById(R.id.txtJumAbsen);
+        txtPertemuan = findViewById(R.id.txtJumHadir);
+        txtNamakul = findViewById(R.id.txtNamakul);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        addData();
+        //addData();
         winny2 = -1;
-        adapter = new absenAdapter(mahasiswaArrayList);
+        pertemuan = 0;
+        kehadiran = 0;
+        Intent intent = getIntent();
+        namakul = intent.getStringExtra("Matkul");
+        txtNamakul.setText(namakul);
+        absenRepository= new absenRepository(getApplication());
+        //
         mSettings = getSharedPreferences("Settings",0);
         editor = mSettings.edit();
         nim = mSettings.getString("nim", "nim");
@@ -61,19 +74,46 @@ public class cekAbsen extends AppCompatActivity {
         getSupportActionBar().setTitle("Cek Absen");
         recyclerView.setLayoutManager(layoutManager);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        recyclerView.setAdapter(adapter);
-        getmatkullist =new GetMatkul();
+
+        //getmatkullist =new GetMatkul();
         Date todayDate = Calendar.getInstance().getTime();
         formatter = new SimpleDateFormat("dd-MM-yyyy");
         todayString = formatter.format(todayDate);
-        getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
-    }
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                mahasiswaArrayList = absenRepository.getDetailAbsen(namakul);
+                adapter = new absenAdapter(mahasiswaArrayList);
+                recyclerView.setAdapter(adapter);
+                //Log.d("raisan", mahasiswaArrayList.toString());
+                adapter.notifyDataSetChanged();
+                for (int i = 0; i <= mahasiswaArrayList.size() - 1 ; i++) {
+                    String hadirga= mahasiswaArrayList.get(i).getKehadiran();
+                    Log.d("rairai","ke "+i +" "+hadirga);
+                    if (hadirga.equals("Hadir")) {
 
-    void addData() {
-        mahasiswaArrayList = new ArrayList<>();
-       }
+                        pertemuan += 1;
+                    } else {
+                        kehadiran += 1;
+                        pertemuan +=1;
+                    }
+                    String p1 = "Jumlah absen: " + kehadiran;
+                    String p2 = "Jumlah kehadiran: " + pertemuan;
+                    txtKehadiran.setText(p1);
+                    txtPertemuan.setText(p2);
+                }
 
-    private class GetMatkul extends AsyncTask<String,String,String> {
+            }
+        });
+            }
+        //getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
+
+
+    //void addData() {
+     //   mahasiswaArrayList = new List<absendb>();
+     //  };
+
+    /**private class GetMatkul extends AsyncTask<String,String,String> {
         @Override
         protected String doInBackground(String... params) {//using params[0]
             try{
@@ -131,7 +171,7 @@ public class cekAbsen extends AppCompatActivity {
 
                     for (int g = 1; g <= 10; g++) { //itung kata2 hadir
 
-                        String urlhadir = "#jadwal-grid > table > tbody > tr:nth-child("+g+") > td:nth-child(8) > span";
+                        String urlhadir = "#jadwal-grid > table > tbody > tr:nth-child("+g+") > td:nth-child(8) > span"; //katakata hadir
                         Elements kehadiran = page2.select(urlhadir);
                         String winnyaw = kehadiran.text();
                         String tanggal = "#jadwal-grid > table > tbody > tr:nth-child("+g+") > td:nth-child(3)";
@@ -191,7 +231,7 @@ public class cekAbsen extends AppCompatActivity {
 
                     String hadirr = "Jumlah pertemuan: " + hadir;
                     String absenn = "Jumlah absen: " + absen;
-                    mahasiswaArrayList.add(new absen(eldosen2, absenn, hadirr));
+                    mahasiswaArrayList.add(new absendb(eldosen2, absenn, hadirr));
 
                 }
 
@@ -225,7 +265,7 @@ public class cekAbsen extends AppCompatActivity {
             //toast.show();
 
         }
-    }
+    }**/
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

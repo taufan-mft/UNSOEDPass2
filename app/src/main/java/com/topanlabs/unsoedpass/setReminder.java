@@ -14,11 +14,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class setReminder extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -27,11 +31,38 @@ public class setReminder extends AppCompatActivity {
     Integer matkulcount;
     private List<matkuldb> dataList;
     matkulDAO matkulDao;
+    private matkulRepository matkulRepository;
+    Button btnYa, btnTidak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_reminder);
+        matkulRepository = new matkulRepository(getApplication());
+        btnYa = findViewById(R.id.loginbutton);
+        btnTidak = findViewById(R.id.copynom);
+        getData();
+        btnYa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setingWin(false);
+                Intent i = new Intent (setReminder.this, MainActivity.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btnTidak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setingWin(true);
+                Intent i = new Intent (setReminder.this, MainActivity.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
        /** recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         adapter = new MahasiswaAdapter(this);
 
@@ -39,30 +70,12 @@ public class setReminder extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);**/
-        matkulViewModel = ViewModelProviders.of(this).get(matkulViewModel.class);
+
 
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
-        matkulViewModel.getAll().observe(this, new Observer<List<matkuldb>>() {
-            @Override
-            public void onChanged(@Nullable final List<matkuldb> words) {
-                // Update the cached copy of the words in the adapter.
-               // adapter.setWords(words);
-                dataList = words;
 
-
-            }
-        });
-        matkulViewModel.getCount().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-
-                matkulcount = integer;
-
-
-            }
-        });
 
         /**while (true) {
             if ((matkulcount != null) & (dataList !=null )) {
@@ -72,7 +85,19 @@ public class setReminder extends AppCompatActivity {
         }**/
 
     }
-    public void setingWin() {
+
+    private void getData() {
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                dataList = matkulRepository.getAllMat();
+                matkulcount = matkulRepository.getCount2();
+
+            }
+        });
+
+    }
+    public void setingWin(boolean cancel) {
         for (int i = 0; i <= matkulcount - 1; i++) {
             AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             String namatkul = dataList.get(i).getNamakul();
@@ -127,9 +152,26 @@ public class setReminder extends AppCompatActivity {
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+            if (!cancel) {
+                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
+            } else {
+                manager.cancel(pendingIntent);
+                Log.d("aurel", "CANCEL" + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
+            }
+        }
+        if (!cancel) {
+            CharSequence text = "Reminder berhasil dibuat.";
+            int duration = Toast.LENGTH_SHORT;
 
-            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-            Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
+            Toast toast = Toast.makeText(this, text, duration);
+            toast.show();
+        } else {
+            CharSequence text = "Reminder berhasil di-nonaktifkan";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(this, text, duration);
+            toast.show();
         }
     }
 }

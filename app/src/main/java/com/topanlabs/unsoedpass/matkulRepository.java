@@ -32,6 +32,8 @@ public class matkulRepository {
         return matkulDao.getTodayMatk(hari);
     }
 
+    public List<matkuldb> getAllMat() { return matkulDao.getAllMat();}
+
     public void insert (matkuldb matkuldb) {
         new insertAsyncTask(matkulDao).execute(matkuldb);
     }

@@ -118,6 +118,7 @@ public class login extends AppCompatActivity {
                  nim = txtnim.getText().toString();
                  pass = txtpass.getText().toString();
                 EditText win = findViewById(R.id.txcapcay);
+                Log.d("raisaa","aku disini");
                 capcay = win.getText().toString();
                 getmatkullist =new GetMatkul();
                 getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
@@ -266,11 +267,14 @@ public class login extends AppCompatActivity {
                 nama = namaku.text();
                 nama = nama.toLowerCase();
                 nama = WordUtils.capitalize(nama);
+                Log.d("raisaa", "nih:"+nama);
                 //tersedia = false;
                if (nama.isEmpty()) {
+                   Log.d("raisaa", nama);
                     tersedia = false;
                 } else {
                     tersedia = true;
+                   Log.d("raisaa", nama);
 
                 }
 

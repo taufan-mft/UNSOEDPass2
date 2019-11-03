@@ -45,6 +45,9 @@
     <string name="jelassinkron">Sinkronisasi diperlukan agar jadwal serta absen bisa dilihat secara offline. Serta agar tidak perlu memasukan capcay.
     \n\nPerlu diingat, setiap kali melakukan sinkron, kamu harus memasukan capcay yang muncul (kami benci capcay, tapi apa boleh buat). Silakan atur agar tidak mengganggu.</string>
     <string name="jelasCapcay">Jika capcay susah dibaca, silakan tekan Refresh Capcay. Jika sudah dapat dibaca, silakan ketik di tempat yang tersedia, kemudian tekan Lanjutkan.</string>
-
+    <string name="copyright"> Copyright © 2019, Topan Laboratories Intl.\nAll rights reserved.\nDengan menggunakan aplikasi ini, kamu setuju dengan kebijakan privasi dan data kami.</string>
+    <string name="thankstoo">Thanks to (in a random order):\n@zara.jkt48, @devanyahya, @nastar_basi, @depdepina, @xxfawnia, @whimpihstrbb_, @hasyimashari, @difanian_, @nadaluftan, @afrzlftrchmn, @ramdunn_, @dekahaa, @kopi_dingin, @ayudiakmila, @hanafzhhh, @winnyaw, @rositagal, @rizkysputrii, @maudykrn, @mykel_amp, @sulthonupriananda, @farahfinaa, @ibusayatercinta.\nWithout their support, you won\'t see this update.</string>
+    <string name="suportedbyn">Connection provided by Atha Media Prima CV and TopanLabs</string>
+    <string name="hidupmhs">Hidup Mahasiswa!\nJabat erat,\n@taufan_mft - CEO TopanLabs</string>
     <string name="inAppVersion">v 2.0 (brigita). TopanLabs LLC. - topanlabs.com</string>
 </resources>

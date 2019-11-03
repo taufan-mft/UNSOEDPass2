@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.topanlabs.unsoedpass"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 3
         versionName "1.1"
@@ -20,7 +20,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true // Remove unused resources
-               // Remove unused codes
+            // Remove unused codes
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

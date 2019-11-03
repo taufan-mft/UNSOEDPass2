@@ -26,6 +26,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 //import android.widget.GridLayout;
@@ -95,9 +98,9 @@ String nama;
     private static final int NOTIFICATION_ID = 0;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
-    ConstraintLayout aha, aha2;
+    ConstraintLayout jadwalK, aha2,aha4;
     RecyclerView recyclerView;
-    TextView todayMat, todayJam, todayRuangan;
+    TextView todayMat, todayJam, todayRuangan, txtSalam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,9 @@ String nama;
         todayMat = findViewById(R.id.txtNamatkul);
         todayJam = findViewById(R.id.textJamkul);
         todayRuangan=findViewById(R.id.textRuangan);
+        txtnama = findViewById(R.id.txtNamaK);
+        txtSalam = findViewById(R.id.textView15);
+        updateGreetings();
         editor = mSettings.edit();
         String yourLocked = mSettings.getString("logged", "ya");
         String firstTime = mSettings.getString("pertama", "ya");
@@ -123,13 +129,22 @@ String nama;
             finish();
             return;
         }
-        aha = findViewById(R.id.aha);
+        jadwalK = findViewById(R.id.aha);
         aha2 = findViewById(R.id.aha2);
+        aha4 = findViewById(R.id.aha4);
 
-        aha.setOnClickListener(new View.OnClickListener() {
+        jadwalK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent w = new Intent(MainActivity.this, jadwalKuliah.class);
+                startActivity(w);
+
+            }
+        });
+        aha4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent w = new Intent(MainActivity.this, aboutScreen.class);
                 startActivity(w);
 
             }
@@ -138,7 +153,7 @@ String nama;
         aha2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent w = new Intent(MainActivity.this, settings2.class);
+                Intent w = new Intent(MainActivity.this, absenSelector.class);
                 startActivity(w);
 
             }
@@ -149,9 +164,15 @@ String nama;
         beritaAdapter = new beritaAdapter(beritaModelk, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(beritaAdapter);
-    getBerita();
-    mRepository = new matkulRepository(getApplication());
-    updJadwal();
+        getBerita();
+        mRepository = new matkulRepository(getApplication());
+        updJadwal();
+        mSettings = getSharedPreferences("Settings",0);
+        editor = mSettings.edit();
+        String namaku = mSettings.getString("nama", "waduh");
+        String[] arr = namaku.split("\\s+");
+        txtnama.setText(arr[0]+" "+arr[1]+"!");
+
 
 
        /** gridLayout=(GridLayout)findViewById(R.id.mainGrid);
@@ -240,9 +261,33 @@ String nama;
         //deliverNotification();
 }
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.new_game:
+                Intent i = new Intent(MainActivity.this, settings2.class);
+                startActivity(i);
+                return true;
+            case R.id.about:
+                Intent a = new Intent(MainActivity.this, aboutScreen.class);
+                startActivity(a);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
     public void onResume(){
         super.onResume();
         updJadwal();
+        updateGreetings();
 /**        String yourLocked = mSettings.getString("logged", "ya");
         if (yourLocked.equals("ya")) {
             Intent i = new Intent(this, login.class);
@@ -409,6 +454,23 @@ String nama;
 
             //showDialog();
         });
+    }
+    private void updateGreetings() {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            String salam= "Selamat pagi, mau ngapain hari ini?";
+            txtSalam.setText(salam);
+        }else if(timeOfDay >= 12 && timeOfDay < 16){
+            String salam= "Selamat siang, mau ngapain hari ini?";
+            txtSalam.setText(salam);
+        }else if(timeOfDay >= 16 && timeOfDay < 21){
+            String salam= "Selamat malam, mau ngapain hari ini?";
+            txtSalam.setText(salam);
+        }else if(timeOfDay >= 21 && timeOfDay < 24){
+            String salam= "Ayo istirahat. Jangan begadang, ya.";
+            txtSalam.setText(salam);
+        }
     }
 
     private void updJadwal() {
@@ -738,7 +800,8 @@ String nama;
             pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            //manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             Log.d("aurel", "uda");
         }
     }

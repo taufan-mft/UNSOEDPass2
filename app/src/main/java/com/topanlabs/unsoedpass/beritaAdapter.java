@@ -1,4 +1,5 @@
 package com.topanlabs.unsoedpass;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,13 @@ public class beritaAdapter extends RecyclerView.Adapter<beritaAdapter.BeritaView
         holder.txtKonten.setText(current.getKonten());
         holder.txtAuthor.setText(current.getAuthor());
         Glide.with(context).load(current.getCover()).fitCenter().into(holder.imgHead);
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Clicked element "+current.getHeadline(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
 
 
 
@@ -58,6 +67,7 @@ public class beritaAdapter extends RecyclerView.Adapter<beritaAdapter.BeritaView
     public class BeritaViewHolder extends RecyclerView.ViewHolder{
         private TextView txtHeadline, txtKonten, txtAuthor;
         private ImageView imgHead;
+        private CardView card;
 
         public BeritaViewHolder(View itemView) {
             super(itemView);
@@ -65,6 +75,7 @@ public class beritaAdapter extends RecyclerView.Adapter<beritaAdapter.BeritaView
             txtKonten = (TextView) itemView.findViewById(R.id.konten);
             txtAuthor = (TextView) itemView.findViewById(R.id.authore);
             imgHead = itemView.findViewById(R.id.imageView6);
+            card = itemView.findViewById(R.id.card);
         }
     }
 }

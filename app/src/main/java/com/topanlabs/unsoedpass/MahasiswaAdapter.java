@@ -5,7 +5,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
       //  this.dataList = dataList;
     //}
     private final LayoutInflater mInflater;
+
     MahasiswaAdapter(Context context) { mInflater = LayoutInflater.from(context); }
     @Override
     public MahasiswaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,6 +51,12 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
             String win = current.getJam().substring(0,2) +":" +current.getJam().substring(2,4);
             holder.txtJam.setText(win);
         }
+        holder.yowdi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Clicked element "+current.getNamakul(), Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -56,6 +66,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
 
     public class MahasiswaViewHolder extends RecyclerView.ViewHolder{
         private TextView txtNama, txtNpm, txtNoHp, txtJam;
+        private LinearLayout yowdi;
 
         public MahasiswaViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +74,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
             txtNpm = (TextView) itemView.findViewById(R.id.txt_dosen);
             txtNoHp = (TextView) itemView.findViewById(R.id.txt_hari);
             txtJam = (TextView) itemView.findViewById(R.id.txt_jam);
+            yowdi = (LinearLayout) itemView.findViewById(R.id.yowdi);
         }
     }
 }

@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".setReminder"></activity>
+        <activity android:name=".absenSelector"></activity>
+        <activity android:name=".aboutScreen" />
+        <activity android:name=".kelasSelector" />
+        <activity android:name=".setReminder" />
         <activity android:name=".masukCapcay" />
         <activity android:name=".sinkronizer" />
         <activity android:name=".sinkronisasi" />

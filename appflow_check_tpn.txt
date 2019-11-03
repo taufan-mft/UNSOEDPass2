@@ -1,0 +1,15 @@
+LOGIN
+-aman
+
+sinkronisasi.class
+-tambah keterangan ini buat apa
+-ilangin textview PHPSESSID
+
+sinkronizer.class
+-aman
+
+setReminder.class
+-pastiin reminder jalan
+
+MainActivity.class
+-ubah icon
