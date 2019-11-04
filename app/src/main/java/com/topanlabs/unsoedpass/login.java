@@ -111,6 +111,9 @@ public class login extends AppCompatActivity {
          apiService =
                 retrofit.create(mahaint.class);
          authenticator = retrofit.create(tokenint.class);
+        getcapcuy =new GetCapcay();
+        getcapcuy.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
+        showaDialog();
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -134,7 +137,7 @@ public class login extends AppCompatActivity {
         btncapcay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("raisa", "btncapcay nih");
-                getcapcuy =new GetCapcay();
+
                 getcapcuy.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
             }
 
@@ -158,11 +161,7 @@ public class login extends AppCompatActivity {
                 //finish();  //Kill the activity from which you will go to next activity
                 //startActivity(i);
             }
-
         });
-
-
-
     }
 
     private class GetCapcay extends AsyncTask<String,String,String> {
@@ -496,7 +495,21 @@ public class login extends AppCompatActivity {
         });
     }
 
+    private void showaDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this);
+        alertDialogBuilder.setTitle("We hate capcay");
+        alertDialogBuilder
+                .setMessage("Kita semua benci capcay (captcha)...tapi apa boleh buat. ")
+                //.setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setPositiveButton("Oke",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
 
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
     private void showDialog(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this);
 

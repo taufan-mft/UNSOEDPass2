@@ -123,7 +123,7 @@ String nama;
             startActivity(i);
             finish();
             return;
-        }else if (yourLocked == "ya") {
+        }else if (yourLocked.equals("ya")) {
             Intent i = new Intent(this, login.class);
             startActivity(i);
             finish();
@@ -273,6 +273,7 @@ String nama;
             case R.id.new_game:
                 Intent i = new Intent(MainActivity.this, settings2.class);
                 startActivity(i);
+                finish();
                 return true;
             case R.id.about:
                 Intent a = new Intent(MainActivity.this, aboutScreen.class);
@@ -288,6 +289,19 @@ String nama;
         super.onResume();
         updJadwal();
         updateGreetings();
+        String yourLocked = mSettings.getString("logged", "ya");
+        String firstTime = mSettings.getString("pertama", "ya");
+       /** if (firstTime == "ya") {
+            Intent i = new Intent(this, welcome.class);
+            startActivity(i);
+            finish();
+            return;
+        }else if (yourLocked.equals("ya")) {
+
+            finish();
+            return;
+        }**/
+
 /**        String yourLocked = mSettings.getString("logged", "ya");
         if (yourLocked.equals("ya")) {
             Intent i = new Intent(this, login.class);

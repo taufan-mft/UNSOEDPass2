@@ -17,7 +17,8 @@ public interface matkulDAO {
 
     @Query("SELECT COUNT(*) FROM matkuldb")
     Integer getCount2();
-
+    @Query("DELETE FROM matkuldb")
+    public void nukeTable();
     @Query("SELECT * FROM matkuldb WHERE hari = :hari")
     List<matkuldb> getTodayMatk(String hari);
 

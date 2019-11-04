@@ -1,0 +1,13 @@
+string
+------
+nim
+pass
+logged
+fakultas
+jurusan
+nama
+tawal
+logged
+pertama
+lagibeli
+premium

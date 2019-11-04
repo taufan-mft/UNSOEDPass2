@@ -18,7 +18,7 @@ public class absenRepository {
     public List<absendb> getDetailAbsen (String hari) {
         return absenDAO.getDetailAbsen(hari);
     }
-
+    public void nukeTable() { absenDAO.nukeTable();}
     public void insert (absendb matkuldb) {
         absenDAO.insert(matkuldb);
     }

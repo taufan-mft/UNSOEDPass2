@@ -10,7 +10,8 @@ import java.util.List;
 public interface absenDAO {
     @Query("SELECT * FROM absendb WHERE namakul = :hari")
     List<absendb> getDetailAbsen(String hari);
-
+    @Query("DELETE FROM absendb")
+    public void nukeTable();
     @Insert
     void insert(absendb absendb);
 }

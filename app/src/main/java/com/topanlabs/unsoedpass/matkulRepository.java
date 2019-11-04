@@ -1,6 +1,7 @@
 package com.topanlabs.unsoedpass;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -11,8 +12,8 @@ public class matkulRepository {
     private matkulDAO matkulDao;
     private LiveData<List<matkuldb>> matkulDB;
 
-    matkulRepository(Application application) {
-        matkulDatabase db = matkulDatabase.getDatabase(application);
+    public matkulRepository(Context context) {
+        matkulDatabase db = matkulDatabase.getDatabase(context);
         matkulDao = db.matkulDao();
         matkulDB = matkulDao.getAll();
     }
@@ -38,7 +39,7 @@ public class matkulRepository {
         new insertAsyncTask(matkulDao).execute(matkuldb);
     }
     public void ambilCount () {}
-
+    public void nukeTable() { matkulDao.nukeTable();}
     private static class insertAsyncTask extends AsyncTask<matkuldb, Void, Void> {
 
         private matkulDAO mAsyncTaskDao;

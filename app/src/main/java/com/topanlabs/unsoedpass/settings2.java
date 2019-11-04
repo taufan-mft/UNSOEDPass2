@@ -93,7 +93,7 @@ public class settings2 extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int id) {
                         // jika tombol diklik, maka akan menutup activity ini
 
-                            Intent w = new Intent(settings2.this, MainActivity.class);
+                            Intent w = new Intent(settings2.this, logout.class);
 
                             editor.putString("trialwarnabsen", "belum");
                             editor.putString("premium", "tidak");
