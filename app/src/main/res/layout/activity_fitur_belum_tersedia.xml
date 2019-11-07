@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fiturBelumTersedia">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Maaf,"
+                android:textColor="#000000"
+                android:textSize="32sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_margin="10dp"
+                android:textColor="#000000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fitur belum tersedia karena kami masih menunggu keputusan dari rektor UNSOED mengenai peresmian aplikasi ini. Kamu bisa mempercepat keputusan ini dengan memberikan dukungan terhadap aplikasi ini.
+\n\nBerikan dukungan kamu terhadap aplikasi ini dengan cara:" />
+
+            <Button
+                android:id="@+id/btnPlayStore"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/MASH"
+                android:layout_height="wrap_content"
+                android:text="Rate bintang 5 di PlayStore" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Jika sudah, berikan dukungan langsung dengan cara:"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/btnDirect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/MASH"
+                android:layout_margin="10dp"
+                android:text="Berikan dukungan langsung" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Terima kasih banyak!\nJabat erat,\n@taufan_mft"
+                android:gravity="center"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

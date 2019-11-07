@@ -144,7 +144,7 @@ String nama;
         aha4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent w = new Intent(MainActivity.this, aboutScreen.class);
+                Intent w = new Intent(MainActivity.this, fiturBelumTersedia.class);
                 startActivity(w);
 
             }

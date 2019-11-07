@@ -18,8 +18,19 @@
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-renamesourcefileattribute SourceFile
 -keepattributes Signature
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+}
+-repackageclasses 'o'
+-optimizations   code/simplification/arithmetic,!code/simplification/cast,!field/*,! class/merging/*,!method/inlining/*
+-optimizationpasses 5
+-allowaccessmodification
+
 
 # For using GSON @Expose annotation
 -keepattributes *Annotation*

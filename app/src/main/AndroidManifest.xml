@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".absenSelector"></activity>
+        <activity android:name=".fiturBelumTersedia"></activity>
+        <activity android:name=".absenSelector" />
         <activity android:name=".aboutScreen" />
         <activity android:name=".kelasSelector" />
         <activity android:name=".setReminder" />
@@ -70,7 +71,7 @@
             android:process=":remote" />
         <receiver
             android:name=".broadcast.BootBroadcastReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
