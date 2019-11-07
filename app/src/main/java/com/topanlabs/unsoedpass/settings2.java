@@ -2,6 +2,7 @@ package com.topanlabs.unsoedpass;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,15 +16,15 @@ import android.widget.Button;
 public class settings2 extends AppCompatActivity {
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    Button logout, btncall, btnkebijakan;
+    ConstraintLayout logout, btncall, btnkebijakan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        logout = findViewById(R.id.btnlogout);
-        btncall = findViewById(R.id.btncall);
-        btnkebijakan = findViewById(R.id.btnkebijakan);
+        logout = findViewById(R.id.optLogout);
+        btncall = findViewById(R.id.optHubungi);
+        btnkebijakan = findViewById(R.id.optKebijakan);
         btncall.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
