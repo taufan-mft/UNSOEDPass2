@@ -10,8 +10,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.commons.text.WordUtils;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,11 +31,14 @@ public class sinkronizer extends AppCompatActivity {
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
     private matkulViewModel matkulViewModel;
-    String nim, pass, todayString;
+    String nim, pass, todayString, capcay;
     GetMatkul getmatkullist;
+    matkulRepository matkulRepository;
     absenRepository absenRepository;
     Date winny, date2;
     int winny2;
+    GetAbsen getab;
+    boolean firsttime, fromcapcay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +48,45 @@ public class sinkronizer extends AppCompatActivity {
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
         absenRepository = new absenRepository(getApplication());
+        matkulRepository = new matkulRepository(getApplication());
         Date todayDate = Calendar.getInstance().getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         todayString = formatter.format(todayDate);
        nim = mSettings.getString("nim", "nim");
        pass = mSettings.getString("pass","pass");
+       fromcapcay = getIntent().getBooleanExtra("fromCapcay", false);
+       capcay = getIntent().getStringExtra("capcayku");
+       firsttime = mSettings.getBoolean("firstsync", true);
         matkulViewModel = ViewModelProviders.of(this).get(matkulViewModel.class);
         getmatkullist =new GetMatkul();
         getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
-        GetAbsen getab = new GetAbsen();
-        getab.execute((new String[]{"ya"}));
+         getab = new GetAbsen();
+
     }
 
     private class GetMatkul extends AsyncTask<String,String,String> {
         @Override
         protected String doInBackground(String... params) {//using params[0]
             try{
+                absenRepository.nukeTable();
+                matkulRepository.nukeTable();
+                if (fromcapcay) {
+                    Log.d("raisa","dari capcay nih");
+                    Connection.Response document = Jsoup.connect(params[0])
 
+                            .data("LoginForm[username]", nim)
+                            .data("LoginForm[password]",pass)
+                            .data("LoginForm[verifyCode]", capcay)
+                            //.cookies(initial.cookies())
+                            .cookies(kukis)
+                            .method(Connection.Method.POST)
+                            .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36")
+                            .execute();
+
+//This will get you cookies
+
+                    kukis = document.cookies();
+                }
                 Document page2 = Jsoup
                         .connect("https://akademik.unsoed.ac.id/index.php?r=jadwal/jadwalpermhs")
                         .cookies(kukis)
@@ -108,7 +136,7 @@ public class sinkronizer extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            getab.execute((new String[]{"ya"}));
 
         }
     }
@@ -201,10 +229,30 @@ public class sinkronizer extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            final Intent i = new Intent(sinkronizer.this, setReminder.class);
-            startActivity(i);
-            finish();
+            Date todayDate = Calendar.getInstance().getTime();
+            DateTimeFormatter dateStringFormat = DateTimeFormat
+                    .forPattern("dd MM yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy");
+            todayString = formatter.format(todayDate);
+            editor.putString("tglSync",todayString);
+            editor.apply();
+            if (firsttime) {
+                final Intent i = new Intent(sinkronizer.this, setReminder.class);
+                startActivity(i);
+                editor.putBoolean("firstsync", false);
+                editor.apply();
+                finish();
+            } else {
 
+                CharSequence text = "Sinkronisasi selesai.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(sinkronizer.this, text, duration);
+                toast.show();
+                final Intent i = new Intent(sinkronizer.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
         }
     }
 }

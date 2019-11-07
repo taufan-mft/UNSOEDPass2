@@ -178,10 +178,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="80dp"
-                        android:layout_marginLeft="80dp"
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true"
-                        app:layout_constraintStart_toStartOf="@id/aha4">
+                        app:layout_constraintStart_toStartOf="@id/aha4"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
                             android:layout_width="80dp"
@@ -205,14 +205,45 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/exam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/aha">
+
+                        <LinearLayout
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="80dp"
+                                android:layout_height="50dp"
+                                android:scaleType="centerInside"
+                                app:srcCompat="@drawable/icon_exam" />
+
+                            <TextView
+                                android:id="@+id/textView25"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Jadwal Ujian" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/aha4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="80dp"
-                        android:layout_marginLeft="80dp"
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true"
-                        app:layout_constraintStart_toStartOf="@id/aha2">
+                        app:layout_constraintStart_toStartOf="@id/aha2"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
                             android:layout_width="80dp"

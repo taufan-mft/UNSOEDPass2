@@ -33,7 +33,7 @@ public class sinkronisasi extends AppCompatActivity {
         final Intent intent = getIntent();
         if(intent.hasExtra("kukis")) {
             kukis = (Map) getIntent().getSerializableExtra("kukis");
-            info.setText(kukis.toString());
+            //info.setText(kukis.toString());
         }
         hari = Integer.parseInt(txthari.getText().toString());
         btnPlus.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +57,7 @@ public class sinkronisasi extends AppCompatActivity {
         });
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               editor.putInt("intSinkron", hari);
+               editor.putInt("intervalSync", hari);
                editor.apply();
                 if(intent.hasExtra("kukis")) {
                     Intent i = new Intent(sinkronisasi.this, sinkronizer.class);

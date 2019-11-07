@@ -98,9 +98,10 @@ String nama;
     private static final int NOTIFICATION_ID = 0;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
-    ConstraintLayout jadwalK, aha2,aha4;
+    ConstraintLayout jadwalK, aha2,aha4, aha3;
     RecyclerView recyclerView;
     TextView todayMat, todayJam, todayRuangan, txtSalam;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,17 @@ String nama;
         editor = mSettings.edit();
         String yourLocked = mSettings.getString("logged", "ya");
         String firstTime = mSettings.getString("pertama", "ya");
+        String tglSync = mSettings.getString("tglSync","01 01 2000");
+        int intervalSync = mSettings.getInt("intervalSync", 7);
+        Date todayDate = Calendar.getInstance().getTime();
+        DateTimeFormatter dateStringFormat = DateTimeFormat
+                .forPattern("dd MM yyyy");
+        formatter = new SimpleDateFormat("dd MM yyyy");
+        todayString = formatter.format(todayDate);
+        DateTime date1 = dateStringFormat.parseDateTime(tglSync);
+        DateTime date2 = dateStringFormat.parseDateTime(todayString);
+        days = Days.daysBetween(new LocalDate(date1),
+                new LocalDate(date2)).getDays();
         if (firstTime == "ya") {
             Intent i = new Intent(this, welcome.class);
             startActivity(i);
@@ -129,9 +141,15 @@ String nama;
             finish();
             return;
         }
+        if (days > intervalSync) {
+            Intent i = new Intent(this, masukCapcay.class);
+            startActivity(i);
+            finish();
+        }
         jadwalK = findViewById(R.id.aha);
         aha2 = findViewById(R.id.aha2);
         aha4 = findViewById(R.id.aha4);
+        aha3 = findViewById(R.id.aha3);
 
         jadwalK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +169,14 @@ String nama;
         });
 
         aha2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent w = new Intent(MainActivity.this, absenSelector.class);
+                startActivity(w);
+
+            }
+        });
+        aha3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent w = new Intent(MainActivity.this, absenSelector.class);

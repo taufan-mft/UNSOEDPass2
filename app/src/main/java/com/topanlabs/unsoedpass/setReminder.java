@@ -12,10 +12,12 @@ import android.app.PendingIntent;
 import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
@@ -33,19 +35,32 @@ public class setReminder extends AppCompatActivity {
     matkulDAO matkulDao;
     private matkulRepository matkulRepository;
     Button btnYa, btnTidak;
+    SharedPreferences mSettings;
+    SharedPreferences.Editor editor;
+    TextView txtStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_reminder);
+        mSettings = getSharedPreferences("Settings",0);
+        editor = mSettings.edit();
         matkulRepository = new matkulRepository(getApplication());
         btnYa = findViewById(R.id.loginbutton);
         btnTidak = findViewById(R.id.copynom);
+        txtStatus = findViewById(R.id.txtStatus);
+        boolean reminderon = mSettings.getBoolean("reminderon", false);
+        if (reminderon) {
+            txtStatus.setText("Reminder aktif.");
+        } else {
+            txtStatus.setText("Reminder tidak aktif.");
+        }
         getData();
         btnYa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setingWin(false);
+                txtStatus.setText("Reminder aktif.");
                 Intent i = new Intent (setReminder.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -57,6 +72,7 @@ public class setReminder extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setingWin(true);
+                txtStatus.setText("Reminder aktif.");
                 Intent i = new Intent (setReminder.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -153,6 +169,7 @@ public class setReminder extends AppCompatActivity {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             if (!cancel) {
+
                 manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
             } else {
@@ -161,12 +178,16 @@ public class setReminder extends AppCompatActivity {
             }
         }
         if (!cancel) {
+            editor.putBoolean("reminderon", true);
+            editor.apply();
             CharSequence text = "Reminder berhasil dibuat.";
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(this, text, duration);
             toast.show();
         } else {
+            editor.putBoolean("reminderon", false);
+            editor.apply();
             CharSequence text = "Reminder berhasil di-nonaktifkan";
             int duration = Toast.LENGTH_SHORT;
 
