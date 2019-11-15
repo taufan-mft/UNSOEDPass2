@@ -50,7 +50,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".cekAbsen"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.topanlabs.unsoedpass.absenSelector"/>
+        </activity>
         <activity
             android:name=".jadwalKuliah"
             android:screenOrientation="portrait" />

@@ -98,7 +98,7 @@ String nama;
     private static final int NOTIFICATION_ID = 0;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
-    ConstraintLayout jadwalK, aha2,aha4, aha3;
+    ConstraintLayout jadwalK, aha2,aha4, aha3, exam;
     RecyclerView recyclerView;
     TextView todayMat, todayJam, todayRuangan, txtSalam;
 
@@ -147,9 +147,10 @@ String nama;
             finish();
         }
         jadwalK = findViewById(R.id.aha);
-        aha2 = findViewById(R.id.aha2);
-        aha4 = findViewById(R.id.aha4);
-        aha3 = findViewById(R.id.aha3);
+        aha2 = findViewById(R.id.aha2); //absensi
+        aha4 = findViewById(R.id.aha4); //lost and found
+        aha3 = findViewById(R.id.aha3); //kelas pengganti
+        exam = findViewById(R.id.exam); //jadwal ujian
 
         jadwalK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +160,14 @@ String nama;
 
             }
         });
+
+        exam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view) {
+                showaDialog("Belum masa ujian","Cek jadwal ujian tidak tersedia karena bukan masa ujian.","yup");
+            }
+        });
+
         aha4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,7 +188,7 @@ String nama;
         aha3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent w = new Intent(MainActivity.this, absenSelector.class);
+                Intent w = new Intent(MainActivity.this, fiturBelumTersedia.class);
                 startActivity(w);
 
             }
@@ -299,7 +308,7 @@ String nama;
             case R.id.new_game:
                 Intent i = new Intent(MainActivity.this, settings2.class);
                 startActivity(i);
-                finish();
+
                 return true;
             case R.id.about:
                 Intent a = new Intent(MainActivity.this, aboutScreen.class);
@@ -328,12 +337,11 @@ String nama;
             return;
         }**/
 
-/**        String yourLocked = mSettings.getString("logged", "ya");
+     //  String yourLocked = mSettings.getString("logged", "ya");
         if (yourLocked.equals("ya")) {
-            Intent i = new Intent(this, login.class);
-            startActivity(i);
+
             finish();
-        }**/
+        }
 
 
     }

@@ -1,6 +1,7 @@
 package com.topanlabs.unsoedpass;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import org.apache.commons.text.WordUtils;
@@ -60,6 +61,7 @@ public class cekAbsen extends AppCompatActivity {
         //addData();
         winny2 = -1;
         pertemuan = 0;
+        getSupportActionBar().setTitle("Detail Absen");
         kehadiran = 0;
         Intent intent = getIntent();
         namakul = intent.getStringExtra("Matkul");
@@ -71,7 +73,7 @@ public class cekAbsen extends AppCompatActivity {
         nim = mSettings.getString("nim", "nim");
         pass = mSettings.getString("pass", "pass");
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(cekAbsen.this);
-        getSupportActionBar().setTitle("Cek Absen");
+        //getSupportActionBar().setTitle("Cek Absen");
         recyclerView.setLayoutManager(layoutManager);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -271,10 +273,12 @@ public class cekAbsen extends AppCompatActivity {
             case android.R.id.home:
                 // todo: goto back activity from here
 
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                //Intent intent = new Intent(this, MainActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                //startActivity(intent);
+                //finish();
+                //return true;
+                NavUtils.navigateUpFromSameTask(this);
                 return true;
 
             default:

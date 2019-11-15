@@ -21,6 +21,7 @@ public class absenSelector extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(absenSelector.this);
         recyclerView.setLayoutManager(layoutManager);
+        getSupportActionBar().setTitle("Pilih Matkul");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {

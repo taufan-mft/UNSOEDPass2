@@ -137,7 +137,7 @@ public class login extends AppCompatActivity {
         btncapcay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("raisa", "btncapcay nih");
-
+                getcapcuy =new GetCapcay();
                 getcapcuy.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
             }
 
