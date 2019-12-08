@@ -10,8 +10,8 @@ import retrofit2.http.Path;
 public interface mahaint {
 
     @GET("/mahasiswa2/{nim}/")
-    Call<mahasis> getUser(@Path("nim") String nim, @Header("Authorization") String token);
+    Call<mahasis> getUser(@Path("nim") String nim);
 
-    @POST("/mahasiswa/")
-    Call<mahasis> createUser(@Body mahasis mahasis, @Header("Authorization") String token);
+    @POST("/createmaha/")
+    Call<mahasis> createUser(@Body mahasis mahasis);
 }

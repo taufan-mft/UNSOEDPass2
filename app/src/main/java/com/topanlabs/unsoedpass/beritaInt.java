@@ -10,5 +10,5 @@ import retrofit2.http.Path;
 public interface beritaInt {
 
     @GET("/berita/")
-    Call<List<beritaModel>> getBerita();
+    Call<List<beritaModel>> getBerita(@Header("Authorization") String token);
 }

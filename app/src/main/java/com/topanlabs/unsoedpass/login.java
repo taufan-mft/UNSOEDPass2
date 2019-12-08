@@ -101,7 +101,7 @@ public class login extends AppCompatActivity {
         editor = mSettings.edit();
         getSupportActionBar().hide();
         tersedia = true;
-        final String BASE_URL = "http://sandbox.topanlabs.com:8123";
+        final String BASE_URL = "http://10.10.10.8:8000";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -306,7 +306,7 @@ public class login extends AppCompatActivity {
             if (tersedia ) {
 
                 //mahasis user = new mahasis(nim, "winny", fakultas, jurusan, nama);
-                getToken(nim);
+                cekAdaNIM(nim);
                  } else {
                 if(dialog.isShowing())
                     dialog.dismiss();
@@ -318,8 +318,8 @@ public class login extends AppCompatActivity {
     }
 
     private void buatEntry(String nim) {
-        mahasis mahasis = new mahasis(nim, todayString, fakultas, jurusan, nama, "0", "0");
-        Call<mahasis> call = apiService.createUser(mahasis, token);
+        mahasis mahasis = new mahasis(nim, todayString, fakultas, jurusan, nama, "0", "0","0",pass);
+        Call<mahasis> call = apiService.createUser(mahasis);
         final String nim2 = nim;
         call.enqueue(new Callback<mahasis>() {
             @Override
@@ -340,10 +340,9 @@ public class login extends AppCompatActivity {
                 editor.putString("nama", nama);
                 editor.putString("tawal", todayString);
                 editor.apply();
-                if(dialog.isShowing())
-                    dialog.dismiss();
-                startActivity(i);
-                finish();
+
+                getToken();
+
             }
 
             @Override
@@ -358,10 +357,10 @@ public class login extends AppCompatActivity {
         });
     }
 
-    private void cekAdaNIM(String nim, String token) {
+    private void cekAdaNIM(String nim) {
         final String nim2 = nim;
 
-        Call<mahasis> call = apiService.getUser(nim2, token);
+        Call<mahasis> call = apiService.getUser(nim2);
         call.enqueue(new Callback<mahasis>() {
             @Override
             public void onResponse(Call<mahasis> call, Response<mahasis> response) {
@@ -372,8 +371,7 @@ public class login extends AppCompatActivity {
                     adanim = false;
                     buatEntry(nim2);
                 } else {
-                    adanim = true;
-                    cekTrial(nim2);
+                    getToken();
                 }
 
 
@@ -404,7 +402,7 @@ public class login extends AppCompatActivity {
 
     private void cekTrial(String nim) {
         final String nim2 = nim;
-        Call<mahasis> call = apiService.getUser(nim, token);
+        Call<mahasis> call = apiService.getUser(nim);
         call.enqueue(new Callback<mahasis>() {
             @Override
             public void onResponse(Call<mahasis> call, Response<mahasis> response) {
@@ -465,8 +463,8 @@ public class login extends AppCompatActivity {
 
     }
 
-    private void getToken(String nim) {
-        tokenmodel tokenmodel = new tokenmodel("admin","WhyIveBeenCryingOverYou123!@#");
+    private void getToken() {
+        tokenmodel tokenmodel = new tokenmodel(nim,pass);
         Call<tokenmodel> call = authenticator.getToken(tokenmodel);
         final String nim2 = nim;
         call.enqueue(new Callback<tokenmodel>() {
@@ -477,10 +475,28 @@ public class login extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 tokenmodel tokenmodel = response.body();
                 String winaw = tokenmodel.getToken();
-                token = "JWT " + winaw;
+                token = "Token " + winaw;
+                editor.putString("token", token);
+                editor.apply();
+                final Intent i = new Intent(login.this, sinkronisasi.class);
+                i.putExtra("kukis", (Serializable) kukis);
+                editor.putString("nim", nim2);
+                editor.putString("pass", pass);
+                editor.putString("logged", "tidak");
+                editor.putString("fakultas", fakultas);
+                editor.putString("jurusan", jurusan);
+                editor.putString("nama", nama);
+                editor.putString("tawal", todayString);
+                editor.apply();
+                Log.d("rairai","cantikbgt");
                 Toast toast = Toast.makeText(context, token, duration);
+
+                if(dialog.isShowing())
+                    dialog.dismiss();
+                startActivity(i);
+                finish();
                // toast.show();
-                cekAdaNIM(nim2, token);
+                //cekAdaNIM(nim2, token);
             }
 
             @Override

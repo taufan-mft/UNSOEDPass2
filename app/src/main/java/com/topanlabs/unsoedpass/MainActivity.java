@@ -101,7 +101,7 @@ String nama;
     ConstraintLayout jadwalK, aha2,aha4, aha3, exam;
     RecyclerView recyclerView;
     TextView todayMat, todayJam, todayRuangan, txtSalam;
-
+    String tokenkita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +120,8 @@ String nama;
         String yourLocked = mSettings.getString("logged", "ya");
         String firstTime = mSettings.getString("pertama", "ya");
         String tglSync = mSettings.getString("tglSync","01 01 2000");
+        tokenkita = mSettings.getString("token","token");
+
         int intervalSync = mSettings.getInt("intervalSync", 7);
         Date todayDate = Calendar.getInstance().getTime();
         DateTimeFormatter dateStringFormat = DateTimeFormat
@@ -456,7 +458,7 @@ String nama;
         }
     }
     private void updateStat() {
-        final String BASE_URL = "http://sandbox.topanlabs.com:8123";
+        final String BASE_URL = "http://10.10.10.8:8000";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -469,7 +471,7 @@ String nama;
 
     }
     private void getBerita() {
-        final String BASE_URL = "http://sandbox.topanlabs.com:8123";
+        final String BASE_URL = "http://10.10.10.8:8000";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -479,7 +481,8 @@ String nama;
         statint = retrofit.create(statint.class);
         authenticator = retrofit.create(tokenint.class);
         beritaint = retrofit.create(beritaInt.class);
-        Call<List<beritaModel>> call = beritaint.getBerita();
+        Call<List<beritaModel>> call = beritaint.getBerita(tokenkita);
+        Log.d("rairairai", tokenkita);
         call.enqueue(new Callback<List<beritaModel>>() {
             @Override
             public void onResponse(Call<List<beritaModel>> call, Response<List<beritaModel>> response) {

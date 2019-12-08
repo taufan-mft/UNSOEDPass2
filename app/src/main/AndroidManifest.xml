@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".fiturBelumTersedia"></activity>
+        <activity android:name=".kelasPengganti"></activity>
+        <activity android:name=".fiturBelumTersedia" />
         <activity android:name=".absenSelector" />
         <activity android:name=".aboutScreen" />
         <activity android:name=".kelasSelector" />
@@ -51,9 +52,9 @@
         <activity
             android:name=".cekAbsen"
             android:screenOrientation="portrait">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.topanlabs.unsoedpass.absenSelector"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.topanlabs.unsoedpass.absenSelector" />
         </activity>
         <activity
             android:name=".jadwalKuliah"
