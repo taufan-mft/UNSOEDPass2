@@ -190,7 +190,7 @@ String nama;
         aha3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent w = new Intent(MainActivity.this, fiturBelumTersedia.class);
+                Intent w = new Intent(MainActivity.this, kelasPengganti.class);
                 startActivity(w);
 
             }
