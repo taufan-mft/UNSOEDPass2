@@ -37,7 +37,7 @@ public class tambahKelas extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "yyyy-MM-dd";
+                String myFormat = "dd-MM-yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 txtTanggal.setText(sdf.format(myCalendar.getTime()));
 

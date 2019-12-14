@@ -19,7 +19,18 @@ public class kelasModel {
     @SerializedName("tanggal")
     @Expose
     private String tanggal;
+    @SerializedName("ketuakelas")
+    @Expose
+    private String ketuakelas;
+    @SerializedName("created")
+    @Expose
+    private String created;
 
+    public kelasModel(String kodekelas, String ketuakelas, String created){
+        this.kodekelas = kodekelas;
+        this.ketuakelas = ketuakelas;
+        this.created = created;
+    }
     public String getKodekelas() {
         return kodekelas;
     }
@@ -60,4 +71,11 @@ public class kelasModel {
         this.tanggal = tanggal;
     }
 
+    public String getKetuakelas() {
+        return ketuakelas;
+    }
+
+    public void setKetuakelas(String ketuakelas) {
+        this.ketuakelas = ketuakelas;
+    }
 }

@@ -5,9 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
@@ -86,6 +90,72 @@ public class kelasPengganti extends AppCompatActivity {
 
                 //Log.d("raisan", mahasiswaArrayList.toString());
                 //adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<kelasModel>> call, Throwable t) {
+
+                Context context = getApplicationContext();
+                CharSequence text = "Error TL12";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
+
+            //showDialog();
+        });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu2, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+
+                updateKelas();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    void updateKelas() {
+        Call<List<kelasModel>> call = kelasService.getKelas(tokenkita,"DIANIS");
+        call.enqueue(new Callback<List<kelasModel>>() {
+            @Override
+            public void onResponse(Call<List<kelasModel>> call, Response<List<kelasModel>> response) {
+                List<kelasModel> matkul= response.body();
+                Log.d("raisani","updatekelas");
+                Executors.newSingleThreadExecutor().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        repo.nukeTable();
+                        for (int i = 0; i < matkul.size(); i++) {
+
+                            repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
+                        }
+                        kelaspenggantis = repo.getKelas();
+
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                kelasAdapter adapter = new kelasAdapter(kelaspenggantis,getApplicationContext());
+                                recyclerView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                });
+
             }
 
             @Override
