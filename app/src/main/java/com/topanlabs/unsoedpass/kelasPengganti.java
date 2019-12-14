@@ -7,9 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
+import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
+
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,10 +29,13 @@ public class kelasPengganti extends AppCompatActivity {
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
     String tokenkita;
+    List<kelaspengganti>  kelaspenggantis;
+    kelasRepository repo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kelas_pengganti);
+        repo= new kelasRepository(getApplication());
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(kelasPengganti.this);
         recyclerView.setLayoutManager(layoutManager);
@@ -43,15 +51,41 @@ public class kelasPengganti extends AppCompatActivity {
 
         kelasService =
                 retrofit.create(kelasInt.class);
+
         Call<List<kelasModel>> call = kelasService.getKelas(tokenkita,"DIANIS");
         call.enqueue(new Callback<List<kelasModel>>() {
             @Override
             public void onResponse(Call<List<kelasModel>> call, Response<List<kelasModel>> response) {
                 List<kelasModel> matkul= response.body();
-                kelasAdapter adapter = new kelasAdapter(matkul,getApplicationContext());
-                recyclerView.setAdapter(adapter);
+                Executors.newSingleThreadExecutor().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        repo.nukeTable();
+                        for (int i = 0; i < matkul.size(); i++) {
+
+                            repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
+                        }
+                            kelaspenggantis = repo.getKelas();
+
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    kelasAdapter adapter = new kelasAdapter(kelaspenggantis,getApplicationContext());
+                                    recyclerView.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                            //Log.d("raisan", mahasiswaArrayList.toString());
+
+                        }
+
+                });
+
+
+
                 //Log.d("raisan", mahasiswaArrayList.toString());
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
             }
 
             @Override

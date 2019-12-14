@@ -12,20 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
+import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
 
 import java.util.List;
 
 public class kelasAdapter extends RecyclerView.Adapter<kelasAdapter.kelasViewHolder> {
 
     private Context context;
-    private List<kelasModel> dataList;
+    private List<kelaspengganti> dataList;
 
     //public MahasiswaAdapter(ArrayList<matkul> dataList) {
     //  this.dataList = dataList;
     //}
     //private final LayoutInflater mInflater;
     //beritaAdapter(Context context) { mInflater = LayoutInflater.from(context); }
-    public kelasAdapter(List<kelasModel> dataList, Context context) {
+    public kelasAdapter(List<kelaspengganti> dataList, Context context) {
         this.dataList = dataList;
         this.context = context;
     }
@@ -35,15 +36,15 @@ public class kelasAdapter extends RecyclerView.Adapter<kelasAdapter.kelasViewHol
         View view = layoutInflater.inflate(R.layout.row_kelaspeng, parent, false);
         return new kelasViewHolder(view);
     }
-    void setKelas(List<kelasModel> words){
+    void setKelas(List<kelaspengganti> words){
         dataList = words;
         notifyDataSetChanged();
     }
 
     @Override
     public void onBindViewHolder(kelasViewHolder holder, int position) {
-        kelasModel current = dataList.get(position);
-        holder.txtNamatkul.setText(current.getNamatkul());
+        kelaspengganti current = dataList.get(position);
+        holder.txtNamatkul.setText(current.getNamakul());
         holder.txtJam.setText(current.getJam());
         holder. txtRuangan.setText(current.getRuangan());
         holder.txtTanggal.setText(current.getTanggal());

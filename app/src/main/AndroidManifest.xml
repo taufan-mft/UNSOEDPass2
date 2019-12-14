@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".kelasPengganti"></activity>
+        <activity android:name=".tambahKelas"></activity>
+        <activity android:name=".kelasPengganti" />
         <activity android:name=".fiturBelumTersedia" />
         <activity android:name=".absenSelector" />
         <activity android:name=".aboutScreen" />
