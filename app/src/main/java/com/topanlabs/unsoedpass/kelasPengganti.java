@@ -35,6 +35,7 @@ public class kelasPengganti extends AppCompatActivity {
     String tokenkita;
     List<kelaspengganti>  kelaspenggantis;
     kelasRepository repo;
+    Boolean ketuakelas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class kelasPengganti extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(kelasPengganti.this);
         recyclerView.setLayoutManager(layoutManager);
         mSettings = getSharedPreferences("Settings", 0);
+        ketuakelas = mSettings.getBoolean("isKetuaKelas",false);
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
         final String BASE_URL = "http://10.10.10.8:8000";
@@ -110,7 +112,11 @@ public class kelasPengganti extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu2, menu);
+        if (ketuakelas) {
+            inflater.inflate(R.menu.menuketua, menu);
+        } else{
+            inflater.inflate(R.menu.menu2, menu);
+    }
         return true;
     }
     @Override
