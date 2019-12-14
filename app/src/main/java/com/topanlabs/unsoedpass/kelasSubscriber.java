@@ -31,6 +31,7 @@ String kode;
     SharedPreferences.Editor editor;
     kelasInt kelasService;
     String tokenkita;
+    kelasModel matkul;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +42,9 @@ String kode;
         txtkode2 = findViewById(R.id.txtKelas);
         txtketua=findViewById(R.id.txtKetua);
         kode = txtKodeKelas.toString();
-        kelasModel matkul;
+
         mSettings = getSharedPreferences("Settings", 0);
+        editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
         final String BASE_URL = "http://10.10.10.8:8000";
         Retrofit retrofit = new Retrofit.Builder()
@@ -50,7 +52,7 @@ String kode;
                 .addConverterFactory(GsonConverterFactory.create())
                 //.client(httpClient.build())
                 .build();
-
+       // matkul = new kelasModel("0","0","0");
         kelasService =
                 retrofit.create(kelasInt.class);
 
@@ -68,6 +70,8 @@ String kode;
                             editor.putString("kodekelas", matkul.getKodekelas());
                             editor.apply();
                             Intent i = new Intent(kelasSubscriber.this, kelasPengganti.class);
+                            startActivity(i);
+                            finish();
                             }
                         })
                         .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {

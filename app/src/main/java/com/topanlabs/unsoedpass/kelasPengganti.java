@@ -32,7 +32,7 @@ public class kelasPengganti extends AppCompatActivity {
     kelasInt kelasService;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    String tokenkita;
+    String tokenkita, kodekelas;
     List<kelaspengganti>  kelaspenggantis;
     kelasRepository repo;
     Boolean ketuakelas;
@@ -46,6 +46,7 @@ public class kelasPengganti extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         mSettings = getSharedPreferences("Settings", 0);
         ketuakelas = mSettings.getBoolean("isKetuaKelas",false);
+        kodekelas = mSettings.getString("kodekelas", "0");
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
         final String BASE_URL = "http://10.10.10.8:8000";
@@ -58,7 +59,7 @@ public class kelasPengganti extends AppCompatActivity {
         kelasService =
                 retrofit.create(kelasInt.class);
 
-        Call<List<kelasModel>> call = kelasService.getKelas(tokenkita,"DIANIS");
+        Call<List<kelasModel>> call = kelasService.getKelas(tokenkita,kodekelas);
         call.enqueue(new Callback<List<kelasModel>>() {
             @Override
             public void onResponse(Call<List<kelasModel>> call, Response<List<kelasModel>> response) {
