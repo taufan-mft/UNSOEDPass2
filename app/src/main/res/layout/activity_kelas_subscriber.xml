@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".kelasSubscriber">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:text="Masukkan kode kelas" />
+
+            <EditText
+                android:id="@+id/txtKodekelas"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCari"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="285dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:text="cari kelas"
+                app:backgroundTint="@color/MASH" />
+
+            <TextView
+                android:id="@+id/txtKelas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                android:fontFamily="@font/sfprdr"
+                android:text="Kelas:" />
+            <TextView
+                android:id="@+id/txtKetua"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="0dp"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:fontFamily="@font/sfprdr"
+                android:visibility="invisible"
+                android:text="Ketua kelas:" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGabung"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="290dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="55dp"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:text="gabung ke kelas"
+                app:backgroundTint="@color/MASH" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
