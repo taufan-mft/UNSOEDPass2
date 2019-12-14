@@ -25,7 +25,7 @@
         app:layout_constraintTop_toBottomOf="@id/imageView12" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv1"
+        android:id="@+id/cvkelasBaru"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -77,6 +77,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvgabungkelas"
         android:layout_width="0dp"
         android:layout_height="130dp"
         android:clickable="true"
@@ -88,7 +89,7 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv1">
+        app:layout_constraintTop_toBottomOf="@+id/cvkelasBaru">
 
         <RelativeLayout
             android:layout_width="match_parent"
