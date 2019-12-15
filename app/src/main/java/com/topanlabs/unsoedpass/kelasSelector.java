@@ -24,13 +24,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class kelasSelector extends AppCompatActivity {
-CardView kelasbaru, gabungkelas;
+    CardView kelasbaru, gabungkelas;
     kelasInt kelasService;
     kelasModel matkul;
     String tokenkita, nim;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
     Boolean ketuakelas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,19 +39,19 @@ CardView kelasbaru, gabungkelas;
         kelasbaru = findViewById(R.id.cvkelasBaru);
         gabungkelas = findViewById(R.id.cvgabungkelas);
 
-        final String kode = RandomStringUtils.random(6,true,false).toUpperCase();
+        final String kode = RandomStringUtils.random(6, true, false).toUpperCase();
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
-        ketuakelas = mSettings.getBoolean("isKetuaKelas",false);
-        tokenkita = mSettings.getString("token","token");
-        String kodekel = mSettings.getString("kodekelas","0");
+        ketuakelas = mSettings.getBoolean("isKetuaKelas", false);
+        tokenkita = mSettings.getString("token", "token");
+        String kodekel = mSettings.getString("kodekelas", "0");
         if (!kodekel.equals("0")) {
             Intent i = new Intent(kelasSelector.this, kelasPengganti.class);
             startActivity(i);
             finish();
             return;
         }
-        nim = mSettings.getString("nim","nim");
+        nim = mSettings.getString("nim", "nim");
         Log.d("raisani", kode);
         final String BASE_URL = "http://10.10.10.8:8000";
         Retrofit retrofit = new Retrofit.Builder()
@@ -70,10 +71,10 @@ CardView kelasbaru, gabungkelas;
                         //.setMessage(pesan)
                         //.setIcon(R.mipmap.ic_launcher)
                         .setCancelable(false)
-                        .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                matkul = new kelasModel(kode,nim,"now");
-                                Call<kelasModel> call = kelasService.buatKelas(tokenkita,matkul);
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                matkul = new kelasModel(kode, nim, "now");
+                                Call<kelasModel> call = kelasService.buatKelas(tokenkita, matkul);
                                 call.enqueue(new Callback<kelasModel>() {
                                     @Override
                                     public void onResponse(Call<kelasModel> call, Response<kelasModel> response) {
@@ -83,14 +84,13 @@ CardView kelasbaru, gabungkelas;
                                             editor.putString("kodekelas", kode);
                                             editor.putBoolean("isKetuaKelas", true);
                                             editor.apply();
-                                                    startActivity(i);
+                                            startActivity(i);
                                             finish();
 
                                         } else {
                                             Toast toast = Toast.makeText(getApplicationContext(), "Gagal membuat kelas", Toast.LENGTH_SHORT);
                                             toast.show();
                                         }
-
 
 
                                         //Log.d("raisan", mahasiswaArrayList.toString());
@@ -113,8 +113,8 @@ CardView kelasbaru, gabungkelas;
                                 });
                             }
                         })
-                        .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
                                 // jika tombol diklik, maka akan menutup activity ini
                                 dialog.cancel();
 
@@ -125,5 +125,13 @@ CardView kelasbaru, gabungkelas;
             }
         });
 
+        gabungkelas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(kelasSelector.this, kelasSubscriber.class  );
+                startActivity(i);
+                finish();
+            }
+        });
     }
 }

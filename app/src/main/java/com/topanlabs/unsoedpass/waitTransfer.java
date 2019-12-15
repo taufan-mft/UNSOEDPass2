@@ -105,7 +105,7 @@ int nominul;
 
     }
     private void refreshStatus() {
-        Call<mahasis> call = orstatus.getUser(nim);
+        Call<mahasis> call = orstatus.getUser("wa",nim);
         call.enqueue(new Callback<mahasis>() {
             @Override
             public void onResponse(Call<mahasis> call, Response<mahasis> response) {

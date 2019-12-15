@@ -88,7 +88,7 @@ String kode;
         btnCari.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                kode = txtKodeKelas.getText().toString();
-                Call<kelasModel> call = kelasService.cariKelas(tokenkita,kode);
+                Call<kelasModel> call = kelasService.cariKelas(kode);
                 call.enqueue(new Callback<kelasModel>() {
                     @Override
                     public void onResponse(Call<kelasModel> call, Response<kelasModel> response) {

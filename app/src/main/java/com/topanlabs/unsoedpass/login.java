@@ -67,8 +67,9 @@ public class login extends AppCompatActivity {
     ProgressDialog dialog;
     mahaint apiService;
     tokenint authenticator;
+    kelasInt kelaschecker;
     String ceknam;
-    String nama;
+    String nama, emailku;
     String token;
     Boolean adanim;
     String todayString;
@@ -111,6 +112,7 @@ public class login extends AppCompatActivity {
          apiService =
                 retrofit.create(mahaint.class);
          authenticator = retrofit.create(tokenint.class);
+         kelaschecker = retrofit.create(kelasInt.class);
         getcapcuy =new GetCapcay();
         getcapcuy.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
         showaDialog();
@@ -260,7 +262,8 @@ public class login extends AppCompatActivity {
                 Elements cekjurusan = page.select("#content > div > table > tbody > tr:nth-child(6) > td:nth-child(3)");
                 jurusan = cekjurusan.text();
                 Elements cekfakultas = page.select("#content > div > table > tbody > tr:nth-child(5) > td:nth-child(3)");
-
+                Elements email = page.select("#content > div > table > tbody > tr:nth-child(4) > td:nth-child(3)");
+                emailku = email.text();
                 fakultas = cekfakultas.text();
                 Elements namaku = page.select("#content > div > table > tbody > tr:nth-child(2) > td:nth-child(3)");
                 nama = namaku.text();
@@ -327,11 +330,14 @@ public class login extends AppCompatActivity {
                 Context context = getApplicationContext();
                 CharSequence text = "Berhasil create entry";
                 int duration = Toast.LENGTH_SHORT;
-
+                mahasis mahasis2 = response.body();
                 Toast toast = Toast.makeText(context, text, duration);
+                String kodekelas = mahasis2.getKodekelas();
+
                 //toast.show();
                 final Intent i = new Intent(login.this, sinkronisasi.class);
                 i.putExtra("kukis", (Serializable) kukis);
+                editor.putString("kodekelas", kodekelas);
                 editor.putString("nim", nim2);
                 editor.putString("pass", pass);
                 editor.putString("logged", "tidak");
@@ -341,7 +347,7 @@ public class login extends AppCompatActivity {
                 editor.putString("tawal", todayString);
                 editor.apply();
 
-                getToken();
+                getToken(false);
 
             }
 
@@ -359,11 +365,11 @@ public class login extends AppCompatActivity {
 
     private void cekAdaNIM(String nim) {
         final String nim2 = nim;
-
-        Call<mahasis> call = apiService.getUser(nim2);
-        call.enqueue(new Callback<mahasis>() {
+        mahasis mahasis = new mahasis("0", "0", "0", "0", "0", "0", "0","0","0");
+        Call<Void> call = apiService.checkUser(nim2);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<mahasis> call, Response<mahasis> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 Context context = getApplicationContext();
 
                 int statusCode = response.code();
@@ -371,19 +377,19 @@ public class login extends AppCompatActivity {
                     adanim = false;
                     buatEntry(nim2);
                 } else {
-                    getToken();
+                    getToken(true);
                 }
-
+                Log.d("raisani","di ceknim sukses");
 
             }
 
             @Override
-            public void onFailure(Call<mahasis> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
 
                 Context context = getApplicationContext();
                 CharSequence text = "Error TL12";
                 int duration = Toast.LENGTH_SHORT;
-
+                Log.d("raisani","di ceknim gagal");
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 
@@ -400,48 +406,18 @@ public class login extends AppCompatActivity {
 
     }
 
-    private void cekTrial(String nim) {
+    private void getUserDetail(String nim) {
         final String nim2 = nim;
-        Call<mahasis> call = apiService.getUser(nim);
+        Call<mahasis> call = apiService.getUser(token, nim);
         call.enqueue(new Callback<mahasis>() {
             @Override
             public void onResponse(Call<mahasis> call, Response<mahasis> response) {
 
                mahasis mahasis = response.body();
-
-                String tawal = mahasis.getTawal();
-                String premium = mahasis.getBeli();
-                DateTimeFormatter dateStringFormat = DateTimeFormat
-                        .forPattern("dd MM yyyy");
-                DateTime date1 = dateStringFormat.parseDateTime(tawal);
-                DateTime date2 = dateStringFormat.parseDateTime(todayString);
-                int days = Days.daysBetween(new LocalDate(date1),
-                        new LocalDate(date2)).getDays();
-                if (premium.equals("1")) {
-                    editor.putString("premium", "ya");
-                } else {
-                    editor.putString("premium", "tidak");
-                }
-                    editor.putString("nim", nim2);
-                    editor.putString("pass", pass);
-                    editor.putString("logged", "tidak");
-                    editor.putString("fakultas", fakultas);
-                    editor.putString("jurusan", jurusan);
-                    editor.putString("nama", nama);
-                    editor.putString("tawal", tawal);
-                    editor.apply();
-                    Context context = getApplicationContext();
-                    CharSequence text = "Selamat datang di MyUNSOED!";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                    final Intent i = new Intent(login.this, sinkronisasi.class);
-                i.putExtra("kukis", (Serializable) kukis);
-                if(dialog.isShowing())
-                    dialog.dismiss();
-                    startActivity(i);
-                    finish();
+                String kodekelas = mahasis.getKodekelas();
+                editor.putString("kodekelas", kodekelas);
+                editor.apply();
+                checkKetua();
 
 
             }
@@ -463,7 +439,7 @@ public class login extends AppCompatActivity {
 
     }
 
-    private void getToken() {
+    private void getToken(Boolean cekDetailUser) {
         tokenmodel tokenmodel = new tokenmodel(nim,pass);
         Call<tokenmodel> call = authenticator.getToken(tokenmodel);
         final String nim2 = nim;
@@ -491,16 +467,61 @@ public class login extends AppCompatActivity {
                 Log.d("rairai","cantikbgt");
                 Toast toast = Toast.makeText(context, token, duration);
 
-                if(dialog.isShowing())
-                    dialog.dismiss();
-                startActivity(i);
-                finish();
+                if (cekDetailUser) {
+                    getUserDetail(nim2);
+                } else {
+                    final Intent d = new Intent(login.this, sinkronisasi.class);
+                    d.putExtra("kukis", (Serializable) kukis);
+                    startActivity(i);
+                    finish();
+                }
+                //if(dialog.isShowing())
+                //    dialog.dismiss();
+                //startActivity(i);
+               // finish();
                // toast.show();
                 //cekAdaNIM(nim2, token);
             }
 
             @Override
             public void onFailure(Call<tokenmodel> call, Throwable t) {
+                Context context = getApplicationContext();
+                CharSequence text = "Error DVN12. Mohon klik bantuan jika berlanjut.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
+    }
+
+    private void checkKetua() {
+        String kelas = mSettings.getString("kodekelas", "kodekelas");
+        Call<kelasModel> call = kelaschecker.cariKelas(kelas);
+        final String nim2 = nim;
+        call.enqueue(new Callback<kelasModel>() {
+            @Override
+            public void onResponse(Call<kelasModel> call, Response<kelasModel> response) {
+                if (response.code() == 200) {
+                    kelasModel kel = response.body();
+                    String kita = kel.getKetuakelas();
+                    if (kita.equals(nim)) {
+                        editor.putBoolean("isKetuaKelas", true);
+                        editor.apply();
+                    }
+                }
+                if(dialog.isShowing())
+                    dialog.dismiss();
+                final Intent i = new Intent(login.this, sinkronisasi.class);
+                i.putExtra("kukis", (Serializable) kukis);
+                startActivity(i);
+                finish();
+                // toast.show();
+                //cekAdaNIM(nim2, token);
+            }
+
+            @Override
+            public void onFailure(Call<kelasModel> call, Throwable t) {
                 Context context = getApplicationContext();
                 CharSequence text = "Error DVN12. Mohon klik bantuan jika berlanjut.";
                 int duration = Toast.LENGTH_SHORT;

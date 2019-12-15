@@ -5,16 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class mahasis {
 
-    @SerializedName("_id")
-    @Expose
-    private String id;
+
     @SerializedName("nama")
     @Expose
     private String nama;
     @SerializedName("NIM")
     @Expose
     private String nIM;
-    @SerializedName("kodekelas")
+    @SerializedName("beli")
     @Expose
     private String beli;
     @SerializedName("noorder")
@@ -29,6 +27,9 @@ public class mahasis {
     @SerializedName("jurusan")
     @Expose
     private String jurusan;
+    @SerializedName("kodekelas")
+    @Expose
+    private String kodekelas;
     @SerializedName("raisa")
     @Expose
     private String raisa;
@@ -45,23 +46,15 @@ public class mahasis {
         this.beli = beli;
         this.noorder= noorder;
         this.raisa = raisa;
+        this.kodekelas = kodekelas;
     }
 
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
     public String getNama() {
         return nama;
     }
 
-    public void setNama(String id) {
-        this.id = nama;
-    }
 
     public String getNIM() {
         return nIM;
@@ -125,5 +118,13 @@ public class mahasis {
 
     public void setRaisa(String raisa) {
         this.raisa = raisa;
+    }
+
+    public String getKodekelas() {
+        return kodekelas;
+    }
+
+    public void setKodekelas(String kodekelas) {
+        this.kodekelas = kodekelas;
     }
 }

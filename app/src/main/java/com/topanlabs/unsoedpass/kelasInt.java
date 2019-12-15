@@ -15,7 +15,7 @@ public interface kelasInt {
     Call<List<kelasModel>> getKelas(@Header("Authorization") String token, @Path("nim") String nim);
 
     @GET("/liatkelas/{kodekelas}/")
-    Call<kelasModel> cariKelas(@Header("Authorization")String token, @Path("kodekelas") String kodekelas);
+    Call<kelasModel> cariKelas(@Path("kodekelas") String kodekelas);
 
     @POST("/createkelas/")
     Call<kelasModel> buatKelas(@Header("Authorization")String token, @Body kelasModel mahasis);
