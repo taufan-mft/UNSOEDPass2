@@ -30,16 +30,26 @@ CardView kelasbaru, gabungkelas;
     String tokenkita, nim;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
+    Boolean ketuakelas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kelas_selector);
         kelasbaru = findViewById(R.id.cvkelasBaru);
         gabungkelas = findViewById(R.id.cvgabungkelas);
+
         final String kode = RandomStringUtils.random(6,true,false).toUpperCase();
-
-
+        mSettings = getSharedPreferences("Settings", 0);
+        editor = mSettings.edit();
+        ketuakelas = mSettings.getBoolean("isKetuaKelas",false);
         tokenkita = mSettings.getString("token","token");
+        String kodekel = mSettings.getString("kodekelas","0");
+        if (!kodekel.equals("0")) {
+            Intent i = new Intent(kelasSelector.this, kelasPengganti.class);
+            startActivity(i);
+            finish();
+            return;
+        }
         nim = mSettings.getString("nim","nim");
         Log.d("raisani", kode);
         final String BASE_URL = "http://10.10.10.8:8000";
@@ -68,11 +78,17 @@ CardView kelasbaru, gabungkelas;
                                     @Override
                                     public void onResponse(Call<kelasModel> call, Response<kelasModel> response) {
                                         int statusCode = response.code();
-                                        if (statusCode == 200) {
-                                            matkul = response.body();
+                                        if (statusCode == 201) {
+                                            Intent i = new Intent(kelasSelector.this, kelasPengganti.class);
+                                            editor.putString("kodekelas", kode);
+                                            editor.putBoolean("isKetuaKelas", true);
+                                            editor.apply();
+                                                    startActivity(i);
+                                            finish();
 
                                         } else {
-
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Gagal membuat kelas", Toast.LENGTH_SHORT);
+                                            toast.show();
                                         }
 
 

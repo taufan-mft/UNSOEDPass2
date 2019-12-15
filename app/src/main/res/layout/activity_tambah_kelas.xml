@@ -57,6 +57,17 @@
                     android:hint="Pilih jam"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtTanggal" />
+                <EditText
+                    android:id="@+id/txtRuangan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:ems="10"
+                    android:inputType="none"
+                    android:hint="Ruangan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtJam" />
                 <Button
                     android:id="@+id/Jam"
                     android:layout_width="wrap_content"
@@ -84,7 +95,7 @@
                     android:text="Tambah Kelas Pengganti"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtJam" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtRuangan" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

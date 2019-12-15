@@ -128,14 +128,17 @@ public class kelasPengganti extends AppCompatActivity {
 
                 updateKelas();
                 return true;
-
+            case R.id.new_game:
+                Intent i = new Intent(kelasPengganti.this, tambahKelas.class);
+                startActivity(i);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     void updateKelas() {
-        Call<List<kelasModel>> call = kelasService.getKelas(tokenkita,"DIANIS");
+        Call<List<kelasModel>> call = kelasService.getKelas(tokenkita,kodekelas);
         call.enqueue(new Callback<List<kelasModel>>() {
             @Override
             public void onResponse(Call<List<kelasModel>> call, Response<List<kelasModel>> response) {

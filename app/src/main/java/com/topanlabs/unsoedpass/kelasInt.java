@@ -19,4 +19,7 @@ public interface kelasInt {
 
     @POST("/createkelas/")
     Call<kelasModel> buatKelas(@Header("Authorization")String token, @Body kelasModel mahasis);
+
+    @POST("/creatematkul/")
+    Call<kelasModel> buatMatkul(@Header("Authorization")String token, @Body kelasModel mahasis);
 }

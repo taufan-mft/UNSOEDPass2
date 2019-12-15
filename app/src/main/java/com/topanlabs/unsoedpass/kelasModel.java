@@ -31,6 +31,13 @@ public class kelasModel {
         this.ketuakelas = ketuakelas;
         this.created = created;
     }
+    public kelasModel(String kodekelas, String namatkul, String jam, String ruangan, String tanggal){
+        this.kodekelas = kodekelas;
+        this.namatkul = namatkul;
+        this.jam = jam;
+        this.ruangan = ruangan;
+        this.tanggal = tanggal;
+    }
     public String getKodekelas() {
         return kodekelas;
     }
