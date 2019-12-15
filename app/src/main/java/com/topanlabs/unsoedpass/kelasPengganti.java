@@ -50,6 +50,8 @@ public class kelasPengganti extends AppCompatActivity {
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
         final String BASE_URL = "http://10.10.10.8:8000";
+        getSupportActionBar().setTitle("Kelas Pengganti");
+        getSupportActionBar().setSubtitle(kodekelas);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

@@ -51,6 +51,7 @@ public class kelasSelector extends AppCompatActivity {
             finish();
             return;
         }
+
         nim = mSettings.getString("nim", "nim");
         Log.d("raisani", kode);
         final String BASE_URL = "http://10.10.10.8:8000";
