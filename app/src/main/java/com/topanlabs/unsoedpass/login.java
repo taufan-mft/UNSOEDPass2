@@ -102,7 +102,7 @@ public class login extends AppCompatActivity {
         editor = mSettings.edit();
         getSupportActionBar().hide();
         tersedia = true;
-        final String BASE_URL = "http://10.10.10.8:8000";
+        final String BASE_URL = "https://dianis.topanlabs.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

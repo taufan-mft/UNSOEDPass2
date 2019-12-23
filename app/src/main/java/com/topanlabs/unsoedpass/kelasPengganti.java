@@ -49,7 +49,7 @@ public class kelasPengganti extends AppCompatActivity {
         kodekelas = mSettings.getString("kodekelas", "0");
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
-        final String BASE_URL = "http://10.10.10.8:8000";
+        final String BASE_URL = "https://dianis.topanlabs.com";
         getSupportActionBar().setTitle("Kelas Pengganti");
         getSupportActionBar().setSubtitle(kodekelas);
         Retrofit retrofit = new Retrofit.Builder()
@@ -70,17 +70,18 @@ public class kelasPengganti extends AppCompatActivity {
                     @Override
                     public void run() {
                         repo.nukeTable();
-                        for (int i = 0; i < matkul.size(); i++) {
+                        if (!matkul.isEmpty()) {
+                            for (int i = 0; i < matkul.size(); i++) {
 
-                            repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
-                        }
+                                repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
+                            }
                             kelaspenggantis = repo.getKelas();
 
                             runOnUiThread(new Runnable() {
 
                                 @Override
                                 public void run() {
-                                    kelasAdapter adapter = new kelasAdapter(kelaspenggantis,getApplicationContext());
+                                    kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
                                     recyclerView.setAdapter(adapter);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -88,7 +89,7 @@ public class kelasPengganti extends AppCompatActivity {
                             //Log.d("raisan", mahasiswaArrayList.toString());
 
                         }
-
+                    }
                 });
 
 
@@ -106,6 +107,27 @@ public class kelasPengganti extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+                Executors.newSingleThreadExecutor().execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        kelaspenggantis = repo.getKelas();
+
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                kelasAdapter adapter = new kelasAdapter(kelaspenggantis,getApplicationContext());
+                                recyclerView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                        //Log.d("raisan", mahasiswaArrayList.toString());
+
+                    }
+
+                });
+
 
             }
 

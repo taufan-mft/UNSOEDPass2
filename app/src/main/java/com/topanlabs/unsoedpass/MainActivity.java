@@ -47,8 +47,11 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
+import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
+import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -74,12 +77,13 @@ TextView txtnama;
 ProgressDialog dialog;
 String nama;
     matkulRepository mRepository;
+    kelasRepository kelRepo;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
     List<beritaModel> beritaModelk;
     private beritaAdapter beritaAdapter;
     String nim;
-    String pass;
+    String pass, minus;
     GetMatkul getmatkullist;
     String todayString;
     SimpleDateFormat formatter;
@@ -102,12 +106,14 @@ String nama;
     RecyclerView recyclerView;
     TextView todayMat, todayJam, todayRuangan, txtSalam;
     String tokenkita;
+    Boolean dariKelp;
+    Integer indexKelp = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        minus = "ya";
         setContentView(R.layout.activity_main);
         mSettings = getSharedPreferences("Settings",0);
         todayMat = findViewById(R.id.txtNamatkul);
@@ -203,6 +209,7 @@ String nama;
         recyclerView.setAdapter(beritaAdapter);
         getBerita();
         mRepository = new matkulRepository(getApplication());
+        kelRepo = new kelasRepository(getApplication());
         updJadwal();
         mSettings = getSharedPreferences("Settings",0);
         editor = mSettings.edit();
@@ -458,7 +465,7 @@ String nama;
         }
     }
     private void updateStat() {
-        final String BASE_URL = "http://10.10.10.8:8000";
+        final String BASE_URL = "https://dianis.topanlabs.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -471,7 +478,7 @@ String nama;
 
     }
     private void getBerita() {
-        final String BASE_URL = "http://10.10.10.8:8000";
+        final String BASE_URL = "https://dianis.topanlabs.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -525,12 +532,18 @@ String nama;
     }
 
     private void updJadwal() {
+        minus = "ya";
+
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
+                SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm");
+                SimpleDateFormat formatterTanggal = new SimpleDateFormat("dd-MM-yyyy");
                 Date date = new Date(System.currentTimeMillis());
                 String date2 = formatter.format(date);
+                String waktu = formatterTanggal.format(date);
+                Log.d("rairai", waktu);
                 Date waktu1 = new Date();
                 try {
                     waktu1 = formatter.parse(date2);
@@ -570,12 +583,47 @@ String nama;
                 }
                 Log.d("winal", harini);
                 List<matkuldb> win = mRepository.getTodayMat(harini);
-                // Log.d("winal", win.get(2).getNamakul());
+                List<kelaspengganti> kelp = kelRepo.getKelasIni(waktu);
+//                Log.d("kelaspeng", kelp.get(0).getNamakul());
+  //              Log.d("kelaspeng", kelp.get(0).getRuangan());
+                // Log.d("winal", win.get(2).getNa.makul());
                 /**for (matkuldb wins : win) {
                  Log.d("winal", wins.getNamakul());
                  }**/
                 long[] milisec = new long[win.size()];
-                if (!win.isEmpty()) {
+                long[] milisec2 = new long[kelp.size()];
+
+                if (!kelp.isEmpty()) {
+                    for (int i = 0; i < kelp.size(); i++) {
+                        String date3 = kelp.get(i).getJam();
+                        Log.d("raiso", date3);
+                        Date waktu2 = new Date();
+                        try {
+                            waktu2 = formatter2.parse(date3);
+                        } catch (Exception e) {
+                            //
+                        }
+                        long difference = waktu2.getTime() - waktu1.getTime();
+                        milisec2[i] = difference;
+                    }
+                        long min = Long.MAX_VALUE;
+
+                         minus = "ya";
+
+                        for (int a = 0; a < milisec2.length; a++) {
+                            Log.d("winal", "ini " + a);
+                            if (min > milisec2[a] && milisec2[a] > 0) {
+                                min = milisec2[a];
+                                Log.d("winal", "Ini value milisec2 min & max kelp" + min + "&" + milisec[a]);
+                                indexKelp   = a;
+                                minus = "ga";
+                            }
+                        }
+
+                    }
+
+
+                if (!win.isEmpty() || !kelp.isEmpty()) {
                     for (int i = 0; i < win.size(); i++) {
                         Log.d("winal", win.get(i).getJam().substring(0, 4));
                         String date3 = win.get(i).getJam().substring(0, 4);
@@ -592,7 +640,7 @@ String nama;
                     }
                     long min = Long.MAX_VALUE;
                     int index = 0;
-                    String minus = "ya";
+
 
                     for (int i = 0; i < milisec.length; i++) {
                         Log.d("winal", "ini " + i);
@@ -603,59 +651,69 @@ String nama;
                             minus = "ga";
                         }
                     }
+                    if (milisec[index] < 0) {
+                        milisec[index] = 0;
+                    }
+                    if (!kelp.isEmpty()) {
+                        if ((milisec2[indexKelp] > milisec[index]) && (milisec[index] < 0))  {
+                            dariKelp = false;
+                            Log.d("winal", milisec2[indexKelp] + "> " + milisec[index]);
+                            Log.d("winal", dariKelp.toString());
+                        } else {
+                            dariKelp = true;
+                        }
+                    }
 
                     if (minus.equals("ga")) {
                         final int index2 = index;
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                todayMat.setText(win.get(index2).getNamakul());
-                            }
-                        });
+                                if (dariKelp) {
+                                    todayMat.setText(kelp.get(indexKelp).getNamakul() +" "+ new String(Character.toChars(0x1F500)));
+                                    todayJam.setText(kelp.get(indexKelp).getJam());
+                                    todayRuangan.setText(kelp.get(indexKelp).getRuangan());
+                                } else {
 
-                        String jamentah = win.get(index).getJam();
-                        if (jamentah.length() == 8 ) {
-                            String jamateng = win.get(index).getJam().substring(0,2) +":" +win.get(index).getJam().substring(2,4) + " - " + win.get(index).getJam().substring(4,6) +":"+win.get(index).getJam().substring(6,8);
-                            runOnUiThread(new Runnable() {
+                                    todayMat.setText(win.get(index2).getNamakul());
+                                    Log.d("uitred", "1");
+                                    String jamentah = win.get(index2).getJam();
+                                    if (jamentah.length() == 8) {
+                                        String jamateng = win.get(index2).getJam().substring(0, 2) + ":" + win.get(index2).getJam().substring(2, 4) + " - " + win.get(index2).getJam().substring(4, 6) + ":" + win.get(index2).getJam().substring(6, 8);
+                                        runOnUiThread(new Runnable() {
 
-                                @Override
-                                public void run() {
-                                    todayJam.setText(jamateng);
+                                            @Override
+                                            public void run() {
+                                                todayJam.setText(jamateng);
+                                            }
+                                        });
+
+                                    } else {
+                                        String jamateng = win.get(index2).getJam().substring(0, 2) + ":" + win.get(index2).getJam().substring(2, 4);
+                                        runOnUiThread(new Runnable() {
+
+                                            @Override
+                                            public void run() {
+                                                todayJam.setText(jamateng);
+                                            }
+                                        });
+                                    }
+
+                                    runOnUiThread(new Runnable() {
+
+                                        @Override
+                                        public void run() {
+                                            todayRuangan.setText(win.get(index2).getRuangan());
+                                        }
+                                    });
+
+
                                 }
-                            });
-
-                        } else {
-                            String jamateng = win.get(index).getJam().substring(0,2) +":" +win.get(index).getJam().substring(2,4);
-                            runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    todayJam.setText(jamateng);
-                                }
-                            });
-                        }
-
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                todayRuangan.setText(win.get(index2).getRuangan());
                             }
+
+
                         });
 
-
-                    } else {
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                todayMat.setText("Great job!");
-                                todayJam.setText("tidak ada kuliah lagi.");
-                                todayRuangan.setText("selamat istirahat,");
-                            }
-                        });
-
-                    }
                 } else {
                     runOnUiThread(new Runnable() {
 
@@ -669,8 +727,9 @@ String nama;
                 }
             }
 
-            ;
-        });
+
+        };
+    });
     }
 
     private void getToken() {

@@ -17,6 +17,9 @@ public class kelasRepository {
         return kelasDAO.getAllKelas();
     }
     public void nukeTable() { kelasDAO.nukeTable();}
+    public  List<kelaspengganti> getKelasIni( String hari) {
+        return kelasDAO.getTodayKelas(hari);
+    }
     public void insert (kelaspengganti matkuldb) {
         kelasDAO.insert(matkuldb);
     }

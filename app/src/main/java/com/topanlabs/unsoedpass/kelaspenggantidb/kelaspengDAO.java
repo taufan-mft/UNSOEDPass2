@@ -15,4 +15,8 @@ public interface kelaspengDAO {
     public void nukeTable();
     @Insert
     void insert(kelaspengganti kelaspengganti);
+
+    @Query("SELECT * FROM kelaspengganti WHERE tanggal = :hari")
+    List<kelaspengganti> getTodayKelas(String hari);
+
 }

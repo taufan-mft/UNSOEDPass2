@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,10 +27,11 @@ public class kelasSubscriber extends AppCompatActivity {
 Button btnCari, btnGabung;
 EditText txtKodeKelas;
 TextView txtkode2, txtketua;
-String kode;
+String kode, nim;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
     kelasInt kelasService;
+    mahaint mahaint;
     String tokenkita;
     kelasModel matkul;
     @Override
@@ -46,7 +48,8 @@ String kode;
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
-        final String BASE_URL = "http://10.10.10.8:8000";
+        nim = mSettings.getString("nim", "nim");
+        final String BASE_URL = "https://dianis.topanlabs.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -55,6 +58,7 @@ String kode;
        // matkul = new kelasModel("0","0","0");
         kelasService =
                 retrofit.create(kelasInt.class);
+        mahaint = retrofit.create(mahaint.class);
 
 
         btnGabung.setOnClickListener(new View.OnClickListener(){
@@ -69,6 +73,32 @@ String kode;
                             public void onClick(DialogInterface dialog,int id) {
                             editor.putString("kodekelas", matkul.getKodekelas());
                             editor.apply();
+                            mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, matkul.getKodekelas(), null);
+                                Call<Void> call = mahaint.gantiKodekel(nim,mahasiw,tokenkita );
+                                call.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+
+
+                                        Log.d("raisan", "updatecuy");
+                                        //adapter.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+
+                                        Context context = getApplicationContext();
+                                        CharSequence text = "Error TL12";
+                                        int duration = Toast.LENGTH_SHORT;
+
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+
+                                    }
+
+                                    //showDialog();
+                                });
                             Intent i = new Intent(kelasSubscriber.this, kelasPengganti.class);
                             startActivity(i);
                             finish();
