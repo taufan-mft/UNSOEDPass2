@@ -1,10 +1,12 @@
 package com.topanlabs.unsoedpass;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -156,6 +158,9 @@ public class kelasPengganti extends AppCompatActivity {
                 Intent i = new Intent(kelasPengganti.this, tambahKelas.class);
                 startActivity(i);
                 return true;
+            case R.id.keluarKelas:
+                showCancel();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -206,5 +211,39 @@ public class kelasPengganti extends AppCompatActivity {
 
             //showDialog();
         });
+    }
+
+    private void showCancel() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this);
+        alertDialogBuilder.setTitle("Keluar kelas?");
+        alertDialogBuilder
+                //.setMessage(pesan)
+                //.setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        editor.putString("kodekelas", "0");
+                        editor.apply();
+                        Intent i = new Intent(kelasPengganti.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+                        Executors.newSingleThreadExecutor().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                repo.nukeTable();
+                            }
+                        });
+
+                    }
+                })
+                .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // jika tombol diklik, maka akan menutup activity ini
+                        dialog.cancel();
+
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

@@ -533,7 +533,7 @@ String nama;
 
     private void updJadwal() {
         minus = "ya";
-
+    dariKelp = false;
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -550,13 +550,10 @@ String nama;
                 } catch (Exception e) {
                     //
                 }
-
-
                 Log.d("winal", "devina");
                 Calendar calendar = Calendar.getInstance();
                 int day = calendar.get(Calendar.DAY_OF_WEEK);
                 String harini = "ha";
-
                 switch (day) {
                     case Calendar.SUNDAY:
                         harini = "MINGGU";
@@ -584,12 +581,6 @@ String nama;
                 Log.d("winal", harini);
                 List<matkuldb> win = mRepository.getTodayMat(harini);
                 List<kelaspengganti> kelp = kelRepo.getKelasIni(waktu);
-//                Log.d("kelaspeng", kelp.get(0).getNamakul());
-  //              Log.d("kelaspeng", kelp.get(0).getRuangan());
-                // Log.d("winal", win.get(2).getNa.makul());
-                /**for (matkuldb wins : win) {
-                 Log.d("winal", wins.getNamakul());
-                 }**/
                 long[] milisec = new long[win.size()];
                 long[] milisec2 = new long[kelp.size()];
 
