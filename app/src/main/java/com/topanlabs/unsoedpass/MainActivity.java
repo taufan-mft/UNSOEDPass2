@@ -172,7 +172,9 @@ String nama;
         exam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view) {
-                showaDialog("Belum masa ujian","Cek jadwal ujian tidak tersedia karena bukan masa ujian.","yup");
+                //showaDialog("Belum masa ujian","Cek jadwal ujian tidak tersedia karena bukan masa ujian.","yup");
+            Intent a = new Intent(getApplicationContext(), beritaView.class);
+            startActivity(a);
             }
         });
 
@@ -716,7 +718,17 @@ String nama;
                         }
                     });
                 }
-            }
+            } else {
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            todayMat.setText("Great job!");
+                            todayJam.setText("tidak ada kuliah lagi.");
+                            todayRuangan.setText("selamat istirahat,");
+                        }
+                    });
+                }
 
 
         };

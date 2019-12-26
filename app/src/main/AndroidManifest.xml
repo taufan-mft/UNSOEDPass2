@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".kelasSubscriber"></activity>
+        <activity android:name=".beritaView"></activity>
+        <activity android:name=".kelasSubscriber" />
         <activity android:name=".tambahKelas" />
         <activity android:name=".kelasPengganti" />
         <activity android:name=".fiturBelumTersedia" />
