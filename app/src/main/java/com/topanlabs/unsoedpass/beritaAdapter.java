@@ -3,6 +3,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +53,10 @@ public class beritaAdapter extends RecyclerView.Adapter<beritaAdapter.BeritaView
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Clicked element "+current.getHeadline(), Snackbar.LENGTH_LONG).show();
+                Intent i = new Intent(context, beritaView.class);
+                i.putExtra("url", current.getUrl());
+                Log.d("tadigita", current.getUrl());
+                context.startActivity(i);
             }
         });
 

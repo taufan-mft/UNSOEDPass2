@@ -16,12 +16,16 @@ public class beritaModel {
     @SerializedName("author")
     @Expose
     private String author;
+    @SerializedName("url")
+    @Expose
+    private String url;
 
-    public beritaModel(String headline, String konten, String cover, String author) {
+    public beritaModel(String headline, String konten, String cover, String author, String url) {
         this.headline = headline;
         this.konten = konten;
         this.cover = cover;
         this.author = author;
+        this.url = url;
 
     }
 
@@ -57,4 +61,11 @@ public class beritaModel {
         this.author = author;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

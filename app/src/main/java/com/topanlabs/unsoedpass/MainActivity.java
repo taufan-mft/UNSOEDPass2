@@ -607,7 +607,7 @@ String nama;
                             Log.d("winal", "ini " + a);
                             if (min > milisec2[a] && milisec2[a] > 0) {
                                 min = milisec2[a];
-                                Log.d("winal", "Ini value milisec2 min & max kelp" + min + "&" + milisec[a]);
+//                                Log.d("winal", "Ini value milisec2 min & max kelp" + min + "&" + milisec[a]);
                                 indexKelp   = a;
                                 minus = "ga";
                             }
@@ -644,11 +644,17 @@ String nama;
                             minus = "ga";
                         }
                     }
-                    if (milisec[index] < 0) {
-                        milisec[index] = 0;
+                    if (milisec.length != 0) {
+                        if (milisec[index] < 0) {
+                            milisec[index] = 0;
+                        }
+                    } else {
+                        milisec = new long[1];
+                        milisec[0]= -19;
                     }
+                    Log.d("apakahiya", String.valueOf(milisec.length) + " " + String.valueOf(milisec2.length) + " " + String.valueOf(index));
                     if (!kelp.isEmpty()) {
-                        if ((milisec2[indexKelp] > milisec[index]) && (milisec[index] < 0))  {
+                        if ((milisec2[indexKelp] > milisec[index]) && (milisec[index] > 0))  {
                             dariKelp = false;
                             Log.d("winal", milisec2[indexKelp] + "> " + milisec[index]);
                             Log.d("winal", dariKelp.toString());
