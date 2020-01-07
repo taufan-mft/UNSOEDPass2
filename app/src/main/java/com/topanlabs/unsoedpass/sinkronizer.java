@@ -212,6 +212,47 @@ public class sinkronizer extends AppCompatActivity {
                         Log.d("raisan", eldosen2 +hari+tanggal+winnyaw);
 
                     }
+                    String urlhadir2 = "#yw0 > li:nth-child(4) > a";
+                    Element tombol2 = page2.selectFirst(urlhadir2);
+
+                    if (tombol2 != null) {
+                        linkURL2 = tombol2.absUrl("href");
+                        Document page3 = Jsoup
+                                .connect(linkURL2)
+                                .cookies(kukis) //use this with any page you parse. it will log you in
+                                .get();
+                        for (int h = 1; h<= 4; h++) {
+                            String urlhadir = "#jadwal-grid > table > tbody > tr:nth-child("+h+") > td:nth-child(8) > span"; //katakata hadir
+                            Elements kehadiran = page3.select(urlhadir);
+                            String winnyaw = kehadiran.text();
+                            String tanggal = "#jadwal-grid > table > tbody > tr:nth-child("+h+") > td:nth-child(3)";
+                            String hari = "#jadwal-grid > table > tbody > tr:nth-child("+h+") > td:nth-child(2)";
+                            Elements hahrii = page3.select(hari);
+                            hari = hahrii.text();
+                            Elements tanggalfin = page3.select(tanggal);
+                            tanggal = tanggalfin.text();
+                            if(tanggal != null) {
+                                try {
+                                    winny = new SimpleDateFormat("dd-MM-yyyy").parse(todayString);
+                                    date2 = new SimpleDateFormat("dd-MM-yyyy").parse(tanggal);
+                                    winny2 = date2.compareTo(winny);
+                                } catch (java.text.ParseException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            }
+                            if (winnyaw.isEmpty()) {
+                                break;
+                            }
+                            if (winny2 > 0) {
+                                break;
+                            }
+                            Log.d("raisan", String.valueOf(winnyaw.isEmpty()));
+                            absenRepository.insert(new absendb(0,eldosen2, hari,tanggal,winnyaw));
+
+                        }
+
+                    }
 
                 }
             }catch (Exception excp){
