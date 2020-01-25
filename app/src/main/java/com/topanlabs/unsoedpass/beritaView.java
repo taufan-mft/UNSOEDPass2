@@ -11,7 +11,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 public class beritaView extends AppCompatActivity {
-String url;
+String url, judul;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,10 @@ String url;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Happening right now");
         url = getIntent().getStringExtra("url");
+        if (getIntent().getStringExtra("judul")!=null){
+            judul = getIntent().getStringExtra("judul");
+            getSupportActionBar().setTitle(judul);
+        }
         Log.d("tadigita", url);
         pbar.setMax(100);
         pbar.setProgress(1);

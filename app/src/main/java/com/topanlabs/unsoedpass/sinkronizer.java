@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.apache.commons.text.WordUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -150,6 +152,7 @@ public class sinkronizer extends AppCompatActivity {
                         .connect("https://akademik.unsoed.ac.id/index.php?r=jadwal/jadwalpermhs")
                         .cookies(kukis)
                         .get();
+                Log.d("Winny", "udh login"+new Gson().toJson(kukis));
                 Element kodeadkul = page5.selectFirst("#kodetahunakadkul > option:nth-child(2)");
                 String linkURL2 = kodeadkul.attr("value");
 

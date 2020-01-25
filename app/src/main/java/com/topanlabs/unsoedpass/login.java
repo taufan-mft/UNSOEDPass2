@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,8 @@ import android.content.DialogInterface;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -178,7 +181,12 @@ public class login extends AppCompatActivity {
                 kukis = initial.response().cookies();
                 Element captcha = d.selectFirst("#yw0");
                 String linkURL2 = captcha.absUrl("src");
-                Log.d("Winny", kukis.toString());
+
+                Log.d("Winny", new Gson().toJson(kukis));
+                Map<String, String> diana = new HashMap<String, String>();
+                diana.put("raisa", "dianis");
+                diana.put("tetenya","turun");
+                Log.d("Winny", new Gson().toJson(diana));
 
                 Connection.Response response = Jsoup //
                         .connect(linkURL2) // Extract image absolute URL
