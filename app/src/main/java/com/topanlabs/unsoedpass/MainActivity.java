@@ -45,12 +45,16 @@ import java.lang.String;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,8 +84,9 @@ String nama;
     kelasRepository kelRepo;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    List<beritaModel> beritaModelk;
+    List<beritaModel> beritaModelk, eventModel;
     private beritaAdapter beritaAdapter;
+    private beritaAdapter eventAdapter;
     String nim;
     String pass, minus;
     GetMatkul getmatkullist;
@@ -103,7 +108,7 @@ String nama;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
     ConstraintLayout jadwalK, aha2,aha4, aha3, exam;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, eventrec;
     TextView todayMat, todayJam, todayRuangan, txtSalam;
     String tokenkita;
     Boolean dariKelp;
@@ -122,6 +127,11 @@ String nama;
         txtnama = findViewById(R.id.txtNamaK);
         txtSalam = findViewById(R.id.textView15);
         updateGreetings();
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         editor = mSettings.edit();
         String yourLocked = mSettings.getString("logged", "ya");
         String firstTime = mSettings.getString("pertama", "ya");
@@ -205,10 +215,15 @@ String nama;
         });
 
         recyclerView = (RecyclerView) findViewById(R.id.beritarec);
+        eventrec = findViewById(R.id.eventrec);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         beritaAdapter = new beritaAdapter(beritaModelk, this);
+        eventAdapter = new beritaAdapter(eventModel, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(beritaAdapter);
+        eventrec.setLayoutManager(layoutManager2);
+        eventrec.setAdapter(eventAdapter);
         getBerita();
         mRepository = new matkulRepository(getApplication());
         kelRepo = new kelasRepository(getApplication());
@@ -334,6 +349,7 @@ String nama;
     public void onResume(){
         super.onResume();
         updJadwal();
+        getBerita();
         updateGreetings();
         String yourLocked = mSettings.getString("logged", "ya");
         String firstTime = mSettings.getString("pertama", "ya");
@@ -467,7 +483,7 @@ String nama;
         }
     }
     private void updateStat() {
-        final String BASE_URL = "https://dianis.topanlabs.com";
+        final String BASE_URL = "http://10.10.10.35:8123";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -480,7 +496,7 @@ String nama;
 
     }
     private void getBerita() {
-        final String BASE_URL = "https://dianis.topanlabs.com";
+        final String BASE_URL = "http://10.10.10.35:8123";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -502,8 +518,39 @@ String nama;
 
             @Override
             public void onFailure(Call<List<beritaModel>> call, Throwable t) {
+                beritaModel alsa = new beritaModel("Kamu sedang offline", "Quote favorit Topan: \"Yang patah tumbuh, yang hilang berganti\" - Banda Neira", null, "Offline", "http://aasirai.id");
+                List<beritaModel> changesList = new ArrayList<beritaModel>();
+                changesList.add(alsa);
 
+                beritaAdapter.setBerita(changesList);
                 Context context = getApplicationContext();
+                CharSequence text = "Error DVN12. Mohon klik bantuan jika berlanjut.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
+
+            //showDialog();
+        });
+        Call<List<beritaModel>> call2 = beritaint.getEvent();
+        Log.d("rairairai", tokenkita);
+        call2.enqueue(new Callback<List<beritaModel>>() {
+            @Override
+            public void onResponse(Call<List<beritaModel>> call, Response<List<beritaModel>> response) {
+
+                List<beritaModel> changesList = response.body();
+                eventAdapter.setBerita(changesList, "Events");
+            }
+
+            @Override
+            public void onFailure(Call<List<beritaModel>> call, Throwable t) {
+                beritaModel alsa = new beritaModel("Kamu sedang offline", "Quote favorit Topan: \"Yang patah tumbuh, yang hilang berganti\" - Banda Neira", null, "Offline", "http://aasirai.id");
+                List<beritaModel> changesList = new ArrayList<beritaModel>();
+                changesList.add(alsa);
+                Context context = getApplicationContext();
+                eventAdapter.setBerita(changesList, "Events");
                 CharSequence text = "Error DVN12. Mohon klik bantuan jika berlanjut.";
                 int duration = Toast.LENGTH_SHORT;
 

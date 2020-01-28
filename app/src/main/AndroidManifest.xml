@@ -16,6 +16,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4802685768489188~3534254786"/>
         <activity android:name=".beritaView"></activity>
         <activity android:name=".kelasSubscriber" />
         <activity android:name=".tambahKelas" />

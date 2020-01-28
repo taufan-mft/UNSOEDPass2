@@ -51,7 +51,7 @@ public class kelasPengganti extends AppCompatActivity {
         kodekelas = mSettings.getString("kodekelas", "0");
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
-        final String BASE_URL = "https://dianis.topanlabs.com";
+        final String BASE_URL = "http://10.10.10.35:8123";
         getSupportActionBar().setTitle("Kelas Pengganti");
         getSupportActionBar().setSubtitle(kodekelas);
         Retrofit retrofit = new Retrofit.Builder()

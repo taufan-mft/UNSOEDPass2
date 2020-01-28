@@ -11,4 +11,7 @@ public interface beritaInt {
 
     @GET("/berita/")
     Call<List<beritaModel>> getBerita(@Header("Authorization") String token);
+
+    @GET("/eventall/")
+    Call<List<beritaModel>> getEvent();
 }

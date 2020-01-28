@@ -14,6 +14,7 @@
         <!-- TextView Nama Mahasiwa -->
         <TextView
             android:id="@+id/txt_namatkul"
+            android:text="Pemrograman Topaaaaaaan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
@@ -23,6 +24,7 @@
         <!-- TextView Npm Mahasiswa -->
         <TextView
             android:id="@+id/txt_hari"
+            android:text="SENIN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -30,9 +32,11 @@
         <TextView
             android:id="@+id/txt_dosen"
             android:layout_width="match_parent"
+            android:text="isyana"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/txt_jam"
+            android:text="12.00"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     <View

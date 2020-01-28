@@ -21,6 +21,7 @@ public class beritaAdapter extends RecyclerView.Adapter<beritaAdapter.BeritaView
 
     private Context context;
     private List<beritaModel> dataList;
+    private String namane;
 
     //public MahasiswaAdapter(ArrayList<matkul> dataList) {
     //  this.dataList = dataList;
@@ -41,19 +42,30 @@ public class beritaAdapter extends RecyclerView.Adapter<beritaAdapter.BeritaView
         dataList = words;
         notifyDataSetChanged();
     }
-
+    void setBerita(List<beritaModel> words, String namane2){
+        dataList = words;
+        namane = namane2;
+        notifyDataSetChanged();
+    }
     @Override
     public void onBindViewHolder(BeritaViewHolder holder, int position) {
         beritaModel current = dataList.get(position);
         holder.txtHeadline.setText(current.getHeadline());
         holder.txtKonten.setText(current.getKonten());
         holder.txtAuthor.setText(current.getAuthor());
-        Glide.with(context).load(current.getCover()).fitCenter().into(holder.imgHead);
+        if (current.getAuthor().equals("Offline")){
+            Glide.with(context).load(R.drawable.blackof).fitCenter().into(holder.imgHead);
+        } else {
+            Glide.with(context).load(current.getCover()).fitCenter().into(holder.imgHead);
+        }
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Clicked element "+current.getHeadline(), Snackbar.LENGTH_LONG).show();
                 Intent i = new Intent(context, beritaView.class);
+                if (namane!=null){
+                    i.putExtra("judul", namane);
+                }
                 i.putExtra("url", current.getUrl());
                 Log.d("tadigita", current.getUrl());
                 context.startActivity(i);
