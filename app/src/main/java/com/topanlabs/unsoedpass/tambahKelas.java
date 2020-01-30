@@ -90,7 +90,8 @@ public class tambahKelas extends AppCompatActivity {
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        txtJam.setText(selectedHour + ":" + selectedMinute);
+                        //txtJam.setText(selectedHour + ":" + selectedMinute);
+                        txtJam.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 //mTimePicker.setTitle("Select Time");

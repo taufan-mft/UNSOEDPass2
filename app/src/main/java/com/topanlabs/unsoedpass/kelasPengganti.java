@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
@@ -34,7 +36,8 @@ public class kelasPengganti extends AppCompatActivity {
     kelasInt kelasService;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    String tokenkita, kodekelas;
+    String tokenkita, kodekelas, nim;
+    mahaint mahaint;
     List<kelaspengganti>  kelaspenggantis;
     kelasRepository repo;
     Boolean ketuakelas;
@@ -46,9 +49,13 @@ public class kelasPengganti extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(kelasPengganti.this);
         recyclerView.setLayoutManager(layoutManager);
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(getApplicationContext(), R.anim.layout_animation);
+        recyclerView.setLayoutAnimation(controller);
         mSettings = getSharedPreferences("Settings", 0);
         ketuakelas = mSettings.getBoolean("isKetuaKelas",false);
         kodekelas = mSettings.getString("kodekelas", "0");
+        nim = mSettings.getString("nim", "nim");
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
         final String BASE_URL = "http://10.10.10.35:8123";
@@ -62,37 +69,85 @@ public class kelasPengganti extends AppCompatActivity {
 
         kelasService =
                 retrofit.create(kelasInt.class);
-
+        mahaint = retrofit.create(mahaint.class);
         Call<List<kelasModel>> call = kelasService.getKelas(tokenkita,kodekelas);
         call.enqueue(new Callback<List<kelasModel>>() {
             @Override
             public void onResponse(Call<List<kelasModel>> call, Response<List<kelasModel>> response) {
-                List<kelasModel> matkul= response.body();
-                Executors.newSingleThreadExecutor().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        repo.nukeTable();
-                        if (!matkul.isEmpty()) {
-                            for (int i = 0; i < matkul.size(); i++) {
+                if (response.code() == 200) {
+                    List<kelasModel> matkul = response.body();
+                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            repo.nukeTable();
+                            if (!matkul.isEmpty()) {
+                                for (int i = 0; i < matkul.size(); i++) {
 
-                                repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
+                                    repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
+                                }
+                                kelaspenggantis = repo.getKelas();
+
+                                runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
+                                        recyclerView.setAdapter(adapter);
+
+                                        adapter.notifyDataSetChanged();
+                                        recyclerView.scheduleLayoutAnimation();
+                                    }
+                                });
+                                //Log.d("raisan", mahasiswaArrayList.toString());
+
                             }
-                            kelaspenggantis = repo.getKelas();
+                        }
+                    });
+                }else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this);
+                    alertDialogBuilder.setTitle("Kelas sudah dihapus.");
+                    alertDialogBuilder
+                            //.setMessage(pesan)
+                            //.setIcon(R.mipmap.ic_launcher)
+                            .setCancelable(false)
+                            .setPositiveButton("Oke",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    editor.putString("kodekelas", "0");
+                                    editor.apply();
+                                    mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, "0", null, null, null);
+                                    Call<Void> call = mahaint.gantiKodekel(nim,mahasiw,tokenkita );
+                                    call.enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                            Log.d("raisan", "updatecuy");
+                                            //adapter.notifyDataSetChanged();
+                                        }
 
-                            runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
+                                            Context context = getApplicationContext();
+                                            CharSequence text = "Error TL12";
+                                            int duration = Toast.LENGTH_SHORT;
+                                            Toast toast = Toast.makeText(context, text, duration);
+                                            toast.show();
+                                        }
+                                    });
+                                    Intent i = new Intent(kelasPengganti.this, MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            repo.nukeTable();
+                                        }
+                                    });
 
-                                @Override
-                                public void run() {
-                                    kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
-                                    recyclerView.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
                                 }
                             });
-                            //Log.d("raisan", mahasiswaArrayList.toString());
 
-                        }
-                    }
-                });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
 
 
 
@@ -122,6 +177,7 @@ public class kelasPengganti extends AppCompatActivity {
                                 kelasAdapter adapter = new kelasAdapter(kelaspenggantis,getApplicationContext());
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
+                                recyclerView.scheduleLayoutAnimation();
                             }
                         });
                         //Log.d("raisan", mahasiswaArrayList.toString());
@@ -161,57 +217,161 @@ public class kelasPengganti extends AppCompatActivity {
             case R.id.keluarKelas:
                 showCancel();
                 return true;
+            case R.id.hapusKelas:
+                hapuskelas();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+void hapuskelas(){
+    Call<Void> call = kelasService.delKelas(tokenkita,kodekelas);
+    call.enqueue(new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+
+            Context context = getApplicationContext();
+            CharSequence text = "Error TL12";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+        }
+
+        //showDialog();
+    });
+    editor.putString("kodekelas", "0");
+    editor.apply();
+    mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, "0", null, null, null);
+    call = mahaint.gantiKodekel(nim,mahasiw,tokenkita );
+    call.enqueue(new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            Log.d("raisan", "updatecuy");
+            //adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            Context context = getApplicationContext();
+            CharSequence text = "Error TL12";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    });
+    Intent i = new Intent(kelasPengganti.this, MainActivity.class);
+    startActivity(i);
+    finish();
+    Executors.newSingleThreadExecutor().execute(new Runnable() {
+        @Override
+        public void run() {
+            repo.nukeTable();
+        }
+    });
+
+}
 
     void updateKelas() {
         Call<List<kelasModel>> call = kelasService.getKelas(tokenkita,kodekelas);
         call.enqueue(new Callback<List<kelasModel>>() {
             @Override
             public void onResponse(Call<List<kelasModel>> call, Response<List<kelasModel>> response) {
-                List<kelasModel> matkul= response.body();
-                Log.d("raisani","updatekelas");
-                Executors.newSingleThreadExecutor().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        repo.nukeTable();
-                        for (int i = 0; i < matkul.size(); i++) {
+                if (response.code() == 200) {
+                    List<kelasModel> matkul = response.body();
+                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            repo.nukeTable();
+                            if (!matkul.isEmpty()) {
+                                for (int i = 0; i < matkul.size(); i++) {
 
-                            repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
-                        }
-                        kelaspenggantis = repo.getKelas();
+                                    repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
+                                }
+                                kelaspenggantis = repo.getKelas();
 
-                        runOnUiThread(new Runnable() {
+                                runOnUiThread(new Runnable() {
 
-                            @Override
-                            public void run() {
-                                kelasAdapter adapter = new kelasAdapter(kelaspenggantis,getApplicationContext());
-                                recyclerView.setAdapter(adapter);
-                                adapter.notifyDataSetChanged();
+                                    @Override
+                                    public void run() {
+                                        kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
+                                        recyclerView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                        recyclerView.scheduleLayoutAnimation();
+                                    }
+                                });
+                                //Log.d("raisan", mahasiswaArrayList.toString());
+
                             }
-                        });
-                    }
-                });
+                        }
+                    });
+                } else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this);
+                    alertDialogBuilder.setTitle("Kelas sudah dihapus.");
+                    alertDialogBuilder
+                            //.setMessage(pesan)
+                            //.setIcon(R.mipmap.ic_launcher)
+                            .setCancelable(false)
+                            .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    editor.putString("kodekelas", "0");
+                                    editor.apply();
+                                    mahasis mahasiw = new mahasis(null, null, null, null, null, null, null, "0", null, null,null);
+                                    Call<Void> call = mahaint.gantiKodekel(nim, mahasiw, tokenkita);
+                                    call.enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                            Log.d("raisan", "updatecuy");
+                                            //adapter.notifyDataSetChanged();
+                                        }
 
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
+                                            Context context = getApplicationContext();
+                                            CharSequence text = "Error TL12";
+                                            int duration = Toast.LENGTH_SHORT;
+                                            Toast toast = Toast.makeText(context, text, duration);
+                                            toast.show();
+                                        }
+                                    });
+                                    Intent i = new Intent(kelasPengganti.this, MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            repo.nukeTable();
+                                        }
+                                    });
+
+                                }
+                            });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
             }
+                @Override
+                public void onFailure (Call < List < kelasModel >> call, Throwable t){
 
-            @Override
-            public void onFailure(Call<List<kelasModel>> call, Throwable t) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Error TL12";
+                    int duration = Toast.LENGTH_SHORT;
 
-                Context context = getApplicationContext();
-                CharSequence text = "Error TL12";
-                int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                }
 
-            }
-
-            //showDialog();
-        });
-    }
+                //showDialog();
+            });
+    };
 
     private void showCancel() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this);
@@ -224,6 +384,24 @@ public class kelasPengganti extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int id) {
                         editor.putString("kodekelas", "0");
                         editor.apply();
+                        mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, "0", null, null, null);
+                        Call<Void> call = mahaint.gantiKodekel(nim,mahasiw,tokenkita );
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Log.d("raisan", "updatecuy");
+                                //adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Error TL12";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }
+                       });
                         Intent i = new Intent(kelasPengganti.this, MainActivity.class);
                         startActivity(i);
                         finish();

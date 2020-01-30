@@ -65,7 +65,7 @@ public class login extends AppCompatActivity {
     String nim;
     String pass, capcay;
     String fakultas;
-    String jurusan;
+    String jurusan, nohp;
     private List<mahasis> userList =null;
     ProgressDialog dialog;
     mahaint apiService;
@@ -103,6 +103,12 @@ public class login extends AppCompatActivity {
         winnyau = findViewById(R.id.textView);
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
+        String versiapp = mSettings.getString("versiapp","0");
+        if(versiapp.equals("0")){
+            editor.putString("versiapp","2.0");
+            editor.apply();
+        }
+
         getSupportActionBar().hide();
         tersedia = true;
         final String BASE_URL = "http://10.10.10.35:8123";
@@ -272,6 +278,9 @@ public class login extends AppCompatActivity {
                 Elements cekfakultas = page.select("#content > div > table > tbody > tr:nth-child(5) > td:nth-child(3)");
                 Elements email = page.select("#content > div > table > tbody > tr:nth-child(4) > td:nth-child(3)");
                 emailku = email.text();
+                Elements noohp = page.select("#content > div > table > tbody > tr:nth-child(3) > td:nth-child(3)");
+                nohp = noohp.text();
+                Log.d("nohp", emailku+" " + nohp);
                 fakultas = cekfakultas.text();
                 Elements namaku = page.select("#content > div > table > tbody > tr:nth-child(2) > td:nth-child(3)");
                 nama = namaku.text();
@@ -329,7 +338,7 @@ public class login extends AppCompatActivity {
     }
 
     private void buatEntry(String nim) {
-        mahasis mahasis = new mahasis(nim, todayString, fakultas, jurusan, nama, "0", "0","0",pass);
+        mahasis mahasis = new mahasis(nim, todayString, fakultas, jurusan, nama, "0", "0","0",pass, emailku, nohp);
         Call<mahasis> call = apiService.createUser(mahasis);
         final String nim2 = nim;
         call.enqueue(new Callback<mahasis>() {
@@ -373,7 +382,7 @@ public class login extends AppCompatActivity {
 
     private void cekAdaNIM(String nim) {
         final String nim2 = nim;
-        mahasis mahasis = new mahasis("0", "0", "0", "0", "0", "0", "0","0","0");
+        mahasis mahasis = new mahasis("0", "0", "0", "0", "0", "0", "0","0","0","0","0");
         Call<Void> call = apiService.checkUser(nim2);
         call.enqueue(new Callback<Void>() {
             @Override

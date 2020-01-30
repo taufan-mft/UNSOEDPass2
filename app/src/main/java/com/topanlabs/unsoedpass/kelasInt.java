@@ -4,6 +4,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -22,4 +23,7 @@ public interface kelasInt {
 
     @POST("/creatematkul/")
     Call<kelasModel> buatMatkul(@Header("Authorization")String token, @Body kelasModel mahasis);
+
+    @DELETE("/deletekelas/{nim}/")
+    Call<Void> delKelas(@Header("Authorization")String token,@Path("nim") String nim);
 }

@@ -1,4 +1,5 @@
 package com.topanlabs.unsoedpass;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -66,7 +67,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
 
     public class MahasiswaViewHolder extends RecyclerView.ViewHolder{
         private TextView txtNama, txtNpm, txtNoHp, txtJam;
-        private LinearLayout yowdi;
+        private ConstraintLayout yowdi;
 
         public MahasiswaViewHolder(View itemView) {
             super(itemView);
@@ -74,7 +75,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
             txtNpm = (TextView) itemView.findViewById(R.id.txt_dosen);
             txtNoHp = (TextView) itemView.findViewById(R.id.txt_hari);
             txtJam = (TextView) itemView.findViewById(R.id.txt_jam);
-            yowdi = (LinearLayout) itemView.findViewById(R.id.yowdi);
+            yowdi = (ConstraintLayout) itemView.findViewById(R.id.yowdi);
         }
     }
 }

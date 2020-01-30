@@ -136,6 +136,7 @@ String nama;
         String yourLocked = mSettings.getString("logged", "ya");
         String firstTime = mSettings.getString("pertama", "ya");
         String tglSync = mSettings.getString("tglSync","01 01 2000");
+        String versiapp = mSettings.getString("versiapp","0");
         tokenkita = mSettings.getString("token","token");
 
         int intervalSync = mSettings.getInt("intervalSync", 7);
@@ -156,6 +157,18 @@ String nama;
         }else if (yourLocked.equals("ya")) {
             Intent i = new Intent(this, login.class);
             startActivity(i);
+            finish();
+            return;
+        } else if(!versiapp.equals("2.0")){
+            Intent w = new Intent(MainActivity.this, logout.class);
+
+            editor.putString("trialwarnabsen", "belum");
+            editor.putString("premium", "tidak");
+            editor.putString("logged", "ya");
+            editor.putString("nim","nim");
+            editor.putBoolean("warntrial3", false);
+            editor.apply();
+            startActivity(w);
             finish();
             return;
         }
@@ -636,7 +649,7 @@ String nama;
                 if (!kelp.isEmpty()) {
                     for (int i = 0; i < kelp.size(); i++) {
                         String date3 = kelp.get(i).getJam();
-                        Log.d("raiso", date3);
+                        Log.d("KELPDATE", date3);
                         Date waktu2 = new Date();
                         try {
                             waktu2 = formatter2.parse(date3);
@@ -654,7 +667,7 @@ String nama;
                             Log.d("winal", "ini " + a);
                             if (min > milisec2[a] && milisec2[a] > 0) {
                                 min = milisec2[a];
-//                                Log.d("winal", "Ini value milisec2 min & max kelp" + min + "&" + milisec[a]);
+                               Log.d("winal2", "Ini value milisec2 min & max kelp" + min + "&" + milisec[a]);
                                 indexKelp   = a;
                                 minus = "ga";
                             }
@@ -665,7 +678,7 @@ String nama;
 
                 if (!win.isEmpty() || !kelp.isEmpty()) {
                     for (int i = 0; i < win.size(); i++) {
-                        Log.d("winal", win.get(i).getJam().substring(0, 4));
+                        Log.d("winEMPTY", win.get(i).getJam().substring(0, 4));
                         String date3 = win.get(i).getJam().substring(0, 4);
                         Date waktu2 = new Date();
                         try {
@@ -699,14 +712,15 @@ String nama;
                         milisec = new long[1];
                         milisec[0]= -19;
                     }
-                    Log.d("apakahiya", String.valueOf(milisec.length) + " " + String.valueOf(milisec2.length) + " " + String.valueOf(index));
+//                    Log.d("apakahiya", String.valueOf(milisec.length) + " " + String.valueOf(milisec2.length) + " " + String.valueOf(index)+" kon "+ milisec2[indexKelp]+" "+milisec[index]);
                     if (!kelp.isEmpty()) {
-                        if ((milisec2[indexKelp] > milisec[index]) && (milisec[index] > 0))  {
+                        if ((milisec2[indexKelp] < milisec[index]) && (milisec[index] > 0))  {
                             dariKelp = false;
-                            Log.d("winal", milisec2[indexKelp] + "> " + milisec[index]);
-                            Log.d("winal", dariKelp.toString());
+                            Log.d("mili", milisec2[indexKelp] + "> " + milisec[index]);
+                            Log.d("mili", dariKelp.toString());
                         } else {
                             dariKelp = true;
+                            Log.d("mili", "oke");
                         }
                     }
 
@@ -722,7 +736,7 @@ String nama;
                                 } else {
 
                                     todayMat.setText(win.get(index2).getNamakul());
-                                    Log.d("uitred", "1");
+                                    Log.d("uitred", "disini");
                                     String jamentah = win.get(index2).getJam();
                                     if (jamentah.length() == 8) {
                                         String jamateng = win.get(index2).getJam().substring(0, 2) + ":" + win.get(index2).getJam().substring(2, 4) + " - " + win.get(index2).getJam().substring(4, 6) + ":" + win.get(index2).getJam().substring(6, 8);

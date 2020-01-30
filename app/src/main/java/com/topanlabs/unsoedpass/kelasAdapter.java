@@ -14,6 +14,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class kelasAdapter extends RecyclerView.Adapter<kelasAdapter.kelasViewHolder> {
@@ -48,8 +51,42 @@ public class kelasAdapter extends RecyclerView.Adapter<kelasAdapter.kelasViewHol
         holder.txtJam.setText(current.getJam());
         holder. txtRuangan.setText(current.getRuangan());
         holder.txtTanggal.setText(current.getTanggal());
+        SimpleDateFormat formatterTanggal = new SimpleDateFormat("dd-MM-yyyy");
+        Date waktu1 = new Date();
+        try {
+            waktu1 = formatterTanggal.parse(current.getTanggal());
+        } catch (Exception e) {
+            //
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(waktu1);
+        int day = c.get(Calendar.DAY_OF_WEEK);
+        String harini = "o";
+        switch (day) {
+            case Calendar.SUNDAY:
+                harini = "MINGGU";
+                break;
+            case Calendar.MONDAY:
+                harini = "SENIN";
+                break;
+            case Calendar.TUESDAY:
+                harini = "SELASA";
+                break;
+            case Calendar.WEDNESDAY:
+                harini = "RABU";
+                break;
+            case Calendar.THURSDAY:
+                harini = "KAMIS";
+                break;
+            case Calendar.FRIDAY:
+                harini = "JUMAT";
+                break;
+            case Calendar.SATURDAY:
+                harini = "SABTU";
+                break;
 
-
+        }
+        holder.txtHari.setText(harini);
 
 
 
@@ -61,7 +98,7 @@ public class kelasAdapter extends RecyclerView.Adapter<kelasAdapter.kelasViewHol
     }
 
     public class kelasViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtNamatkul, txtJam, txtRuangan, txtTanggal;
+        private TextView txtNamatkul, txtJam, txtRuangan, txtTanggal, txtHari;
 
 
         public kelasViewHolder(View itemView) {
@@ -70,7 +107,7 @@ public class kelasAdapter extends RecyclerView.Adapter<kelasAdapter.kelasViewHol
             txtJam = (TextView) itemView.findViewById(R.id.txt_jam);
             txtRuangan = (TextView) itemView.findViewById(R.id.txt_ruangan);
             txtTanggal = itemView.findViewById(R.id.txt_tanggal);
-
+        txtHari = itemView.findViewById(R.id.txt_hari);
         }
     }
 }

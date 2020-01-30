@@ -73,7 +73,7 @@ String kode, nim;
                             public void onClick(DialogInterface dialog,int id) {
                             editor.putString("kodekelas", matkul.getKodekelas());
                             editor.apply();
-                            mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, matkul.getKodekelas(), null);
+                            mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, matkul.getKodekelas(), null, null,null);
                                 Call<Void> call = mahaint.gantiKodekel(nim,mahasiw,tokenkita );
                                 call.enqueue(new Callback<Void>() {
                                     @Override

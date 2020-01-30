@@ -25,6 +25,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.ArrayList;
 
@@ -49,13 +57,23 @@ public class jadwalKuliah extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         addData();
         adapter = new MahasiswaAdapter(this);
-
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(jadwalKuliah.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Jadwal Kuliah");
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(getApplicationContext(), R.anim.layout_animation);
+        recyclerView.setLayoutAnimation(controller);
         nim = mSettings.getString("nim", "nim");
         pass = mSettings.getString("pass", "pass");
         matkulViewModel = ViewModelProviders.of(this).get(matkulViewModel.class);
@@ -68,6 +86,7 @@ public class jadwalKuliah extends AppCompatActivity {
             public void onChanged(@Nullable final List<matkuldb> words) {
                 // Update the cached copy of the words in the adapter.
                 adapter.setWords(words);
+                recyclerView.scheduleLayoutAnimation();
             }
         });
 

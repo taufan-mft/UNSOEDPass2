@@ -96,7 +96,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:fontFamily="@font/sfprdb"
-                    android:text="Happening right now"
+                    android:text="Events"
                     android:textColor="#000000"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"

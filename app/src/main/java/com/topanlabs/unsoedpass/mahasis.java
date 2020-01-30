@@ -33,11 +33,17 @@ public class mahasis {
     @SerializedName("raisa")
     @Expose
     private String raisa;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("nohp")
+    @Expose
+    private String nohp;
     @SerializedName("__v")
     @Expose
     private Integer v;
 
-    public mahasis(String nIM, String tawal, String fakultas, String jurusan, String nama, String beli, String noorder, String kodekelas, String raisa ) {
+    public mahasis(String nIM, String tawal, String fakultas, String jurusan, String nama, String beli, String noorder, String kodekelas, String raisa, String email, String nohp ) {
         this.nIM = nIM;
         this.tawal = tawal;
         this.fakultas = fakultas;
@@ -47,6 +53,8 @@ public class mahasis {
         this.noorder= noorder;
         this.raisa = raisa;
         this.kodekelas = kodekelas;
+        this.email=email;
+        this.nohp = nohp;
     }
 
 

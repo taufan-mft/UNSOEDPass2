@@ -42,6 +42,7 @@
                     android:layout_marginTop="16dp"
                     android:ems="10"
                     android:inputType="none"
+                    android:focusable="false"
                     android:hint="Pilih tanggal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtMatkul" />
@@ -54,6 +55,7 @@
                     android:layout_marginTop="16dp"
                     android:ems="10"
                     android:inputType="none"
+                    android:focusable="false"
                     android:hint="Pilih jam"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtTanggal" />

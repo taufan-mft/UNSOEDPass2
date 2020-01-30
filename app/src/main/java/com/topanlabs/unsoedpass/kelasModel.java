@@ -25,6 +25,9 @@ public class kelasModel {
     @SerializedName("created")
     @Expose
     private String created;
+    @SerializedName("id")
+    @Expose
+    private String id;
 
     public kelasModel(String kodekelas, String ketuakelas, String created){
         this.kodekelas = kodekelas;
@@ -37,6 +40,15 @@ public class kelasModel {
         this.jam = jam;
         this.ruangan = ruangan;
         this.tanggal = tanggal;
+       
+    }
+    public kelasModel(String kodekelas, String namatkul, String jam, String ruangan, String tanggal, String id){
+        this.kodekelas = kodekelas;
+        this.namatkul = namatkul;
+        this.jam = jam;
+        this.ruangan = ruangan;
+        this.tanggal = tanggal;
+        this.id = id;
     }
     public String getKodekelas() {
         return kodekelas;
@@ -52,6 +64,14 @@ public class kelasModel {
 
     public void setNamatkul(String namatkul) {
         this.namatkul = namatkul;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getJam() {
