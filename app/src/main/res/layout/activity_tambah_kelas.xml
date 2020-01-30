@@ -5,15 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tambahKelas">
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></com.google.android.gms.ads.AdView>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adView">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -27,8 +41,8 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
                     android:ems="10"
-                    android:inputType="textPersonName|textCapWords"
                     android:hint="Mata kuliah"
+                    android:inputType="textPersonName|textCapWords"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.098"
                     app:layout_constraintStart_toStartOf="parent"
@@ -41,9 +55,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:ems="10"
-                    android:inputType="none"
                     android:focusable="false"
                     android:hint="Pilih tanggal"
+                    android:inputType="none"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtMatkul" />
 
@@ -54,11 +68,12 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:ems="10"
-                    android:inputType="none"
                     android:focusable="false"
                     android:hint="Pilih jam"
+                    android:inputType="none"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtTanggal" />
+
                 <EditText
                     android:id="@+id/txtRuangan"
                     android:layout_width="wrap_content"
@@ -66,10 +81,11 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:ems="10"
-                    android:inputType="none"
                     android:hint="Ruangan"
+                    android:inputType="none"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtJam" />
+
                 <Button
                     android:id="@+id/Jam"
                     android:layout_width="wrap_content"
@@ -79,6 +95,7 @@
                     android:text="Jam"
                     app:layout_constraintStart_toEndOf="@+id/txtJam"
                     app:layout_constraintTop_toBottomOf="@+id/txtTanggal" />
+
                 <Button
                     android:id="@+id/btnTanggal"
                     android:layout_width="wrap_content"
