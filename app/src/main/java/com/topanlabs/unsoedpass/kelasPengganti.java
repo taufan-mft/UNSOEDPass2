@@ -18,6 +18,11 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
 
@@ -58,6 +63,14 @@ public class kelasPengganti extends AppCompatActivity {
         nim = mSettings.getString("nim", "nim");
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         final String BASE_URL = "http://10.10.10.35:8123";
         getSupportActionBar().setTitle("Kelas Pengganti");
         getSupportActionBar().setSubtitle(kodekelas);
