@@ -42,7 +42,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
                         String namatkul = dataList.get(i).getNamakul();
                         String hari = dataList.get(i).getHari().toLowerCase();
                         int winul = Calendar.MONDAY;
-
+                        Log.d("bootsuda","cihuyy");
                         switch (hari) {
                             case "senin":
                                 winul = Calendar.MONDAY;

@@ -17,6 +17,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.jirbo.adcolony.AdColonyAdapter;
+import com.jirbo.adcolony.AdColonyBundleBuilder;
 
 
 public class beritaView extends AppCompatActivity {
@@ -86,6 +88,7 @@ String url, judul;
             }
         });
         webView.getSettings().setJavaScriptEnabled(true);*/
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(url);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -94,7 +97,7 @@ String url, judul;
             }
         });
         AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addNetworkExtrasBundle(AdColonyAdapter.class, AdColonyBundleBuilder.build()).build();
         mAdView.loadAd(adRequest);
         }
 }

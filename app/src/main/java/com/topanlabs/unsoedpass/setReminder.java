@@ -167,7 +167,7 @@ public class setReminder extends AppCompatActivity {
             myIntent.putExtra("dayofweek", winul);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+            Log.d("bootsuda","dibuatt");
             if (!cancel) {
 
                 manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);

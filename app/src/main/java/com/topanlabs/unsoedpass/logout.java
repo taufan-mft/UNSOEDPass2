@@ -33,6 +33,7 @@ public class logout extends AppCompatActivity {
         });
         editor = mSettings.edit();
         editor.putString("logged", "ya");
+        editor.putBoolean("firstsync", true);
         editor.apply();
         Intent i = new Intent(this, login.class);
         startActivity(i);

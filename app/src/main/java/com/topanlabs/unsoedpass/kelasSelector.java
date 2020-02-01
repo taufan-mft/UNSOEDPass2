@@ -26,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class kelasSelector extends AppCompatActivity {
     CardView kelasbaru, gabungkelas;
     kelasInt kelasService;
+    mahaint mahaint;
     kelasModel matkul;
     String tokenkita, nim;
     SharedPreferences mSettings;
@@ -54,7 +55,7 @@ public class kelasSelector extends AppCompatActivity {
 
         nim = mSettings.getString("nim", "nim");
         Log.d("raisani", kode);
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -63,6 +64,7 @@ public class kelasSelector extends AppCompatActivity {
         // matkul = new kelasModel("0","0","0");
         kelasService =
                 retrofit.create(kelasInt.class);
+        mahaint = retrofit.create(mahaint.class);
         kelasbaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +102,32 @@ public class kelasSelector extends AppCompatActivity {
 
                                     @Override
                                     public void onFailure(Call<kelasModel> call, Throwable t) {
+
+                                        Context context = getApplicationContext();
+                                        CharSequence text = "Error TL12";
+                                        int duration = Toast.LENGTH_SHORT;
+
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+
+                                    }
+
+                                    //showDialog();
+                                });
+                                mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, matkul.getKodekelas(), null, null,null);
+                                Call<Void> call2 = mahaint.gantiKodekel(nim,mahasiw,tokenkita );
+                                call2.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+
+
+                                        Log.d("raisan", "updatecuy");
+                                        //adapter.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
 
                                         Context context = getApplicationContext();
                                         CharSequence text = "Error TL12";

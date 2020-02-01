@@ -1,5 +1,7 @@
 package com.topanlabs.unsoedpass;
 
+import com.topanlabs.unsoedpass.memo.memoModel;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -14,6 +16,9 @@ public interface kelasInt {
 
     @GET("/retkelas/{nim}/")
     Call<List<kelasModel>> getKelas(@Header("Authorization") String token, @Path("nim") String nim);
+
+    @GET("/retmemo/{nim}/")
+    Call<List<memoModel>> getMemo(@Header("Authorization") String token, @Path("nim") String nim);
 
     @GET("/liatkelas/{kodekelas}/")
     Call<kelasModel> cariKelas(@Path("kodekelas") String kodekelas);

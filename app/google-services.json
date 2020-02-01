@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "73273070671",
+    "firebase_url": "https://myunsoed.firebaseio.com",
+    "project_id": "myunsoed",
+    "storage_bucket": "myunsoed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73273070671:android:367f95e4b6eee14d3dc63a",
+        "android_client_info": {
+          "package_name": "com.topanlabs.unsoedpass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73273070671-seag4que8r2lplg204peib5n3rg39su6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5bI0jr1m9ZW2dIBr8-OqQs7qftRVBzeY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73273070671-seag4que8r2lplg204peib5n3rg39su6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

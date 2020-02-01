@@ -496,7 +496,7 @@ String nama;
         }
     }
     private void updateStat() {
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -509,7 +509,7 @@ String nama;
 
     }
     private void getBerita() {
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -714,7 +714,7 @@ String nama;
                     }
 //                    Log.d("apakahiya", String.valueOf(milisec.length) + " " + String.valueOf(milisec2.length) + " " + String.valueOf(index)+" kon "+ milisec2[indexKelp]+" "+milisec[index]);
                     if (!kelp.isEmpty()) {
-                        if ((milisec2[indexKelp] < milisec[index]) && (milisec[index] > 0))  {
+                        if ((milisec2[indexKelp] > milisec[index]) && (milisec[index] > 0) || (milisec2[indexKelp] <0))  {
                             dariKelp = false;
                             Log.d("mili", milisec2[indexKelp] + "> " + milisec[index]);
                             Log.d("mili", dariKelp.toString());
