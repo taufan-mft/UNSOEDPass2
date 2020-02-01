@@ -17,7 +17,7 @@ public interface kelasInt {
     @GET("/retkelas/{nim}/")
     Call<List<kelasModel>> getKelas(@Header("Authorization") String token, @Path("nim") String nim);
 
-    @GET("/retmemo/{nim}/")
+    @GET("/memo/{nim}/")
     Call<List<memoModel>> getMemo(@Header("Authorization") String token, @Path("nim") String nim);
 
     @GET("/liatkelas/{kodekelas}/")

@@ -26,6 +26,7 @@ import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
 import com.topanlabs.unsoedpass.memo.memoModel;
 import com.topanlabs.unsoedpass.memo.memoent;
 import com.topanlabs.unsoedpass.memo.memorepo;
+import com.topanlabs.unsoedpass.memo.memoAdapter;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -72,7 +73,7 @@ public class memoList extends AppCompatActivity {
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addNetworkExtrasBundle(AdColonyAdapter.class, AdColonyBundleBuilder.build()).build();
         mAdView.loadAd(adRequest);
-        final String BASE_URL = "https://api1.myunsoed.com";
+        final String BASE_URL = "http://10.10.10.35:8123";
         getSupportActionBar().setTitle("Memo Kelas");
         getSupportActionBar().setSubtitle(kodekelas);
         Retrofit retrofit = new Retrofit.Builder()
@@ -96,7 +97,8 @@ public class memoList extends AppCompatActivity {
                             if (!matkul.isEmpty()) {
                                 for (int i = 0; i < matkul.size(); i++) {
 
-                                    //repo.insert(new memoent(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
+                                    repo.insert(new memoent(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal(), matkul.get(i).getCatatan(),matkul.get(i).getJenis()));
+
                                 }
                                 kelaspenggantis = repo.getKelas();
 
@@ -104,7 +106,7 @@ public class memoList extends AppCompatActivity {
 
                                     @Override
                                     public void run() {
-                                        kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
+                                        memoAdapter adapter = new memoAdapter(kelaspenggantis, getApplicationContext());
                                         recyclerView.setAdapter(adapter);
 
                                         adapter.notifyDataSetChanged();
@@ -145,7 +147,7 @@ public class memoList extends AppCompatActivity {
                                             toast.show();
                                         }
                                     });
-                                    Intent i = new Intent(kelasPengganti.this, MainActivity.class);
+                                    Intent i = new Intent(memoList.this, MainActivity.class);
                                     startActivity(i);
                                     finish();
                                     Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -169,7 +171,7 @@ public class memoList extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<kelasModel>> call, Throwable t) {
+            public void onFailure(Call<List<memoModel>> call, Throwable t) {
 
                 Context context = getApplicationContext();
                 CharSequence text = "Error TL12";
@@ -187,7 +189,7 @@ public class memoList extends AppCompatActivity {
 
                             @Override
                             public void run() {
-                                kelasAdapter adapter = new kelasAdapter(kelaspenggantis,getApplicationContext());
+                                memoAdapter adapter = new memoAdapter(kelaspenggantis,getApplicationContext());
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
                                 recyclerView.scheduleLayoutAnimation();

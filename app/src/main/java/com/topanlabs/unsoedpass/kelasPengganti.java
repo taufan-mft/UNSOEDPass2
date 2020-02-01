@@ -73,7 +73,7 @@ public class kelasPengganti extends AppCompatActivity {
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addNetworkExtrasBundle(AdColonyAdapter.class, AdColonyBundleBuilder.build()).build();
         mAdView.loadAd(adRequest);
-        final String BASE_URL = "https://api1.myunsoed.com";
+        final String BASE_URL = "http://10.10.10.35:8123";
         getSupportActionBar().setTitle("Kelas Pengganti");
         getSupportActionBar().setSubtitle(kodekelas);
         Retrofit retrofit = new Retrofit.Builder()

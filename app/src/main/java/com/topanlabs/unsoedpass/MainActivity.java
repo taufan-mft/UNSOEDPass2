@@ -204,7 +204,7 @@ String nama;
         aha4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent w = new Intent(MainActivity.this, kelasSubscriber.class);
+                Intent w = new Intent(MainActivity.this, memoList.class);
                 startActivity(w);
 
             }
@@ -496,7 +496,7 @@ String nama;
         }
     }
     private void updateStat() {
-        final String BASE_URL = "https://api1.myunsoed.com";
+        final String BASE_URL = "http://10.10.10.35:8123";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -509,7 +509,7 @@ String nama;
 
     }
     private void getBerita() {
-        final String BASE_URL = "https://api1.myunsoed.com";
+        final String BASE_URL = "http://10.10.10.35:8123";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
