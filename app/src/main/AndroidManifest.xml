@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".memoList"></activity>
+        <activity android:name=".memoAdd"></activity>
+        <activity android:name=".memoList" />
 
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"

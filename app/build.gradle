@@ -27,7 +27,7 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.topanlabs.unsoedpass"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 4
         versionName "1.6"
@@ -83,7 +83,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.11.3'
     //implementation 'org.apache.commons:commons-lang3:3.9'
     implementation 'org.apache.commons:commons-text:1.6'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
+
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.7.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.0'

@@ -63,7 +63,7 @@ String kode, nim;
 
         btnGabung.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasSubscriber.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasSubscriber.this, R.style.AlertDialogTheme);
                 alertDialogBuilder.setTitle("Gabung ke kelas?");
                 alertDialogBuilder
                         //.setMessage(pesan)

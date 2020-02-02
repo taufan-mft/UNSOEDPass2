@@ -6,12 +6,4 @@
         android:icon="@drawable/ic_refresh_black_24dp"
         android:title="Refresh"
         app:showAsAction="ifRoom"/>
-    <item android:id="@+id/newMemo"
-    android:icon="@drawable/ic_settings_black_24dp"
-    android:title="Tambah Kelas"
-    />
-    <item android:id="@+id/hapusKelas"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="Hapus Kelas"
-        />
 </menu>

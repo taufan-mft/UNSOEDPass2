@@ -68,7 +68,7 @@ public class kelasSelector extends AppCompatActivity {
         kelasbaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasSelector.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasSelector.this, R.style.AlertDialogTheme2);
                 alertDialogBuilder.setTitle("Buat kelas baru?");
                 alertDialogBuilder
                         //.setMessage(pesan)

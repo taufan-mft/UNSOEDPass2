@@ -8,7 +8,7 @@
     <color name="jadwal">#ffc0cb</color>
     <color name="absen">#065535</color>
     <color name="ujian">#ff7373</color>
-
+    <color name="tulisan">#000000</color>
     <color name="bg_screen1">#f64c73</color>
     <color name="bg_screen2">#20d2bb</color>
     <color name="bg_screen3">#3395ff</color>
@@ -43,5 +43,5 @@
         <item>@color/dot_dark_screen4</item>
         <item>@color/dot_dark_screen5</item>
     </array>
-
+    <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
 </resources>

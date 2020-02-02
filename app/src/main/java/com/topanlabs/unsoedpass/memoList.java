@@ -11,6 +11,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
@@ -84,6 +87,158 @@ public class memoList extends AppCompatActivity {
 
         kelasService =
                 retrofit.create(kelasInt.class);
+        Call<List<memoModel>> call = kelasService.getMemo(tokenkita,kodekelas);
+        call.enqueue(new Callback<List<memoModel>>() {
+            @Override
+            public void onResponse(Call<List<memoModel>> call, Response<List<memoModel>> response) {
+                if (response.code() == 200) {
+                    List<memoModel> matkul = response.body();
+                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            repo.nukeTable();
+                            if (!matkul.isEmpty()) {
+                                for (int i = 0; i < matkul.size(); i++) {
+
+                                    repo.insert(new memoent(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal(), matkul.get(i).getCatatan(),matkul.get(i).getJenis()));
+
+                                }
+                                kelaspenggantis = repo.getKelas();
+
+                                runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        memoAdapter adapter = new memoAdapter(kelaspenggantis, getApplicationContext());
+                                        recyclerView.setAdapter(adapter);
+
+                                        adapter.notifyDataSetChanged();
+                                        recyclerView.scheduleLayoutAnimation();
+                                    }
+                                });
+                                //Log.d("raisan", mahasiswaArrayList.toString());
+
+                            }
+                        }
+                    });
+                }else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(memoList.this);
+                    alertDialogBuilder.setTitle("Kelas sudah dihapus.");
+                    alertDialogBuilder
+                            //.setMessage(pesan)
+                            //.setIcon(R.mipmap.ic_launcher)
+                            .setCancelable(false)
+                            .setPositiveButton("Oke",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    editor.putString("kodekelas", "0");
+                                    editor.apply();
+                                    mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, "0", null, null, null);
+                                    Call<Void> call = mahaint.gantiKodekel(nim,mahasiw,tokenkita );
+                                    call.enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                            Log.d("raisan", "updatecuy");
+                                            //adapter.notifyDataSetChanged();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
+                                            Context context = getApplicationContext();
+                                            CharSequence text = "Error TL12";
+                                            int duration = Toast.LENGTH_SHORT;
+                                            Toast toast = Toast.makeText(context, text, duration);
+                                            toast.show();
+                                        }
+                                    });
+                                    Intent i = new Intent(memoList.this, MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            repo.nukeTable();
+                                        }
+                                    });
+
+                                }
+                            });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+
+
+
+                //Log.d("raisan", mahasiswaArrayList.toString());
+                //adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<memoModel>> call, Throwable t) {
+
+                Context context = getApplicationContext();
+                CharSequence text = "Error TL12";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                Executors.newSingleThreadExecutor().execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        kelaspenggantis = repo.getKelas();
+
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                memoAdapter adapter = new memoAdapter(kelaspenggantis,getApplicationContext());
+                                recyclerView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                                recyclerView.scheduleLayoutAnimation();
+                            }
+                        });
+                        //Log.d("raisan", mahasiswaArrayList.toString());
+
+                    }
+
+                });
+
+
+            }
+
+            //showDialog();
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        if (ketuakelas) {
+            inflater.inflate(R.menu.menuketua_memo, menu);
+        } else{
+            inflater.inflate(R.menu.menumemo, menu);
+        }
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+
+                updateKelas();
+                return true;
+            case R.id.newMemo:
+                Intent i = new Intent(memoList.this, memoAdd.class);
+                startActivity(i);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    void updateKelas() {
         Call<List<memoModel>> call = kelasService.getMemo(tokenkita,kodekelas);
         call.enqueue(new Callback<List<memoModel>>() {
             @Override

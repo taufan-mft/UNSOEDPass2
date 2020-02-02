@@ -20,6 +20,9 @@ public interface kelasInt {
     @GET("/memo/{nim}/")
     Call<List<memoModel>> getMemo(@Header("Authorization") String token, @Path("nim") String nim);
 
+    @POST("/creatememo/")
+    Call<memoModel> buatMemo(@Header("Authorization")String token, @Body memoModel mahasis);
+
     @GET("/liatkelas/{kodekelas}/")
     Call<kelasModel> cariKelas(@Path("kodekelas") String kodekelas);
 

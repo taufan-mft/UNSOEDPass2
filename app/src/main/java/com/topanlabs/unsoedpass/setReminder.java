@@ -79,26 +79,6 @@ public class setReminder extends AppCompatActivity {
 
             }
         });
-       /** recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        adapter = new MahasiswaAdapter(this);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(setReminder.this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setAdapter(adapter);**/
-
-
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
-        // The onChanged() method fires when the observed data changes and the activity is
-        // in the foreground.
-
-
-        /**while (true) {
-            if ((matkulcount != null) & (dataList !=null )) {
-                setingWin();
-                break;
-            }
-        }**/
 
     }
 
