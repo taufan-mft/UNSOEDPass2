@@ -225,7 +225,7 @@ public class kelasPengganti extends AppCompatActivity {
 
                 updateKelas();
                 return true;
-            case R.id.new_game:
+            case R.id.newMemo:
                 Intent i = new Intent(kelasPengganti.this, tambahKelas.class);
                 startActivity(i);
                 return true;

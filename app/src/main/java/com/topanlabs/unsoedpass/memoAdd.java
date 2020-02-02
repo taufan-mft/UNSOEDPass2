@@ -35,6 +35,7 @@ TextInputEditText namatkul, txtRuangan, txtCatatan;
     AutoCompleteTextView txtJenis;
 TextView txtTanggal, txtJam;
     SharedPreferences mSettings;
+    SimpleDateFormat sdf;
     SharedPreferences.Editor editor;
 kelasInt kelasService;
 String tokenkita, kodekelas;
@@ -76,6 +77,7 @@ MaterialButton btnTanggal, btnJam, btnSend;
                 findViewById(R.id.txtJenis);
         txtJenis.setAdapter(adapter);
         Calendar myCalendar = Calendar.getInstance();
+
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -85,7 +87,7 @@ MaterialButton btnTanggal, btnJam, btnSend;
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 String myFormat = "dd-MM-yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                 sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                 int day = myCalendar.get(Calendar.DAY_OF_WEEK);
                 String harini = "o";
@@ -142,7 +144,7 @@ MaterialButton btnTanggal, btnJam, btnSend;
             mTimePicker.show();
         });
         btnSend.setOnClickListener((View v) -> {
-            memoModel maukirim = new memoModel(kodekelas, namatkul.getText().toString(), txtJam.getText().toString(), txtRuangan.getText().toString(), txtTanggal.getText().toString(),0,txtJenis.getText().toString(),txtCatatan.getText().toString());
+            memoModel maukirim = new memoModel(kodekelas, namatkul.getText().toString(), txtJam.getText().toString(), txtRuangan.getText().toString(), sdf.format(myCalendar.getTime()),0,txtJenis.getText().toString(),txtCatatan.getText().toString());
             Call<memoModel> call = kelasService.buatMemo(tokenkita,maukirim);
             call.enqueue(new Callback<memoModel>() {
                 @Override
