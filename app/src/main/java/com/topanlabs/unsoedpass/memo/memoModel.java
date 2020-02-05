@@ -28,14 +28,17 @@ public class memoModel {
     @SerializedName("catatan")
     @Expose
     private String catatan;
-
-    public memoModel(String kodekelas, String namatkul, String jam, String ruangan, String tanggal, Integer id, String jenis, String catatan) {
+    @SerializedName("idmemo")
+    @Expose
+    private Integer idmemo;
+    public memoModel(String kodekelas, String namatkul, String jam, String ruangan, String tanggal, Integer id, String jenis, String catatan, Integer idmemo) {
         this.kodekelas = kodekelas;
         this.namatkul = namatkul;
         this.jam = jam;
         this.ruangan = ruangan;
         this.tanggal = tanggal;
         this.id = id;
+        this.idmemo = idmemo;
         this.jenis = jenis;
         this.catatan = catatan;
     }
@@ -46,6 +49,14 @@ public class memoModel {
 
     public void setKodekelas(String kodekelas) {
         this.kodekelas = kodekelas;
+    }
+
+    public Integer getIdmemo() {
+        return idmemo;
+    }
+
+    public void setIdmemo(Integer idmemo) {
+        this.idmemo = idmemo;
     }
 
     public String getNamatkul() {

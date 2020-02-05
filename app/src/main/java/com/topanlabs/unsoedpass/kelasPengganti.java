@@ -73,7 +73,7 @@ public class kelasPengganti extends AppCompatActivity {
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addNetworkExtrasBundle(AdColonyAdapter.class, AdColonyBundleBuilder.build()).build();
         mAdView.loadAd(adRequest);
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         getSupportActionBar().setTitle("Kelas Pengganti");
         getSupportActionBar().setSubtitle(kodekelas);
         Retrofit retrofit = new Retrofit.Builder()
@@ -242,22 +242,22 @@ public class kelasPengganti extends AppCompatActivity {
 void hapuskelas(){
     Call<Void> call = kelasService.delKelas(tokenkita,kodekelas);
     call.enqueue(new Callback<Void>() {
-        @Override
-        public void onResponse(Call<Void> call, Response<Void> response) {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
 
-        }
+            }
 
-        @Override
-        public void onFailure(Call<Void> call, Throwable t) {
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
 
-            Context context = getApplicationContext();
-            CharSequence text = "Error TL12";
-            int duration = Toast.LENGTH_SHORT;
+                Context context = getApplicationContext();
+                CharSequence text = "Error TL12";
+                int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
 
-        }
+            }
 
         //showDialog();
     });

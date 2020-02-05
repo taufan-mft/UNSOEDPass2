@@ -30,11 +30,14 @@ public class memoent {
     private String catatan;
     @ColumnInfo(name = "jenis")
     private String jenis;
+    @ColumnInfo(name = "idmemo")
+    private Integer idmemo;
 
-    public memoent(int id, String namakul, String jam, String ruangan, String tanggal, String catatan, String jenis) {
+    public memoent(int id, String namakul, String jam, String ruangan, String tanggal, String catatan, String jenis, Integer idmemo) {
         this.id = id;
         this.namakul = namakul;
         this.jam = jam;
+        this.idmemo = idmemo;
         this.tanggal = tanggal;
         this.ruangan = ruangan;
         this.catatan = catatan;
@@ -43,6 +46,14 @@ public class memoent {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Integer getIdmemo() {
+        return idmemo;
+    }
+
+    public void setIdmemo(Integer idmemo) {
+        this.idmemo = idmemo;
     }
 
     public void setNamakul(@NonNull String namakul) {

@@ -20,6 +20,9 @@ public interface kelasInt {
     @GET("/memo/{nim}/")
     Call<List<memoModel>> getMemo(@Header("Authorization") String token, @Path("nim") String nim);
 
+    @DELETE("/hapmemo/{nim}/")
+    Call<Void> deleteMemo(@Header("Authorization") String token, @Path("nim") String nim);
+
     @POST("/creatememo/")
     Call<memoModel> buatMemo(@Header("Authorization")String token, @Body memoModel mahasis);
 

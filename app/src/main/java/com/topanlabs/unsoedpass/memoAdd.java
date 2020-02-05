@@ -58,7 +58,7 @@ MaterialButton btnTanggal, btnJam, btnSend;
         tokenkita = mSettings.getString("token","token");
         kodekelas = mSettings.getString("kodekelas","rai");
         String[] COUNTRIES = new String[] {"Tugas", "Kuis"};
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -144,7 +144,7 @@ MaterialButton btnTanggal, btnJam, btnSend;
             mTimePicker.show();
         });
         btnSend.setOnClickListener((View v) -> {
-            memoModel maukirim = new memoModel(kodekelas, namatkul.getText().toString(), txtJam.getText().toString(), txtRuangan.getText().toString(), sdf.format(myCalendar.getTime()),0,txtJenis.getText().toString(),txtCatatan.getText().toString());
+            memoModel maukirim = new memoModel(kodekelas, namatkul.getText().toString(), txtJam.getText().toString(), txtRuangan.getText().toString(), sdf.format(myCalendar.getTime()),0,txtJenis.getText().toString(),txtCatatan.getText().toString(),0);
             Call<memoModel> call = kelasService.buatMemo(tokenkita,maukirim);
             call.enqueue(new Callback<memoModel>() {
                 @Override
@@ -153,7 +153,7 @@ MaterialButton btnTanggal, btnJam, btnSend;
                     if (statusCode == 201) {
                         Toast toast = Toast.makeText(getApplicationContext(), "Berhasil menambah matkul", Toast.LENGTH_SHORT);
                         toast.show();
-                        Intent i = new Intent(memoAdd.this, kelasPengganti.class);
+                        Intent i = new Intent(memoAdd.this, memoList.class);
                         startActivity(i);
                         finish();
 

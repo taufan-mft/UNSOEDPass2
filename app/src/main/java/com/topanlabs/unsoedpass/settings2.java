@@ -16,7 +16,7 @@ import android.widget.Button;
 public class settings2 extends AppCompatActivity {
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    ConstraintLayout logout, btncall, btnkebijakan;
+    ConstraintLayout logout, btncall, btnkebijakan, btnSinkron;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +25,19 @@ public class settings2 extends AppCompatActivity {
         logout = findViewById(R.id.optLogout);
         btncall = findViewById(R.id.optHubungi);
         btnkebijakan = findViewById(R.id.optKebijakan);
+        btnSinkron = findViewById(R.id.optSinkron);
+        btnSinkron.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                Intent i = new Intent(settings2.this, sinkronisasi.class);
+                startActivity(i);
+
+                //Intent i = new Intent(login.this, MainActivity.class);
+                //finish();  //Kill the activity from which you will go to next activity
+                //startActivity(i);
+            }
+
+        });
         btncall.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button

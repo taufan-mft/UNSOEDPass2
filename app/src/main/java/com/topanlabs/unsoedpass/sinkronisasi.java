@@ -48,7 +48,7 @@ public class sinkronisasi extends AppCompatActivity {
         btnMin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 hari = Integer.parseInt(txthari.getText().toString());
-                if (hari != 1) {
+                if (hari != 0) {
                     hari = hari - 1;
                     txthari.setText(hari.toString());
                 }

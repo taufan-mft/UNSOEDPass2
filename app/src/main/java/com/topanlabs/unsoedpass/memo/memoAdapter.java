@@ -1,7 +1,9 @@
 package com.topanlabs.unsoedpass.memo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.topanlabs.unsoedpass.R;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
 import com.topanlabs.unsoedpass.memo.memoent;
+import com.topanlabs.unsoedpass.memoDetail;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -111,8 +114,20 @@ public class memoAdapter extends RecyclerView.Adapter<memoAdapter.memoViewHolder
             holder.txtJenis.setTextColor(parseColor("#FFFFFF"));
             holder.txthari.setTextColor(parseColor("#FFFFFF"));
         }
+    final String buatl = harini;
+    holder.cview.setOnClickListener((View v)-> {
+        Intent i = new Intent(context, memoDetail.class);
+        i.putExtra("matkul", current.getNamakul());
+        i.putExtra("jam", current.getJam());
+        i.putExtra("ruangan", current.getRuangan());
+        i.putExtra("tanggal",buatl +" "+current.getTanggal());
+        i.putExtra("catatan", current.getCatatan());
+        i.putExtra("jenis", current.getJenis());
+        i.putExtra("id", Integer.toString(current.getIdmemo()));
+        Log.d("zhafarin", Integer.toString(current.getIdmemo()));
+        context.startActivity(i);
 
-
+    });
 
 
     }

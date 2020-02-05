@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.topanlabs.unsoedpass.memo.memodao;
 import com.topanlabs.unsoedpass.memo.memoent;
 
-@Database(entities = {kelaspengganti.class, memoent.class}, version = 2)
+@Database(entities = {kelaspengganti.class, memoent.class}, version = 3)
 public abstract class  kelasdb extends RoomDatabase {
 
     public abstract kelaspengDAO kelaspengDAO();
@@ -25,7 +25,7 @@ public abstract class  kelasdb extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             kelasdb.class, "kelas_database")
-                            .addMigrations(MIGRATION_1_2)
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .build();
                 }
             }
@@ -37,6 +37,14 @@ public abstract class  kelasdb extends RoomDatabase {
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("CREATE TABLE `memo` (`namakul` TEXT NOT NULL, `jam` TEXT,`jenis` TEXT,`catatan` TEXT, `ruangan` TEXT," +
                     "`id` INTEGER NOT NULL,`tanggal` TEXT,PRIMARY KEY(`id`))");
+        }
+    };
+
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE `memo`" +
+                    "ADD COLUMN `idmemo` INTEGER");
         }
     };
 

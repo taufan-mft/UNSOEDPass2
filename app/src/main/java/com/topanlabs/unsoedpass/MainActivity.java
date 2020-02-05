@@ -172,7 +172,7 @@ String nama;
             finish();
             return;
         }
-        if (days > intervalSync) {
+        if (days > intervalSync && intervalSync != 0) {
             Intent i = new Intent(this, masukCapcay.class);
             startActivity(i);
             finish();
@@ -353,7 +353,11 @@ String nama;
                 Intent a = new Intent(MainActivity.this, aboutScreen.class);
                 startActivity(a);
                 return true;
-
+            case R.id.syncnow:
+                Intent s = new Intent(this, masukCapcay.class);
+                startActivity(s);
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -385,26 +389,7 @@ String nama;
 
 
     }
-
-    private void absenLaunch(int days) {
-        String trialwarn = mSettings.getString("trialwarnabsen", "belum");
-
-        if ( (days < 30) && trialwarn.equals("belum")) {
-            showaDialog("Ini merupakan fitur premium","Cek absen merupakan salah satu fitur premium. Kamu dapat mencoba fitur ini selama 30 hari.", "cekabsen");
-        } else if (ifpremium.equals("ya")) {
-
-            Intent w = new Intent(MainActivity.this, cekAbsen.class);
-            startActivity(w);
-        } else if (days < 30) {
-            Intent w = new Intent(MainActivity.this, cekAbsen.class);
-            startActivity(w);
-        } else if (days > 30){
-            Intent w = new Intent(MainActivity.this, checkoutPay.class);
-            startActivity(w);
-        }
-    }
-
-    private void showaDialog(String title, String pesan, final String konteks){
+        private void showaDialog(String title, String pesan, final String konteks){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
@@ -496,7 +481,7 @@ String nama;
         }
     }
     private void updateStat() {
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -509,7 +494,7 @@ String nama;
 
     }
     private void getBerita() {
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -578,14 +563,20 @@ String nama;
     private void updateGreetings() {
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-        if(timeOfDay >= 0 && timeOfDay < 12){
+        if(timeOfDay >= 0 && timeOfDay < 3){
+            String salam= "Loh kok belom tidur?";
+            txtSalam.setText(salam);
+        }else if(timeOfDay >= 3 && timeOfDay < 6){
+            String salam= "Wah, gasik banget udah bangun.";
+            txtSalam.setText(salam);
+        }else if(timeOfDay >= 6 && timeOfDay < 12){
             String salam= "Selamat pagi, mau ngapain hari ini?";
             txtSalam.setText(salam);
         }else if(timeOfDay >= 12 && timeOfDay < 16){
             String salam= "Selamat siang, mau ngapain hari ini?";
             txtSalam.setText(salam);
-        }else if(timeOfDay >= 16 && timeOfDay < 21){
-            String salam= "Selamat malam, mau ngapain hari ini?";
+        }else if(timeOfDay >= 16 && timeOfDay < 18){
+            String salam= "Selamat sore, menikmati senja sama siapa nih?";
             txtSalam.setText(salam);
         }else if(timeOfDay >= 21 && timeOfDay < 24){
             String salam= "Ayo istirahat. Jangan begadang, ya.";

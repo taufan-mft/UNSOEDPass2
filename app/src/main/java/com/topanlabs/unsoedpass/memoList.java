@@ -48,6 +48,7 @@ public class memoList extends AppCompatActivity {
     SharedPreferences.Editor editor;
     String tokenkita, kodekelas, nim;
     mahaint mahaint;
+    Context cox;
     List<memoent>  kelaspenggantis;
     memorepo repo;
     Boolean ketuakelas;
@@ -68,6 +69,7 @@ public class memoList extends AppCompatActivity {
         nim = mSettings.getString("nim", "nim");
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
+        cox = getApplicationContext();
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -76,7 +78,7 @@ public class memoList extends AppCompatActivity {
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addNetworkExtrasBundle(AdColonyAdapter.class, AdColonyBundleBuilder.build()).build();
         mAdView.loadAd(adRequest);
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         getSupportActionBar().setTitle("Memo Kelas");
         getSupportActionBar().setSubtitle(kodekelas);
         Retrofit retrofit = new Retrofit.Builder()
@@ -100,7 +102,7 @@ public class memoList extends AppCompatActivity {
                             if (!matkul.isEmpty()) {
                                 for (int i = 0; i < matkul.size(); i++) {
 
-                                    repo.insert(new memoent(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal(), matkul.get(i).getCatatan(),matkul.get(i).getJenis()));
+                                    repo.insert(new memoent(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal(), matkul.get(i).getCatatan(),matkul.get(i).getJenis(), matkul.get(i).getIdmemo()));
 
                                 }
                                 kelaspenggantis = repo.getKelas();
@@ -109,7 +111,7 @@ public class memoList extends AppCompatActivity {
 
                                     @Override
                                     public void run() {
-                                        memoAdapter adapter = new memoAdapter(kelaspenggantis, getApplicationContext());
+                                        memoAdapter adapter = new memoAdapter(kelaspenggantis, memoList.this);
                                         recyclerView.setAdapter(adapter);
 
                                         adapter.notifyDataSetChanged();
@@ -192,7 +194,7 @@ public class memoList extends AppCompatActivity {
 
                             @Override
                             public void run() {
-                                memoAdapter adapter = new memoAdapter(kelaspenggantis,getApplicationContext());
+                                memoAdapter adapter = new memoAdapter(kelaspenggantis,memoList.this);
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
                                 recyclerView.scheduleLayoutAnimation();
@@ -210,7 +212,12 @@ public class memoList extends AppCompatActivity {
             //showDialog();
         });
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateKelas();
 
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -226,7 +233,7 @@ public class memoList extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_refresh:
-
+Log.d("zhafarin", "aku dipencet");
                 updateKelas();
                 return true;
             case R.id.newMemo:
@@ -244,6 +251,7 @@ public class memoList extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<memoModel>> call, Response<List<memoModel>> response) {
                 if (response.code() == 200) {
+                    Log.d("zhafarin", "200");
                     List<memoModel> matkul = response.body();
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
                         @Override
@@ -252,7 +260,9 @@ public class memoList extends AppCompatActivity {
                             if (!matkul.isEmpty()) {
                                 for (int i = 0; i < matkul.size(); i++) {
 
-                                    repo.insert(new memoent(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal(), matkul.get(i).getCatatan(),matkul.get(i).getJenis()));
+                                    repo.insert(new memoent(0, matkul.get(i).getNamatkul(),
+                                            matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal(),
+                                            matkul.get(i).getCatatan(),matkul.get(i).getJenis(), matkul.get(i).getIdmemo()));
 
                                 }
                                 kelaspenggantis = repo.getKelas();
@@ -261,7 +271,7 @@ public class memoList extends AppCompatActivity {
 
                                     @Override
                                     public void run() {
-                                        memoAdapter adapter = new memoAdapter(kelaspenggantis, getApplicationContext());
+                                        memoAdapter adapter = new memoAdapter(kelaspenggantis, memoList.this);
                                         recyclerView.setAdapter(adapter);
 
                                         adapter.notifyDataSetChanged();
@@ -344,7 +354,7 @@ public class memoList extends AppCompatActivity {
 
                             @Override
                             public void run() {
-                                memoAdapter adapter = new memoAdapter(kelaspenggantis,getApplicationContext());
+                                memoAdapter adapter = new memoAdapter(kelaspenggantis,memoList.this);
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
                                 recyclerView.scheduleLayoutAnimation();

@@ -111,7 +111,7 @@ public class login extends AppCompatActivity {
 
         getSupportActionBar().hide();
         tersedia = true;
-        final String BASE_URL = "http://10.10.10.35:8123";
+        final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

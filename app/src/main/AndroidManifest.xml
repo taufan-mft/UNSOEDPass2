@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".memoAdd"></activity>
+        <activity android:name=".memoDetail"></activity>
+        <activity android:name=".memoAdd" />
         <activity android:name=".memoList" />
 
         <meta-data
