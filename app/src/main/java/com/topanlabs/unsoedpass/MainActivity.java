@@ -650,20 +650,20 @@ String nama;
                         long difference = waktu2.getTime() - waktu1.getTime();
                         milisec2[i] = difference;
                     }
-                        long min = Long.MAX_VALUE;
+                    long min = Long.MAX_VALUE;
 
-                         minus = "ya";
-
-                        for (int a = 0; a < milisec2.length; a++) {
-                            Log.d("winal", "ini " + a);
-                            if (min > milisec2[a] && milisec2[a] > 0) {
-                                min = milisec2[a];
-                               Log.d("winal2", "Ini value milisec2 min & max kelp" + min + "&" + milisec[a]);
-                                indexKelp   = a;
-                                minus = "ga";
-                            }
+                    minus = "ya";
+//if (milisec2.length != 0){
+                    for (int a = 0; a < milisec2.length; a++) {
+                        Log.d("winal", "ini " + a);
+                        if (min > milisec2[a] && milisec2[a] > 0) {
+                            min = milisec2[a];
+                          //  Log.d("winal2", "Ini value milisec2 min & max kelp" + min + "&" + milisec[a]);
+                            indexKelp = a;
+                            minus = "ga";
                         }
-
+                    }
+             //   }
                     }
 
 
