@@ -16,7 +16,7 @@ import android.widget.Button;
 public class settings2 extends AppCompatActivity {
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    ConstraintLayout logout, btncall, btnkebijakan, btnSinkron;
+    ConstraintLayout logout, btncall, btnkebijakan, btnSinkron, btnReminder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,7 @@ public class settings2 extends AppCompatActivity {
         btncall = findViewById(R.id.optHubungi);
         btnkebijakan = findViewById(R.id.optKebijakan);
         btnSinkron = findViewById(R.id.optSinkron);
+        btnReminder=findViewById(R.id.optReminder);
         btnSinkron.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
@@ -71,6 +72,12 @@ public class settings2 extends AppCompatActivity {
             showaDialog("Yakin mau logout?", "Serius ga?");
           }
          });
+        btnReminder.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(settings2.this, setReminder.class);
+                startActivity(i);
+            }
+        });
 
         getSupportActionBar().setTitle("Settings");
         mSettings = getSharedPreferences("Settings",0);

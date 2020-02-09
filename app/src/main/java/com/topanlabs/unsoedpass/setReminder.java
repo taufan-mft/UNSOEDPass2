@@ -88,15 +88,18 @@ public class setReminder extends AppCompatActivity {
             public void run() {
                 dataList = matkulRepository.getAllMat();
                 matkulcount = matkulRepository.getCount2();
+                Log.d("zhafarin", "matkul count:" +matkulcount);
 
             }
         });
 
     }
     public void setingWin(boolean cancel) {
-        for (int i = 0; i <= matkulcount - 1; i++) {
+        for (int i = 0; i <= matkulcount-1; i++) {
+            Log.d("zhafarin","ini i nya "+i);
             AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             String namatkul = dataList.get(i).getNamakul();
+            Log.d("zhafarin", "nama matkul: "+ namatkul);
             String hari = dataList.get(i).getHari().toLowerCase();
             int winul = Calendar.MONDAY;
 
@@ -145,6 +148,7 @@ public class setReminder extends AppCompatActivity {
             myIntent.putExtra("hour", jam);
             myIntent.putExtra("minute", menit);
             myIntent.putExtra("dayofweek", winul);
+            myIntent.putExtra("repeat", true);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             Log.d("bootsuda","dibuatt");

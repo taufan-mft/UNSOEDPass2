@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clay"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#000000"
     android:layout_height="match_parent"
     tools:context=".Login">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
 
                 <EditText
@@ -25,100 +19,97 @@
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="36dp"
-                    android:layout_marginLeft="36dp"
-                    android:layout_marginTop="12dp"
                     android:ems="10"
                     android:hint="NIM"
+                    android:backgroundTint="#ffffff"
                     android:inputType="textPersonName"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textlgn" />
+                    android:textColorHint="#ffffff"
+                    android:textColor="#ffffff"
+                    app:layout_constraintBottom_toTopOf="@+id/txpass"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <EditText
                     android:id="@+id/txpass"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
-
+                    android:backgroundTint="#ffffff"
                     android:layout_marginStart="36dp"
-                    android:layout_marginLeft="36dp"
-                    android:layout_marginTop="16dp"
                     android:ems="10"
                     android:hint="Password"
+                    android:textColorHint="#ffffff"
+                    android:textColor="#ffffff"
                     android:inputType="textPassword"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txnim" />
+                    app:layout_constraintBottom_toTopOf="@+id/tempatCapcay2"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <EditText
                     android:id="@+id/txcapcay"
                     android:layout_width="280dp"
                     android:layout_height="wrap_content"
-
+                    android:backgroundTint="#ffffff"
                     android:layout_marginStart="36dp"
-                    android:layout_marginLeft="36dp"
                     android:ems="10"
+                    android:textColor="#ffffff"
                     android:hint="Capcay"
+                    android:textColorHint="#ffffff"
                     android:inputType="textPersonName"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tempatCapcay2" />
+                    app:layout_constraintBottom_toTopOf="@+id/loginbutton2"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="179dp"
                     android:layout_height="86dp"
-                    android:layout_marginStart="160dp"
-                    android:layout_marginTop="65dp"
-                    android:layout_marginEnd="50dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/upass" />
+                    app:srcCompat="@drawable/upass2" />
 
                 <ImageView
                     android:id="@+id/tempatCapcay2"
-                    android:layout_width="179dp"
-                    android:layout_height="86dp"
+                    android:layout_width="155dp"
+                    android:layout_height="62dp"
                     android:layout_marginStart="50dp"
-                    android:layout_marginLeft="50dp"
                     android:layout_marginEnd="50dp"
+                    app:layout_constraintBottom_toTopOf="@+id/txcapcay"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txpass"
                     app:srcCompat="@drawable/upass" />
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="105dp"
-                    android:layout_height="200dp"
+                    android:layout_width="70dp"
+                    android:layout_height="99dp"
                     android:layout_marginStart="36dp"
-                    android:layout_marginLeft="36dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:scaleType="fitCenter"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/sudirpong" />
+                    app:srcCompat="@drawable/icweb" />
 
                 <TextView
                     android:id="@+id/textlgn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginBottom="16dp"
                     android:text="Login dengan akun SIA UNSOED:"
+                    android:textColor="#ffffff"
                     android:textSize="14dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintBottom_toTopOf="@+id/txnim"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="#ffffff"
                     android:text="@string/inAppVersion"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bthbantuan" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/loginbutton"
@@ -126,13 +117,12 @@
                     android:layout_width="285dp"
                     android:layout_height="44dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="LOGIN"
                     app:backgroundTint="@color/MASH"
+                    app:layout_constraintBottom_toTopOf="@+id/bthbantuan"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/loginbutton2" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/loginbutton2"
@@ -140,13 +130,12 @@
                     android:layout_width="285dp"
                     android:layout_height="44dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="32dp"
                     android:layout_marginEnd="8dp"
                     android:text="Refresh Capcay"
                     app:backgroundTint="@color/MASH"
+                    app:layout_constraintBottom_toTopOf="@+id/loginbutton"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txcapcay" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/bthbantuan"
@@ -154,17 +143,14 @@
                     android:layout_width="285dp"
                     android:layout_height="44dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="16dp"
                     android:text="Butuh bantuan?"
                     app:backgroundTint="@color/MASH"
+                    app:layout_constraintBottom_toTopOf="@+id/textView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/loginbutton" />
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

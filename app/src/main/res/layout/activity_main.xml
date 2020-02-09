@@ -270,14 +270,14 @@
                                 android:layout_width="80dp"
                                 android:layout_height="50dp"
                                 android:scaleType="centerInside"
-                                app:srcCompat="@drawable/icon_lostfound" />
+                                app:srcCompat="@drawable/icon_memo" />
 
                             <TextView
                                 android:id="@+id/textView25"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Lost n Found" />
+                                android:text="Memo" />
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
