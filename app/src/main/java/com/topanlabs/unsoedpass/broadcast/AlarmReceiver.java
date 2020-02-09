@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.topanlabs.unsoedpass.MainActivity;
 import com.topanlabs.unsoedpass.R;
+import com.topanlabs.unsoedpass.memoList;
 import com.topanlabs.unsoedpass.setReminder;
 
 import java.util.Calendar;
@@ -32,10 +33,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         int jam = intent.getIntExtra("hour",0);
         int menit = intent.getIntExtra("minute", 0);
         int dayofweek = intent.getIntExtra("dayofweek", 0);
-
+        Boolean repeat = intent.getBooleanExtra("repeat", false);
+        String afterAction = intent.getStringExtra("afterAction");
+        Intent contentIntent = new Intent(context, MainActivity.class);
         mNotificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent contentIntent = new Intent(context, MainActivity.class);
+        if (afterAction.equals("main")) {
+             contentIntent = new Intent(context, MainActivity.class);
+        } else if (afterAction.equals("memo")){
+            contentIntent =  new Intent(context, memoList.class);
+        }
         PendingIntent contentPendingIntent = PendingIntent.getActivity
                 (context, NOTIFICATION_ID, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
@@ -69,9 +76,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         myIntent.putExtra("dayofweek", dayofweek);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        if (repeat) {
         AlarmManager manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
     }
-}
+}}
