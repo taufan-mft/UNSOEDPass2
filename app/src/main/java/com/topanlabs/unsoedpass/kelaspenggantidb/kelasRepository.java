@@ -20,6 +20,7 @@ public class kelasRepository {
     public  List<kelaspengganti> getKelasIni( String hari) {
         return kelasDAO.getTodayKelas(hari);
     }
+    public Integer getCount() {return kelasDAO.getCount2();}
     public void insert (kelaspengganti matkuldb) {
         kelasDAO.insert(matkuldb);
     }

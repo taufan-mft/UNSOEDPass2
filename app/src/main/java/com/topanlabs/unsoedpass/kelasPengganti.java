@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,9 +27,13 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.jirbo.adcolony.AdColonyAdapter;
 import com.jirbo.adcolony.AdColonyBundleBuilder;
+import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -48,6 +54,7 @@ public class kelasPengganti extends AppCompatActivity {
     List<kelaspengganti>  kelaspenggantis;
     kelasRepository repo;
     Boolean ketuakelas;
+    Integer oldCount, newCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,14 +101,20 @@ public class kelasPengganti extends AppCompatActivity {
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
                         @Override
                         public void run() {
+                            oldCount = repo.getCount();
+                            if (oldCount!= 0){
+                                addAlarm(true);
+                            }
                             repo.nukeTable();
                             if (!matkul.isEmpty()) {
+                                Log.d("zhafarin", "matkul size: "+matkul.size());
                                 for (int i = 0; i < matkul.size(); i++) {
 
                                     repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
                                 }
                                 kelaspenggantis = repo.getKelas();
-
+                                newCount = repo.getCount();
+                                addAlarm(false);
                                 runOnUiThread(new Runnable() {
 
                                     @Override
@@ -128,6 +141,7 @@ public class kelasPengganti extends AppCompatActivity {
                             .setPositiveButton("Oke",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     editor.putString("kodekelas", "0");
+                                    editor.putBoolean("isKetuaKelas",false);
                                     editor.apply();
                                     mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, "0", null, null, null);
                                     Call<Void> call = mahaint.gantiKodekel(nim,mahasiw,tokenkita );
@@ -303,6 +317,10 @@ void hapuskelas(){
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
                         @Override
                         public void run() {
+                            oldCount = repo.getCount();
+                            if (oldCount!= 0){
+                                addAlarm(true);
+                            }
                             repo.nukeTable();
                             if (!matkul.isEmpty()) {
                                 for (int i = 0; i < matkul.size(); i++) {
@@ -310,7 +328,8 @@ void hapuskelas(){
                                     repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
                                 }
                                 kelaspenggantis = repo.getKelas();
-
+                                newCount = repo.getCount();
+                                addAlarm(false);
                                 runOnUiThread(new Runnable() {
 
                                     @Override
@@ -438,5 +457,71 @@ void hapuskelas(){
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private void addAlarm(Boolean cancel){
+        int requestCode = 60;
+    if (!cancel) {
+        for (int i = 0; i <= newCount - 1; i++) {
+            Log.d("zhafarin", "ini i nya " + i);
+            AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            String namatkul = kelaspenggantis.get(i).getNamakul() + new String(Character.toChars(0x1F500));
+            Log.d("zhafarin", "ini namatkul nya " + namatkul);
+            String jam = kelaspenggantis.get(i).getJam().substring(0, 2);
+            String menit = kelaspenggantis.get(i).getJam().substring(3, 5);
+            String ruangan = kelaspenggantis.get(i).getRuangan();
+            String tanggal = kelaspenggantis.get(i).getTanggal();
+            String brigita = "Kuliah dimulai jam " + jam + "." + menit + ", di " + ruangan;
+            SimpleDateFormat formatterTanggal = new SimpleDateFormat("dd-MM-yyyy");
+            Date waktu1 = new Date();
+            try {
+                waktu1 = formatterTanggal.parse(tanggal);
+            } catch (Exception e) {
+                //
+            }
+            Calendar c = Calendar.getInstance();
+            c.setTime(waktu1);
+            int day = c.get(Calendar.DAY_OF_WEEK);
+            Calendar calNow = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(jam)-1);
+            calendar.set(Calendar.MINUTE, Integer.parseInt(menit));
+            calendar.set(Calendar.DAY_OF_WEEK, day);
+            calendar.set(Calendar.SECOND, 0);
+            if (calendar.before(calNow)) {
+                // If it's in the past increment by one week.
+                continue;
+            }
+            Intent myIntent = new Intent(this, AlarmReceiver.class);
+            myIntent.putExtra("Judul", namatkul);
+            myIntent.putExtra("konten", brigita);
+            myIntent.putExtra("notifID", requestCode);
+            myIntent.putExtra("hour", jam);
+            myIntent.putExtra("minute", menit);
+            myIntent.putExtra("dayofweek", day);
+            myIntent.putExtra("repeat", false);
+            myIntent.putExtra("afterAction", "main");
+
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            requestCode++;
+
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            //Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
+
+        }
+    }else {
+        requestCode = 60;
+        for (int i = 0; i <=oldCount - 1; i++) {
+            AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent myIntent = new Intent(this, AlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+manager.cancel(pendingIntent);
+requestCode++;
+        }
+    }
+
     }
 }
