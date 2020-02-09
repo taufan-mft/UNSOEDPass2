@@ -19,6 +19,7 @@ public class memorepo {
         return memoDAO.getAllKelas();
     }
     public void nukeTable() { memoDAO.nukeTable();}
+    public Integer getCount() {return memoDAO.getCount();}
     public  List<memoent> getKelasIni( String hari) {
         return memoDAO.getTodayKelas(hari);
     }

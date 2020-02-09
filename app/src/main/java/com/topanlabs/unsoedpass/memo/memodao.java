@@ -16,7 +16,8 @@ public interface memodao {
     public void nukeTable();
     @Insert
     void insert(memoent kelaspengganti);
-
+    @Query("SELECT COUNT(*) FROM memo")
+    Integer getCount();
     @Query("SELECT * FROM memo WHERE tanggal = :hari")
     List<memoent> getTodayKelas(String hari);
 

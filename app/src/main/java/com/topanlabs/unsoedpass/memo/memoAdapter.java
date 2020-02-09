@@ -47,7 +47,7 @@ public class memoAdapter extends RecyclerView.Adapter<memoAdapter.memoViewHolder
         View view = layoutInflater.inflate(R.layout.row_memo, parent, false);
         return new memoViewHolder(view);
     }
-    void setKelas(List<memoent> words){
+   public void setKelas(List<memoent> words){
         dataList = words;
         notifyDataSetChanged();
     }
@@ -105,6 +105,7 @@ public class memoAdapter extends RecyclerView.Adapter<memoAdapter.memoViewHolder
         holder.txtdesc.setText(holid);
         holder.txtJenis.setText(current.getJenis());
         if (current.getJenis().equals("Kuis")) {
+            Log.d("zafarin","ohyeah");
             holder.cview.setCardBackgroundColor(parseColor("#DF2C2C"));
             holder.txtNamatkul.setTextColor(parseColor("#FFFFFF"));
             holder.txtJam.setTextColor(parseColor("#FFFFFF"));
