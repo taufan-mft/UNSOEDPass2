@@ -18,6 +18,7 @@ public class ApplicationClass extends Application {
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .setNotificationOpenedHandler(new ExampleNotificationOpenedHandler())
                 .unsubscribeWhenNotificationsAreDisabled(true)
+
                 .init();
     }
     private class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
@@ -32,16 +33,21 @@ public class ApplicationClass extends Application {
                 customKey = data.optString("customkey", null);
                 url = data.optString("url", null);
                 judul = data.optString("judul", null);
-                if (customKey != null){
-                    Intent intent = new Intent(getApplicationContext(), beritaView.class);
-                    intent.putExtra("url", url);
-                    if (judul!=null) {
-                        intent.putExtra("judul", judul);
+                if (customKey != null) {
+                    if (customKey.equals("memo")) {
+                        Intent intent2 = new Intent(getApplicationContext(), memoList.class);
+                        intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent2);
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), beritaView.class);
+                        intent.putExtra("url", url);
+                        if (judul != null) {
+                            intent.putExtra("judul", judul);
+                        }
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
-                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-                     startActivity(intent);
                 }
-
             }
 
             // Intent intent = new Intent(getApplicationContext(), YourActivity.class);
