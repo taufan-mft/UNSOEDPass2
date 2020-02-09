@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.onesignal.OneSignal;
+
 import java.util.concurrent.Executors;
 
 public class logout extends AppCompatActivity {
@@ -34,7 +36,10 @@ public class logout extends AppCompatActivity {
         editor = mSettings.edit();
         editor.putString("logged", "ya");
         editor.putBoolean("firstsync", true);
+        editor.putBoolean("isKetuakelas", false);
+        editor.putBoolean("reminderon", false);
         editor.apply();
+        OneSignal.removeExternalUserId();
         Intent i = new Intent(this, login.class);
         startActivity(i);
         finish();

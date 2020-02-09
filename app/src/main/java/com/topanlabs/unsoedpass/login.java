@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +26,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
@@ -39,7 +42,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.gson.Gson;
+import com.onesignal.OneSignal;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -85,12 +94,16 @@ public class login extends AppCompatActivity {
     Boolean tersedia;
     String winul = "WhyIveBeenCryingOverYou123!@#";
     String obfuscated;
+    ConstraintLayout clay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Log.d("winal", "btncapcay nih");
-
+        View decorView = getWindow().getDecorView();
+// Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
 
         Date todayDate = Calendar.getInstance().getTime();
          formatter = new SimpleDateFormat("dd MM yyyy");
@@ -101,6 +114,16 @@ public class login extends AppCompatActivity {
         txtnim = (EditText)findViewById(R.id.txnim);
         txtpass = (EditText)findViewById(R.id.txpass);
         winnyau = findViewById(R.id.textView);
+        clay = findViewById(R.id.clay);
+        Glide.with(this).load("https://imglogin.myunsoed.com").centerCrop().diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+
+                clay.setBackground(resource);
+
+            }
+        });
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
         String versiapp = mSettings.getString("versiapp","0");
@@ -110,6 +133,7 @@ public class login extends AppCompatActivity {
         }
 
         getSupportActionBar().hide();
+
         tersedia = true;
         final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
@@ -124,8 +148,15 @@ public class login extends AppCompatActivity {
          kelaschecker = retrofit.create(kelasInt.class);
         getcapcuy =new GetCapcay();
         getcapcuy.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
-        showaDialog();
+        //showaDialog();
+        Glide.with(this).load("https://imglogin.myunsoed.com").centerCrop().signature(new ObjectKey(String.valueOf(System.currentTimeMillis()))).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
 
+                    clay.setBackground(resource);
+
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
@@ -487,6 +518,7 @@ public class login extends AppCompatActivity {
                 if (cekDetailUser) {
                     getUserDetail(nim2);
                 } else {
+                    OneSignal.setExternalUserId(nim);
                     final Intent d = new Intent(login.this, sinkronisasi.class);
                     d.putExtra("kukis", (Serializable) kukis);
                     startActivity(i);
@@ -530,6 +562,7 @@ public class login extends AppCompatActivity {
                 if(dialog.isShowing())
                     dialog.dismiss();
                 final Intent i = new Intent(login.this, sinkronisasi.class);
+                OneSignal.setExternalUserId(nim);
                 i.putExtra("kukis", (Serializable) kukis);
                 startActivity(i);
                 finish();
