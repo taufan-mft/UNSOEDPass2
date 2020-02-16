@@ -465,7 +465,7 @@ void hapuskelas(){
         for (int i = 0; i <= newCount - 1; i++) {
             Log.d("zhafarin", "ini i nya " + i);
             AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            String namatkul = kelaspenggantis.get(i).getNamakul() + new String(Character.toChars(0x1F500));
+            String namatkul = kelaspenggantis.get(i).getNamakul() +" "+ new String(Character.toChars(0x1F500));
             Log.d("zhafarin", "ini namatkul nya " + namatkul);
             String jam = kelaspenggantis.get(i).getJam().substring(0, 2);
             String menit = kelaspenggantis.get(i).getJam().substring(3, 5);

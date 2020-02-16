@@ -74,7 +74,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         myIntent.putExtra("hour", jam);
         myIntent.putExtra("minute", menit);
         myIntent.putExtra("dayofweek", dayofweek);
-
+        myIntent.putExtra("afterAction", afterAction);
+        myIntent.putExtra("repeat", repeat);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (repeat) {
         AlarmManager manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);

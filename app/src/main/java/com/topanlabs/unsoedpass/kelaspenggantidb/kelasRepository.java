@@ -1,6 +1,7 @@
 package com.topanlabs.unsoedpass.kelaspenggantidb;
 
 import android.app.Application;
+import android.content.Context;
 
 import java.util.List;
 
@@ -8,8 +9,8 @@ public class kelasRepository {
     private kelaspengDAO kelasDAO;
     private List<kelaspengganti> kelasDB;
 
-   public kelasRepository(Application application) {
-        kelasdb db = kelasdb.getDatabase(application);
+   public kelasRepository(Context context) {
+        kelasdb db = kelasdb.getDatabase(context);
         kelasDAO = db.kelaspengDAO();
 
     }

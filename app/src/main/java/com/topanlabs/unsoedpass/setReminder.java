@@ -149,7 +149,7 @@ public class setReminder extends AppCompatActivity {
             myIntent.putExtra("minute", menit);
             myIntent.putExtra("dayofweek", winul);
             myIntent.putExtra("repeat", true);
-
+            myIntent.putExtra("afterAction", "main");
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             Log.d("bootsuda","dibuatt");
             if (!cancel) {

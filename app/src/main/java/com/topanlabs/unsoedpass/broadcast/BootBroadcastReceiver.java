@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
 import com.topanlabs.unsoedpass.matkulRepository;
 import com.topanlabs.unsoedpass.matkuldb;
 import com.topanlabs.unsoedpass.setReminder;
@@ -18,6 +19,7 @@ import java.util.concurrent.Executors;
 
 public class BootBroadcastReceiver extends BroadcastReceiver {
     matkulRepository matkulRepository;
+    kelasRepository kelasRepository;
     List<matkuldb> dataList;
     int matkulcount;
     SharedPreferences mSettings;
@@ -30,6 +32,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
         editor = mSettings.edit();
         boolean reminderon = mSettings.getBoolean("reminderon", false);
         matkulRepository = new matkulRepository(pContext.getApplicationContext());
+        kelasRepository = new kelasRepository(pContext.getApplicationContext());
         if (reminderon) {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
@@ -87,7 +90,8 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
                         myIntent.putExtra("hour", jam);
                         myIntent.putExtra("minute", menit);
                         myIntent.putExtra("dayofweek", winul);
-
+                        myIntent.putExtra("repeat", true);
+                        myIntent.putExtra("afterAction", "main");
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(pContext, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                         manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                         Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
@@ -95,6 +99,12 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
                 }
             });
         }
+        //MARK: Kelas pengganti
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+            }
+        });
     }
 }
 

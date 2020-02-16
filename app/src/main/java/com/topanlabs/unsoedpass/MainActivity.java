@@ -127,6 +127,7 @@ String nama;
         txtnama = findViewById(R.id.txtNamaK);
         txtSalam = findViewById(R.id.textView15);
         updateGreetings();
+
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -186,9 +187,10 @@ String nama;
         jadwalK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent w = new Intent(MainActivity.this, jadwalKuliah.class);
                 startActivity(w);
-
+                //throw new RuntimeException("Test Crash");
             }
         });
 
