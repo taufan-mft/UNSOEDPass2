@@ -101,18 +101,21 @@ public class kelasPengganti extends AppCompatActivity {
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
                         @Override
                         public void run() {
+                            Log.d("nabila","1");
                             oldCount = repo.getCount();
                             if (oldCount!= 0){
                                 addAlarm(true);
                             }
                             repo.nukeTable();
                             if (!matkul.isEmpty()) {
+                                Log.d("nabila","2");
                                 Log.d("zhafarin", "matkul size: "+matkul.size());
                                 for (int i = 0; i < matkul.size(); i++) {
 
                                     repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
                                 }
                                 kelaspenggantis = repo.getKelas();
+                                Log.d("nabila","3");
                                 newCount = repo.getCount();
                                 addAlarm(false);
                                 runOnUiThread(new Runnable() {
@@ -121,13 +124,26 @@ public class kelasPengganti extends AppCompatActivity {
                                     public void run() {
                                         kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
                                         recyclerView.setAdapter(adapter);
-
+                                        Log.d("nabila","4");
                                         adapter.notifyDataSetChanged();
                                         recyclerView.scheduleLayoutAnimation();
                                     }
                                 });
                                 //Log.d("raisan", mahasiswaArrayList.toString());
 
+                            } else {
+                                kelaspenggantis = repo.getKelas();
+                                runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
+                                        recyclerView.setAdapter(adapter);
+                                        Log.d("nabila","asi");
+                                        adapter.notifyDataSetChanged();
+                                        recyclerView.scheduleLayoutAnimation();
+                                    }
+                                });
                             }
                         }
                     });
@@ -313,6 +329,7 @@ void hapuskelas(){
             @Override
             public void onResponse(Call<List<kelasModel>> call, Response<List<kelasModel>> response) {
                 if (response.code() == 200) {
+                    Log.d("nabila","a");
                     List<kelasModel> matkul = response.body();
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
                         @Override
@@ -321,6 +338,7 @@ void hapuskelas(){
                             if (oldCount!= 0){
                                 addAlarm(true);
                             }
+                            Log.d("nabila","b");
                             repo.nukeTable();
                             if (!matkul.isEmpty()) {
                                 for (int i = 0; i < matkul.size(); i++) {
@@ -328,6 +346,7 @@ void hapuskelas(){
                                     repo.insert(new kelaspengganti(0, matkul.get(i).getNamatkul(), matkul.get(i).getJam(), matkul.get(i).getRuangan(), matkul.get(i).getTanggal()));
                                 }
                                 kelaspenggantis = repo.getKelas();
+                                Log.d("nabila","c");
                                 newCount = repo.getCount();
                                 addAlarm(false);
                                 runOnUiThread(new Runnable() {
@@ -337,11 +356,25 @@ void hapuskelas(){
                                         kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
                                         recyclerView.setAdapter(adapter);
                                         adapter.notifyDataSetChanged();
+                                        Log.d("nabila","d");
                                         recyclerView.scheduleLayoutAnimation();
                                     }
                                 });
                                 //Log.d("raisan", mahasiswaArrayList.toString());
 
+                            } else {
+                                kelaspenggantis = repo.getKelas();
+                                runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        kelasAdapter adapter = new kelasAdapter(kelaspenggantis, getApplicationContext());
+                                        recyclerView.setAdapter(adapter);
+                                        Log.d("nabila","asi");
+                                        adapter.notifyDataSetChanged();
+                                        recyclerView.scheduleLayoutAnimation();
+                                    }
+                                });
                             }
                         }
                     });
