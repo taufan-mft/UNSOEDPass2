@@ -68,8 +68,8 @@
             android:layout_width="99dp"
             android:layout_height="54dp"
             android:layout_gravity="center"
-
-
+            android:textColor="#35373b"
+            app:strokeColor="#35373b"
             android:text="TIDAK"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

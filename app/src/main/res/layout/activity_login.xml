@@ -20,9 +20,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="36dp"
                     android:ems="10"
+                    android:inputType="textCapCharacters"
                     android:hint="NIM"
                     android:backgroundTint="#ffffff"
-                    android:inputType="textPersonName"
+
                     android:textColorHint="#ffffff"
                     android:textColor="#ffffff"
                     app:layout_constraintBottom_toTopOf="@+id/txpass"

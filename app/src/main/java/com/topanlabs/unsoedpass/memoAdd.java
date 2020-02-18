@@ -1,13 +1,16 @@
 package com.topanlabs.unsoedpass;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -144,47 +147,82 @@ MaterialButton btnTanggal, btnJam, btnSend;
             mTimePicker.show();
         });
         btnSend.setOnClickListener((View v) -> {
-            memoModel maukirim = new memoModel(kodekelas, namatkul.getText().toString(), txtJam.getText().toString(), txtRuangan.getText().toString(), sdf.format(myCalendar.getTime()),0,txtJenis.getText().toString(),txtCatatan.getText().toString(),0);
-            Call<memoModel> call = kelasService.buatMemo(tokenkita,maukirim);
-            call.enqueue(new Callback<memoModel>() {
-                @Override
-                public void onResponse(Call<memoModel> call, Response<memoModel> response) {
-                    int statusCode = response.code();
-                    if (statusCode == 201) {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Berhasil menambah matkul", Toast.LENGTH_SHORT);
-                        toast.show();
-                        Intent i = new Intent(memoAdd.this, memoList.class);
-                        startActivity(i);
-                        finish();
+            Log.v("nabila", Boolean.toString(!txtJenis.getText().toString().isEmpty()) +Boolean.toString(!txtCatatan.getText().toString().isEmpty())+ Boolean.toString(!txtRuangan.getText().toString().isEmpty())+
+                    Boolean.toString(!txtTanggal.getText().toString().equals("Tanggal"))+ Boolean.toString(!txtJam.getText().toString().equals("Jam"))+ Boolean.toString(!namatkul.getText().toString().isEmpty()));
+            if (txtJenis.getText().toString().isEmpty() || txtCatatan.getText().toString().isEmpty() ||  txtRuangan.getText().toString().isEmpty() ||
+            txtTanggal.getText().toString().equals("Tanggal") || txtJam.getText().toString().equals("Jam") || namatkul.getText().toString().isEmpty()) {
+                showDialog();
+            } else {
 
-                    } else {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Gagal menambah matkul", Toast.LENGTH_SHORT);
-                        toast.show();
-                        Intent i = new Intent(memoAdd.this, kelasPengganti.class);
-                        startActivity(i);
-                        finish();
+                memoModel maukirim = new memoModel(kodekelas, namatkul.getText().toString(), txtJam.getText().toString(), txtRuangan.getText().toString(), sdf.format(myCalendar.getTime()), 0, txtJenis.getText().toString(), txtCatatan.getText().toString(), 0);
+                Call<memoModel> call = kelasService.buatMemo(tokenkita, maukirim);
+                call.enqueue(new Callback<memoModel>() {
+                    @Override
+                    public void onResponse(Call<memoModel> call, Response<memoModel> response) {
+                        int statusCode = response.code();
+                        if (statusCode == 201) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Berhasil menambah matkul", Toast.LENGTH_SHORT);
+                            toast.show();
+                            Intent i = new Intent(memoAdd.this, memoList.class);
+                            startActivity(i);
+                            finish();
+
+                        } else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Gagal menambah matkul", Toast.LENGTH_SHORT);
+                            toast.show();
+                            Intent i = new Intent(memoAdd.this, kelasPengganti.class);
+                            startActivity(i);
+                            finish();
+                        }
+
+
+                        //Log.d("raisan", mahasiswaArrayList.toString());
+                        //adapter.notifyDataSetChanged();
                     }
 
+                    @Override
+                    public void onFailure(Call<memoModel> call, Throwable t) {
 
+                        Context context = getApplicationContext();
+                        CharSequence text = "Error TL12";
+                        int duration = Toast.LENGTH_SHORT;
 
-                    //Log.d("raisan", mahasiswaArrayList.toString());
-                    //adapter.notifyDataSetChanged();
-                }
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
 
-                @Override
-                public void onFailure(Call<memoModel> call, Throwable t) {
+                    }
 
-                    Context context = getApplicationContext();
-                    CharSequence text = "Error TL12";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
-                }
-
-                //showDialog();
-            });
+                    //showDialog();
+                });
+            }
         });
+    }
+
+
+    private void showDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(memoAdd.this, R.style.AlertDialogTheme2);
+
+        // set title dialog
+        alertDialogBuilder.setTitle("Eits, dilengkapi dulu yaa");
+
+        // set pesan dari dialog
+        alertDialogBuilder
+                .setMessage("Pastiin tanggal, jam, serta semua isian gada yang kosong.")
+                //.setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setPositiveButton("Oke" ,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // jika tombol diklik, maka akan menutup activity ini
+                        dialog.cancel();
+
+                    }
+                });
+
+
+        // membuat alert dialog dari builder
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // menampilkan alert dialog
+        alertDialog.show();
     }
 }

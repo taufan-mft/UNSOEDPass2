@@ -95,6 +95,7 @@ public class login extends AppCompatActivity {
     String winul = "WhyIveBeenCryingOverYou123!@#";
     String obfuscated;
     ConstraintLayout clay;
+    EditText capcaytext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +110,72 @@ public class login extends AppCompatActivity {
          formatter = new SimpleDateFormat("dd MM yyyy");
         todayString = formatter.format(todayDate);
         button = findViewById(R.id.loginbutton);
+        button.setEnabled(false);
         Button btncapcay = findViewById(R.id.loginbutton2);
         bthbantuan = findViewById(R.id.bthbantuan);
         txtnim = (EditText)findViewById(R.id.txnim);
         txtpass = (EditText)findViewById(R.id.txpass);
+        capcaytext = findViewById(R.id.txcapcay);
+        txtnim.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    Log.d("kusuma", "1");
+                   if (!txtnim.getText().toString().isEmpty() && !txtpass.getText().toString().isEmpty() && !capcaytext.getText().toString().isEmpty()) {
+                       button.setEnabled(true);
+                   } else {
+                       button.setEnabled(false);
+                   }
+                } else {
+                    Log.d("kusuma", "2");
+                    if (!txtnim.getText().toString().isEmpty() && !txtpass.getText().toString().isEmpty() && !capcaytext.getText().toString().isEmpty()) {
+                        button.setEnabled(true);
+                    } else {
+                        button.setEnabled(false);
+                    }
+                }
+            }
+        });
+        txtpass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    Log.d("kusuma", "3");
+                    if (!txtnim.getText().toString().isEmpty() && !txtpass.getText().toString().isEmpty() && !capcaytext.getText().toString().isEmpty()) {
+                        button.setEnabled(true);
+                    } else {
+                        button.setEnabled(false);
+                    }
+                } else {
+                    Log.d("kusuma", "4");
+                    if (!txtnim.getText().toString().isEmpty() && !txtpass.getText().toString().isEmpty() && !capcaytext.getText().toString().isEmpty()) {
+                        button.setEnabled(true);
+                    } else {
+                        button.setEnabled(false);
+                    }
+                }
+            }
+        });
+        capcaytext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    Log.d("kusuma", "5");
+                    if (!txtnim.getText().toString().isEmpty() && !txtpass.getText().toString().isEmpty() && !capcaytext.getText().toString().isEmpty()) {
+                        button.setEnabled(true);
+                    } else {
+                        button.setEnabled(true);
+                    }
+                } else {
+                    Log.d("kusuma", "6");
+                    if (!txtnim.getText().toString().isEmpty() && !txtpass.getText().toString().isEmpty() && !capcaytext.getText().toString().isEmpty()) {
+                        button.setEnabled(true);
+                    } else {
+                        button.setEnabled(false);
+                    }
+                }
+            }
+        });
         winnyau = findViewById(R.id.textView);
         clay = findViewById(R.id.clay);
         Glide.with(this).load("https://imglogin.myunsoed.com").centerCrop().diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -162,9 +225,9 @@ public class login extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                  nim = txtnim.getText().toString();
                  pass = txtpass.getText().toString();
-                EditText win = findViewById(R.id.txcapcay);
+
                 Log.d("raisaa","aku disini");
-                capcay = win.getText().toString();
+                capcay = capcaytext.getText().toString();
                 getmatkullist =new GetMatkul();
                 getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
                 //getcapcuy =new GetCapcay();
@@ -362,6 +425,11 @@ public class login extends AppCompatActivity {
                 if(dialog.isShowing())
                     dialog.dismiss();
                 showDialog();
+                txtnim.setText("");
+                txtpass.setText("");
+                capcaytext.setText("");
+                getcapcuy =new GetCapcay();
+                getcapcuy.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
             }
 
             Log.d("tersedia",tersedia.toString());
@@ -583,7 +651,7 @@ public class login extends AppCompatActivity {
     }
 
     private void showaDialog(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this, R.style.AlertDialogTheme);
         alertDialogBuilder.setTitle("We hate capcay");
         alertDialogBuilder
                 .setMessage("Kita semua benci capcay (captcha)...tapi apa boleh buat. ")
@@ -598,7 +666,7 @@ public class login extends AppCompatActivity {
         alertDialog.show();
     }
     private void showDialog(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this, R.style.AlertDialogTheme2);
 
         // set title dialog
         alertDialogBuilder.setTitle("NIM Tidak Ditemukan");
@@ -612,6 +680,7 @@ public class login extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int id) {
                         // jika tombol diklik, maka akan menutup activity ini
                         dialog.cancel();
+                        txtnim.requestFocus();
                     }
                 });
 

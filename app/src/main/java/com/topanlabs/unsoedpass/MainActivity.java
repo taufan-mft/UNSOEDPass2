@@ -199,6 +199,9 @@ String nama;
             public void onClick (View view) {
                 //showaDialog("Belum masa ujian","Cek jadwal ujian tidak tersedia karena bukan masa ujian.","yup");
             Intent a = new Intent(getApplicationContext(), beritaView.class);
+            a.putExtra("url", "https://whatever.topanlabs.com/app/");
+            a.putExtra("showsub",false);
+            a.putExtra("judul","shop");
             startActivity(a);
             }
         });

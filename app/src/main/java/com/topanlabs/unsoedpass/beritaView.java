@@ -25,6 +25,7 @@ import com.jirbo.adcolony.AdColonyBundleBuilder;
 
 public class beritaView extends AppCompatActivity {
 String url, judul;
+Boolean showsub;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,7 @@ String url, judul;
         WebView webView = (WebView) findViewById(R.id.webview);
         ConstraintLayout conste =  findViewById(R.id.root);
         final ProgressBar pbar = findViewById(R.id.pbar);
+        showsub = true;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Happening right now");
         url = getIntent().getStringExtra("url");
@@ -39,14 +41,18 @@ String url, judul;
             judul = getIntent().getStringExtra("judul");
             getSupportActionBar().setTitle(judul);
         }
+        if (getIntent().getBooleanExtra("showsub", true)!= true){
+            showsub = false;
+        }
         Log.d("tadigita", url);
         pbar.setMax(100);
         pbar.setProgress(1);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
-
+            if (showsub) {
                 getSupportActionBar().setSubtitle(title); //Set Activity tile to page title.
+            }
             }
             @Override
             public void onProgressChanged(WebView view, int progress) {
@@ -79,7 +85,7 @@ String url, judul;
             }
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+                if ((url != null && (!url.contains("myunsoed")))&&(url.startsWith("http://") || url.startsWith("https://"))) {
                     view.getContext().startActivity(
                             new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                     return true;

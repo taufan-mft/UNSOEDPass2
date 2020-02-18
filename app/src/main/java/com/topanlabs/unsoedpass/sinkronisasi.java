@@ -29,6 +29,8 @@ public class sinkronisasi extends AppCompatActivity {
         txthari = findViewById(R.id.txtHari);
         info = findViewById(R.id.textView10);
         mSettings = getSharedPreferences("Settings", 0);
+        Integer interval = mSettings.getInt("intervalSync",0);
+        txthari.setText(interval.toString());
         editor = mSettings.edit();
         final Intent intent = getIntent();
         if(intent.hasExtra("kukis")) {
