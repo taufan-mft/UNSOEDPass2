@@ -76,12 +76,42 @@ public class memoList extends AppCompatActivity {
         recyclerView.setLayoutAnimation(controller);
         mSettings = getSharedPreferences("Settings", 0);
         ketuakelas = mSettings.getBoolean("isKetuaKelas",false);
+        String kodekel = mSettings.getString("kodekelas", "0");
+        if (kodekel.equals("0")) {
+            Intent i = new Intent(memoList.this, kelasSelector.class);
+            startActivity(i);
+            finish();
+            return;
+        }
+        editor = mSettings.edit();
+        Boolean firstMemo = mSettings.getBoolean("firstMemo", true);
+        if (firstMemo) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(memoList.this, R.style.AlertDialogTheme2);
+            alertDialogBuilder.setTitle("Heads Up");
+            String pesan = "Di Memo, kamu dapat mencatat tugas serta kuis yang akan datang. Info ditambahkan oleh ketua kelas. Kamu akan mendapat" +
+                    " notifikasi ketika ketua kelas menambahkan Memo baru. Kamu juga akan mendapatkan reminder Memo satu hari sebelum tanggal yang ada di Memo.";
+            alertDialogBuilder
+                    .setMessage(pesan)
+                    //.setIcon(R.mipmap.ic_launcher)
+                    .setCancelable(false)
+                    .setPositiveButton("Aku Mengerti", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+            ;
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            editor.putBoolean("firstMemo", false);
+            editor.apply();
+        }
         kodekelas = mSettings.getString("kodekelas", "0");
         nim = mSettings.getString("nim", "nim");
-        editor = mSettings.edit();
+
         kelaspenggantis = new ArrayList<>();
         tokenkita = mSettings.getString("token","0");
         cox = getApplicationContext();
+
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -235,7 +265,9 @@ public class memoList extends AppCompatActivity {
 
             //showDialog();
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public void onResume(){
         super.onResume();
@@ -273,7 +305,9 @@ Log.d("zhafarin", "aku dipencet");
                 Intent i = new Intent(memoList.this, memoAdd.class);
                 startActivityForResult(i, 12);
                 return true;
-
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

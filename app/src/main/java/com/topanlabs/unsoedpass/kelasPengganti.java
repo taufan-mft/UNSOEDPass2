@@ -71,6 +71,47 @@ public class kelasPengganti extends AppCompatActivity {
         kodekelas = mSettings.getString("kodekelas", "0");
         nim = mSettings.getString("nim", "nim");
         editor = mSettings.edit();
+        boolean firstKelas = mSettings.getBoolean("firstKelas", true);
+        boolean firstKetuaKelas = mSettings.getBoolean("firstKetuaKelas", true);
+        if (firstKelas) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this, R.style.AlertDialogTheme2);
+            alertDialogBuilder.setTitle("Heads Up");
+            String pesan = "Di Kelas Pengganti kamu bisa mencatat kelas pengganti yang akan datang. Info ditambahkan oleh ketua kelas. " +
+                    "Kamu akan mendapat reminder satu jam sebelum kuliah dimulai. Kelas pengganti yang akan datang juga ditampilkan pada Home dengan akhiran " +new String(Character.toChars(0x1F500)) + ".";
+            alertDialogBuilder
+                    .setMessage(pesan)
+                    //.setIcon(R.mipmap.ic_launcher)
+                    .setCancelable(false)
+                    .setPositiveButton("Aku Mengerti", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+            ;
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            editor.putBoolean("firstKelas", false);
+            editor.apply();
+        }
+        if (firstKetuaKelas & ketuakelas) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this, R.style.AlertDialogTheme2);
+            alertDialogBuilder.setTitle("Heads Up");
+            String pesan = "Halo ketua kelas! Silakan bagikan kode kelas " + kodekelas +" kepada teman - teman kamu. Kode kelas juga selalu tampil di pojok kiri atas layar kalau kamu lupa.";
+            alertDialogBuilder
+                    .setMessage(pesan)
+                    //.setIcon(R.mipmap.ic_launcher)
+                    .setCancelable(false)
+                    .setPositiveButton("Aku Mengerti", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+            ;
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            editor.putBoolean("firstKetuaKelas", false);
+            editor.apply();
+        }
         tokenkita = mSettings.getString("token","0");
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -236,7 +277,9 @@ public class kelasPengganti extends AppCompatActivity {
 
             //showDialog();
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -255,6 +298,9 @@ public class kelasPengganti extends AppCompatActivity {
 
                 updateKelas();
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+return true;
             case R.id.newMemo:
                 Intent i = new Intent(kelasPengganti.this, tambahKelas.class);
                 startActivity(i);
@@ -274,7 +320,11 @@ void hapuskelas(){
     call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-
+                editor.putString("kodekelas", "0");
+                editor.putBoolean("isKetuaKelas",false);
+                editor.putBoolean("firstKelas", true);
+                editor.putBoolean("firstKetuaKelas", true);
+                editor.apply();
             }
 
             @Override
@@ -441,7 +491,7 @@ void hapuskelas(){
     };
 
     private void showCancel() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this, R.style.AlertDialogTheme2);
         alertDialogBuilder.setTitle("Keluar kelas?");
         alertDialogBuilder
                 //.setMessage(pesan)
@@ -450,6 +500,11 @@ void hapuskelas(){
                 .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         editor.putString("kodekelas", "0");
+
+                        editor.putBoolean("isKetuaKelas",false);
+                        editor.putBoolean("firstKelas", true);
+                        editor.putBoolean("firstKetuaKelas", true);
+
                         editor.apply();
                         mahasis mahasiw = new mahasis(null,null,null,null, null, null, null, "0", null, null, null);
                         Call<Void> call = mahaint.gantiKodekel(nim,mahasiw,tokenkita );

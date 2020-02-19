@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 
 import com.google.android.gms.ads.AdRequest;
@@ -50,6 +51,16 @@ public class absenSelector extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().addNetworkExtrasBundle(AdColonyAdapter.class, AdColonyBundleBuilder.build()).build();
         mAdView.loadAd(adRequest);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
 
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

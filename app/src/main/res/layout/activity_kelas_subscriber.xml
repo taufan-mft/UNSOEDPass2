@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:hint="Kode kelas" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCari"
                 style="@style/Widget.MaterialComponents.Button"

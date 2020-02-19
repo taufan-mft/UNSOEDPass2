@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class kelasSelector extends AppCompatActivity {
         editor = mSettings.edit();
         ketuakelas = mSettings.getBoolean("isKetuaKelas", false);
         tokenkita = mSettings.getString("token", "token");
+        getSupportActionBar().setTitle("Kelas yang mana?");
         String kodekel = mSettings.getString("kodekelas", "0");
         if (!kodekel.equals("0")) {
             Intent i = new Intent(kelasSelector.this, kelasPengganti.class);
@@ -162,5 +164,35 @@ public class kelasSelector extends AppCompatActivity {
                 finish();
             }
         });
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasSelector.this, R.style.AlertDialogTheme2);
+        alertDialogBuilder.setTitle("Heads Up");
+        String pesan = "Sebelum menggunakan fitur Kelas Pengganti serta Memo, kamu perlu mempunyai kelas. " +
+                "Kelas Pengganti serta Memo ditambahkan oleh seorang ketua kelas lalu semua anggota kelas otomatis mendapat info dari ketua kelas." +
+                " Jika belum ada yang membuat kelas, tunjuk salah satu untuk menjadi ketua kelas. Jika sudah ada, silakan bergabung dengan mereka.";
+        alertDialogBuilder
+                .setMessage(pesan)
+                //.setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setPositiveButton("Oke",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                })
+        ;
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+               onBackPressed();
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

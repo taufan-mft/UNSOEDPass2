@@ -38,6 +38,7 @@ public class logout extends AppCompatActivity {
         editor.putBoolean("firstsync", true);
         editor.putBoolean("isKetuakelas", false);
         editor.putBoolean("reminderon", false);
+        editor.putBoolean("firstMemo", true);
         editor.apply();
         OneSignal.removeExternalUserId();
         Intent i = new Intent(this, login.class);

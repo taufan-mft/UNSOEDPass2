@@ -44,7 +44,7 @@ String kode, nim;
         txtkode2 = findViewById(R.id.txtKelas);
         txtketua=findViewById(R.id.txtKetua);
         kode = txtKodeKelas.toString();
-
+        getSupportActionBar().setTitle("Kelas yang mana?");
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","0");
@@ -63,7 +63,7 @@ String kode, nim;
 
         btnGabung.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasSubscriber.this, R.style.AlertDialogTheme);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasSubscriber.this, R.style.AlertDialogTheme2);
                 alertDialogBuilder.setTitle("Gabung ke kelas?");
                 alertDialogBuilder
                         //.setMessage(pesan)
@@ -159,5 +159,6 @@ String kode, nim;
                 });
             }
         });
+
     }
 }
