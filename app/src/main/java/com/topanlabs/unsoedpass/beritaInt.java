@@ -14,4 +14,10 @@ public interface beritaInt {
 
     @GET("/eventall/")
     Call<List<beritaModel>> getEvent();
+
+    @GET("/pengumumanall/")
+    Call<List<beritaModel>> getPengumuman();
+
+    @GET("/beasiswaall/")
+    Call<List<beritaModel>> getBeasiswa();
 }

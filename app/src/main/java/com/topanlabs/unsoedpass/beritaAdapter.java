@@ -61,7 +61,7 @@ public class beritaAdapter extends RecyclerView.Adapter<beritaAdapter.BeritaView
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Clicked element "+current.getHeadline(), Snackbar.LENGTH_LONG).show();
+               // Snackbar.make(view, "Clicked element "+current.getHeadline(), Snackbar.LENGTH_LONG).show();
                 Intent i = new Intent(context, beritaView.class);
                 if (namane!=null){
                     i.putExtra("judul", namane);

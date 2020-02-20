@@ -84,9 +84,11 @@ String nama;
     kelasRepository kelRepo;
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    List<beritaModel> beritaModelk, eventModel;
+    List<beritaModel> beritaModelk, eventModel, pengumumanModel, beasiswaModel;
     private beritaAdapter beritaAdapter;
     private beritaAdapter eventAdapter;
+    private beritaAdapter pengumumanAdapter;
+    private beritaAdapter beasiswaAdapter;
     String nim;
     String pass, minus;
     GetMatkul getmatkullist;
@@ -108,7 +110,7 @@ String nama;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
     ConstraintLayout jadwalK, aha2,aha4, aha3, exam;
-    RecyclerView recyclerView, eventrec;
+    RecyclerView recyclerView, eventrec, pengumumanrec, beasiswarec;
     TextView todayMat, todayJam, todayRuangan, txtSalam;
     String tokenkita;
     Boolean dariKelp;
@@ -201,7 +203,7 @@ String nama;
             Intent a = new Intent(getApplicationContext(), beritaView.class);
             a.putExtra("url", "https://whatever.topanlabs.com/app/");
             a.putExtra("showsub",false);
-            a.putExtra("judul","shop");
+            a.putExtra("judul","Shop");
             startActivity(a);
             }
         });
@@ -234,14 +236,24 @@ String nama;
 
         recyclerView = (RecyclerView) findViewById(R.id.beritarec);
         eventrec = findViewById(R.id.eventrec);
+        pengumumanrec = findViewById(R.id.pengumumanrec);
+        beasiswarec = findViewById(R.id.beasiswarec);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager3 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager4 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         beritaAdapter = new beritaAdapter(beritaModelk, this);
         eventAdapter = new beritaAdapter(eventModel, this);
+        pengumumanAdapter = new beritaAdapter(pengumumanModel, this);
+        beasiswaAdapter = new beritaAdapter(beasiswaModel, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(beritaAdapter);
         eventrec.setLayoutManager(layoutManager2);
         eventrec.setAdapter(eventAdapter);
+        pengumumanrec.setLayoutManager(layoutManager3);
+        pengumumanrec.setAdapter(pengumumanAdapter);
+        beasiswarec.setLayoutManager(layoutManager4);
+        beasiswarec.setAdapter(beasiswaAdapter);
         getBerita();
         mRepository = new matkulRepository(getApplication());
         kelRepo = new kelasRepository(getApplication());
@@ -554,6 +566,59 @@ String nama;
                 changesList.add(alsa);
                 Context context = getApplicationContext();
                 eventAdapter.setBerita(changesList, "Events");
+                CharSequence text = "Error DVN12. Mohon klik bantuan jika berlanjut.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
+
+            //showDialog();
+        });
+        call2 = beritaint.getPengumuman();
+        call2.enqueue(new Callback<List<beritaModel>>() {
+            @Override
+            public void onResponse(Call<List<beritaModel>> call, Response<List<beritaModel>> response) {
+
+                List<beritaModel> changesList = response.body();
+                pengumumanAdapter.setBerita(changesList, "Pengumuman");
+            }
+
+            @Override
+            public void onFailure(Call<List<beritaModel>> call, Throwable t) {
+                beritaModel alsa = new beritaModel("Kamu sedang offline", "Quote favorit Topan: \"Yang patah tumbuh, yang hilang berganti\" - Banda Neira", null, "Offline", "http://aasirai.id");
+                List<beritaModel> changesList = new ArrayList<beritaModel>();
+                changesList.add(alsa);
+                Context context = getApplicationContext();
+                pengumumanAdapter.setBerita(changesList, "Pengumuman");
+                CharSequence text = "Error DVN12. Mohon klik bantuan jika berlanjut.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
+
+            //showDialog();
+        });
+
+        call2 = beritaint.getBeasiswa();
+        call2.enqueue(new Callback<List<beritaModel>>() {
+            @Override
+            public void onResponse(Call<List<beritaModel>> call, Response<List<beritaModel>> response) {
+
+                List<beritaModel> changesList = response.body();
+                beasiswaAdapter.setBerita(changesList, "Beasiswa");
+            }
+
+            @Override
+            public void onFailure(Call<List<beritaModel>> call, Throwable t) {
+                beritaModel alsa = new beritaModel("Kamu sedang offline", "Quote favorit Topan: \"Yang patah tumbuh, yang hilang berganti\" - Banda Neira", null, "Offline", "http://aasirai.id");
+                List<beritaModel> changesList = new ArrayList<beritaModel>();
+                changesList.add(alsa);
+                Context context = getApplicationContext();
+                beasiswaAdapter.setBerita(changesList, "Beasiswa");
                 CharSequence text = "Error DVN12. Mohon klik bantuan jika berlanjut.";
                 int duration = Toast.LENGTH_SHORT;
 

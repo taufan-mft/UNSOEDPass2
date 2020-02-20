@@ -100,7 +100,7 @@ public class settings2 extends AppCompatActivity {
         }
     }
     private void showaDialog(String title, String pesan){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(settings2.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(settings2.this, R.style.AlertDialogTheme2);
 
         // set title dialog
         alertDialogBuilder.setTitle(title);
