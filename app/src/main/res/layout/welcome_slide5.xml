@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="More features to come"
+            android:text="Dan masih banyak fitur yang lain"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_title"
@@ -31,7 +31,7 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="Tunggu fitur lain yang akan datang, segera."
+            android:text="Yuk, segera login dan cari tahu fitur lainnya."
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_desc" />
