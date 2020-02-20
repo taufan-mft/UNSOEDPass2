@@ -161,7 +161,7 @@ MaterialButton btnTanggal, btnJam, btnSend;
                     public void onResponse(Call<memoModel> call, Response<memoModel> response) {
                         int statusCode = response.code();
                         if (statusCode == 201) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Berhasil menambah matkul", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Berhasil menambah memo", Toast.LENGTH_SHORT);
                             toast.show();
                             Intent i = new Intent(memoAdd.this, memoList.class);
                             startActivity(i);

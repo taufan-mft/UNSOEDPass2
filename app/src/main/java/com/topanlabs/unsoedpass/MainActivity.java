@@ -1005,14 +1005,14 @@ String nama;
             // Create the NotificationChannel with all the parameters.
             NotificationChannel notificationChannel = new NotificationChannel
                     (PRIMARY_CHANNEL_ID,
-                            "Winny notification",
+                            "Kuliah notification",
                             NotificationManager.IMPORTANCE_HIGH);
 
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.RED);
             notificationChannel.enableVibration(true);
             notificationChannel.setDescription
-                    ("Notifies every 15 minutes to stand up and walk");
+                    ("Notifikasi Utama");
             mNotificationManager.createNotificationChannel(notificationChannel);
         }
     }

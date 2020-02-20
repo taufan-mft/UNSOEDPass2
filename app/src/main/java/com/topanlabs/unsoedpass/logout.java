@@ -36,7 +36,7 @@ public class logout extends AppCompatActivity {
         editor = mSettings.edit();
         editor.putString("logged", "ya");
         editor.putBoolean("firstsync", true);
-        editor.putBoolean("isKetuakelas", false);
+        editor.putBoolean("isKetuaKelas", false);
         editor.putBoolean("reminderon", false);
         editor.putBoolean("firstMemo", true);
         editor.apply();

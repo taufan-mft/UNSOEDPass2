@@ -1,6 +1,7 @@
 package com.topanlabs.unsoedpass.memo;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasdb;
 
@@ -10,8 +11,8 @@ public class memorepo {
     private memodao memoDAO;
     private List<memoent> memoDB;
 
-    public memorepo(Application application) {
-        kelasdb db = kelasdb.getDatabase(application);
+    public memorepo(Context context) {
+        kelasdb db = kelasdb.getDatabase(context);
         memoDAO  = db.memodao();
 
     }
