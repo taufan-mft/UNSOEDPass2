@@ -196,7 +196,7 @@ public class login extends AppCompatActivity {
         }
 
         getSupportActionBar().hide();
-
+        showaDialog();
         tersedia = true;
         final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
@@ -651,10 +651,11 @@ public class login extends AppCompatActivity {
     }
 
     private void showaDialog(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this, R.style.AlertDialogTheme);
-        alertDialogBuilder.setTitle("We hate capcay");
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this, R.style.AlertDialogTheme2);
+        alertDialogBuilder.setTitle("Halo!");
         alertDialogBuilder
-                .setMessage("Kita semua benci capcay (captcha)...tapi apa boleh buat. ")
+                .setMessage("Kepada mahasiswa:\nHalo, selamat datang kembali di MyUNSOED. Saya harap aplikasi ini bermanfaat untuk perkuliahanmu. God bless you, hidup mahasiswa!" +
+                        "\n\nKepada orang unsoed (lptsi & WR akademik) jika melihat ini:\nAplikasi ini sangatlah harmless. Saya terbuka untuk membicarakan aplikasi ini lebih lanjut. Anda bisa menemukan nomor saya di app ini.\nJabat erat,\nTaufan M. F. T.")
                 //.setIcon(R.mipmap.ic_launcher)
                 .setCancelable(false)
                 .setPositiveButton("Oke",new DialogInterface.OnClickListener() {

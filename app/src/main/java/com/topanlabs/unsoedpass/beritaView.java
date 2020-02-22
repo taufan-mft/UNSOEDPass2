@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,11 +27,12 @@ import com.jirbo.adcolony.AdColonyBundleBuilder;
 public class beritaView extends AppCompatActivity {
 String url, judul;
 Boolean showsub;
+    WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_berita_view);
-        WebView webView = (WebView) findViewById(R.id.webview);
+         webView = (WebView) findViewById(R.id.webview);
         ConstraintLayout conste =  findViewById(R.id.root);
         final ProgressBar pbar = findViewById(R.id.pbar);
         showsub = true;
@@ -117,5 +119,25 @@ Boolean showsub;
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addNetworkExtrasBundle(AdColonyAdapter.class, AdColonyBundleBuilder.build()).build();
         mAdView.loadAd(adRequest);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
