@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
@@ -164,7 +165,11 @@ if (kelaspenggantis.size() != 0) {
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(pContext, requestCode, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                     requestCode++;
 
-                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    } else {
+                        manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    }
                 }
             }
  requestCode = 150;
@@ -213,7 +218,11 @@ if (kelaspenggantis.size() != 0) {
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(pContext, requestCode, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                         requestCode++;
 
-                        manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        } else {
+                            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        }
                         //Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
 
                     }

@@ -56,7 +56,7 @@ public class settings2 extends AppCompatActivity {
         btnkebijakan.setOnClickListener(new View.OnClickListener() {
                                             public void onClick(View v) {
                                                 // Code here executes on main thread after user presses button
-                                                String url = "https://www.topanlabs.com/unsoed-pass/kebijakan-privasi-dan-keamanan-data/";
+                                                String url = "https://myunsoed.com/privacy-policy/";
                                                 Intent i = new Intent(Intent.ACTION_VIEW);
                                                 i.setData(Uri.parse(url));
                                                 startActivity(i);

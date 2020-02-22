@@ -51,7 +51,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginBottom="4dp"
             android:text="jam"
-            android:textColor="#000000"
+
             android:textSize="16sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent" />
@@ -75,7 +75,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
             android:text="tanggal"
-            android:textColor="#000000"
+
             android:textSize="14sp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/txt_hari" />

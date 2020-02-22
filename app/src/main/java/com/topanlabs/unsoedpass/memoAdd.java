@@ -163,9 +163,10 @@ MaterialButton btnTanggal, btnJam, btnSend;
                         if (statusCode == 201) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Berhasil menambah memo", Toast.LENGTH_SHORT);
                             toast.show();
-                            Intent i = new Intent(memoAdd.this, memoList.class);
-                            startActivity(i);
-                            finish();
+                            //Intent i = new Intent(memoAdd.this, memoList.class);
+                           // startActivity(i);
+                           // finish();
+                            onBackPressed();
 
                         } else {
                             Toast toast = Toast.makeText(getApplicationContext(), "Gagal menambah matkul", Toast.LENGTH_SHORT);

@@ -1,10 +1,12 @@
 package com.topanlabs.unsoedpass;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,8 +14,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,7 +34,8 @@ public class tambahKelas extends AppCompatActivity {
     Button btnTanggal, btnJam, btnSend;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
-    EditText txtTanggal, txtJam, txtNamatkul, txtRuangan;
+    TextView txtTanggal, txtJam ;
+    TextInputEditText txtNamatkul, txtRuangan;
     String kodekelas;
     String tokenkita;
     SharedPreferences mSettings;
@@ -39,11 +45,11 @@ public class tambahKelas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_kelas);
-        btnTanggal= findViewById(R.id.btnTanggal);
+        btnTanggal= findViewById(R.id.btn_tanggal);
         txtTanggal = findViewById(R.id.txtTanggal);
-        btnJam = findViewById((R.id.Jam));
+        btnJam = findViewById((R.id.btn_jam));
         txtJam = findViewById(R.id.txtJam);
-        txtNamatkul = findViewById(R.id.txtMatkul);
+        txtNamatkul = findViewById(R.id.txtNamatkul);
         txtRuangan = findViewById(R.id.txtRuangan);
         btnSend = findViewById(R.id.btnSend);
         mSettings = getSharedPreferences("Settings", 0);
@@ -51,6 +57,7 @@ public class tambahKelas extends AppCompatActivity {
         kodekelas = mSettings.getString("kodekelas","rai");
         myCalendar = Calendar.getInstance();
         final String BASE_URL = "https://api1.myunsoed.com";
+        getSupportActionBar().setTitle("Tambah Kelas");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -75,7 +82,7 @@ public class tambahKelas extends AppCompatActivity {
         };
         btnTanggal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new DatePickerDialog(tambahKelas.this, date, myCalendar
+                new DatePickerDialog(tambahKelas.this, R.style.AlertDialogTheme,date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -86,7 +93,7 @@ public class tambahKelas extends AppCompatActivity {
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(tambahKelas.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(tambahKelas.this, R.style.AlertDialogTheme,new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
@@ -101,6 +108,23 @@ public class tambahKelas extends AppCompatActivity {
         });
         btnSend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (txtJam.getText().toString().equals("Jam") || txtNamatkul.getText().toString().isEmpty() || txtRuangan.getText().toString().isEmpty() || txtTanggal.getText().toString().equals("Tanggal")){
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(tambahKelas.this, R.style.AlertDialogTheme2);
+                    alertDialogBuilder.setTitle("Eits, ada yang kosong.");
+                    alertDialogBuilder
+                            .setMessage("Pastikan kamu sudah mengisi semuanya, ya.")
+                            //.setIcon(R.mipmap.ic_launcher)
+                            .setCancelable(false)
+                            .setPositiveButton("Aku Mengerti", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                    ;
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    return;
+                }
             kelasModel maukirim = new kelasModel(kodekelas, txtNamatkul.getText().toString(), txtJam.getText().toString(), txtRuangan.getText().toString(), txtTanggal.getText().toString());
                 Call<kelasModel> call = kelasService.buatMatkul(tokenkita,maukirim);
                 call.enqueue(new Callback<kelasModel>() {
@@ -110,10 +134,10 @@ public class tambahKelas extends AppCompatActivity {
                         if (statusCode == 201) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Berhasil menambah matkul", Toast.LENGTH_SHORT);
                             toast.show();
-                            Intent i = new Intent(tambahKelas.this, kelasPengganti.class);
-                            startActivity(i);
-                            finish();
-
+                            //Intent i = new Intent(tambahKelas.this, kelasPengganti.class);
+                            //startActivity(i);
+                            //finish();
+onBackPressed();
                         } else {
                             Toast toast = Toast.makeText(getApplicationContext(), "Gagal menambah matkul", Toast.LENGTH_SHORT);
                             toast.show();

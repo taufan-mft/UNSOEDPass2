@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,6 +56,7 @@ public class kelasPengganti extends AppCompatActivity {
     kelasRepository repo;
     Boolean ketuakelas;
     Integer oldCount, newCount;
+    Boolean jalanga = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +170,7 @@ public class kelasPengganti extends AppCompatActivity {
                                         Log.d("nabila","4");
                                         adapter.notifyDataSetChanged();
                                         recyclerView.scheduleLayoutAnimation();
+                                        jalanga = true;
                                     }
                                 });
                                 //Log.d("raisan", mahasiswaArrayList.toString());
@@ -279,7 +282,21 @@ public class kelasPengganti extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        //updateKelas();
+        if(jalanga){
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("zhafarin", "onresume");
+                    updateKelas();
+                }
+            }, 300);
 
+        }}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

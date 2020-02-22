@@ -25,22 +25,26 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4802685768489188~3534254786" />
 
-        <activity android:name=".beritaView" />
-        <activity android:name=".kelasSubscriber" />
-        <activity android:name=".tambahKelas" />
-        <activity android:name=".kelasPengganti" />
-        <activity android:name=".fiturBelumTersedia" />
-        <activity android:name=".absenSelector" />
-        <activity android:name=".aboutScreen" />
-        <activity android:name=".kelasSelector" />
-        <activity android:name=".setReminder" />
-        <activity android:name=".masukCapcay" />
-        <activity android:name=".sinkronizer" />
-        <activity android:name=".sinkronisasi" />
+        <activity android:name=".beritaView"
+            android:screenOrientation="portrait" />
+        <activity android:name=".kelasSubscriber"
+         android:screenOrientation="portrait" />
+        <activity android:name=".tambahKelas"
+        android:screenOrientation="portrait" />
+        <activity android:name=".kelasPengganti" android:screenOrientation="portrait"  />
+        <activity android:name=".fiturBelumTersedia" android:screenOrientation="portrait"  />
+        <activity android:name=".absenSelector" android:screenOrientation="portrait" />
+        <activity android:name=".aboutScreen" android:screenOrientation="portrait"  />
+        <activity android:name=".kelasSelector" android:screenOrientation="portrait"  />
+        <activity android:name=".setReminder" android:screenOrientation="portrait"  />
+        <activity android:name=".masukCapcay" android:screenOrientation="portrait"  />
+        <activity android:name=".sinkronizer"  android:screenOrientation="portrait" />
+        <activity android:name=".sinkronisasi" android:screenOrientation="portrait"  />
         <activity
             android:name=".SettingsActivity2"
             android:label="@string/title_activity_settings2" />
-        <activity android:name=".settings2" />
+        <activity android:name=".settings2"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".waitTransfer"
             android:screenOrientation="portrait" />
