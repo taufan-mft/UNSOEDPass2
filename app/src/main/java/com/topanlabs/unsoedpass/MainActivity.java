@@ -262,8 +262,11 @@ String nama;
         editor = mSettings.edit();
         String namaku = mSettings.getString("nama", "waduh");
         String[] arr = namaku.split("\\s+");
-        txtnama.setText(arr[0]+" "+arr[1]+"!");
-
+        if (arr.length > 1) {
+            txtnama.setText(arr[0] + " " + arr[1] + "!");
+        } else {
+            txtnama.setText(arr[0] +  "!");
+        }
 
 
        /** gridLayout=(GridLayout)findViewById(R.id.mainGrid);
@@ -633,6 +636,7 @@ String nama;
     private void updateGreetings() {
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        Log.d("nabkus", String.valueOf(timeOfDay));
         if(timeOfDay >= 0 && timeOfDay < 3){
             String salam= "Loh kok belom tidur?";
             txtSalam.setText(salam);
@@ -648,7 +652,11 @@ String nama;
         }else if(timeOfDay >= 16 && timeOfDay < 18){
             String salam= "Selamat sore, menikmati senja sama siapa nih?";
             txtSalam.setText(salam);
-        }else if(timeOfDay >= 21 && timeOfDay < 24){
+        }else if(timeOfDay >= 18 && timeOfDay < 21){
+            String salam= "Selamat malam, jangan lupa makan malam ya.";
+            txtSalam.setText(salam);
+        }
+        else if(timeOfDay >= 21 && timeOfDay < 24){
             String salam= "Ayo istirahat. Jangan begadang, ya.";
             txtSalam.setText(salam);
         }
