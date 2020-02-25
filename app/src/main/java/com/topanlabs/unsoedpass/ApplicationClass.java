@@ -38,23 +38,30 @@ public class ApplicationClass extends Application {
                         Intent intent2 = new Intent(getApplicationContext(), memoList.class);
                         intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent2);
-                    } else if (customKey.equals("kelaspeng")){
+                    } else if (customKey.equals("kelaspeng")) {
                         Intent intent2 = new Intent(getApplicationContext(), kelasPengganti.class);
                         intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent2);
                     } else {
-                            Intent intent = new Intent(getApplicationContext(), beritaView.class);
-                            intent.putExtra("url", url);
-                            if (judul != null) {
-                                intent.putExtra("judul", judul);
-                            }
-                            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(), beritaView.class);
+                        intent.putExtra("url", url);
+                        if (judul != null) {
+                            intent.putExtra("judul", judul);
                         }
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
+                } else {
+                    Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent2);
                 }
+            } else {
+                Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
             }
-
+        }
             // Intent intent = new Intent(getApplicationContext(), YourActivity.class);
             // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
             // startActivity(intent);
