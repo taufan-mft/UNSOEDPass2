@@ -45,9 +45,9 @@
     <string name="jelassinkron">Sinkronisasi diperlukan agar jadwal serta absen yang up-to-date bisa dilihat secara offline. Jika absen yang up-to-date gapenting buat kamu, set jadwal ke 0 hari dan kamu gaperlu melakukan sinkronisasi rutin. Kamu masih bisa melakukan sinkronisasi manual di menu Home MyUNSOED.
     \n\nPerlu diingat, setiap kali melakukan sinkron, kamu harus memasukan capcay yang muncul. Silakan atur agar tidak mengganggu.</string>
     <string name="jelasCapcay">Jika capcay susah dibaca, silakan tekan Refresh Capcay. Jika sudah dapat dibaca, silakan ketik di tempat yang tersedia, kemudian tekan Lanjutkan.</string>
-    <string name="copyright"> v2.0(raney)\nCopyright © 2020, Topan Laboratories Intl.\nAll rights reserved.\nDengan menggunakan aplikasi ini, kamu setuju dengan kebijakan privasi dan data kami.</string>
+    <string name="copyright"> v2.0.3(angeline)\nCopyright © 2020, Topan Laboratories Intl.\nAll rights reserved.\nDengan menggunakan aplikasi ini, kamu setuju dengan kebijakan privasi dan data kami.</string>
     <string name="thankstoo">Thanks to (in a random order):\n@jonathanwidhiason, @devanyahya, @nastar_basi, @depdepina, @xxfawnia, @whimpihstrbb_, @hasyimashari, @difanian_, @nadaluftan, @afrzlftrchmn, @ramdunn_, @dekahaa, @kopi_dingin, @ayudiakmila, @hanafzhhh, @winnyaw, @rositagal, @rizkysputrii, @mykel_amp, @sulthonupriananda, @farahfinaa, @ibusayatercinta.\nWithout their support, you won\'t see this update.</string>
-    <string name="suportedbyn">Secure and hi-speed connection provided by Atha Media Prima. MyUNSOED diamankan oleh enkripsi 2048 bit dengan TLS 1.3.</string>
+    <string name="suportedbyn">Secure and hi-speed connection provided by Atha Media Prima. MyUNSOED diamankan oleh enkripsi 256 bit dengan TLS 1.3.</string>
     <string name="hidupmhs">Hidup Mahasiswa!\nJabat erat,\n@taufan_mft - Developer Tunggal MyUNSOED</string>
-    <string name="inAppVersion">v2.0.0 (raney). Topan Laboratories Intl. - topanlabs.com</string>
+    <string name="inAppVersion">v2.0.3 (angeline). Topan Laboratories Intl. - topanlabs.com</string>
 </resources>
