@@ -100,7 +100,7 @@ public class sinkronizer extends AppCompatActivity {
                         .cookies(kukis)
                         .get();
 
-                for (int i = 1; i <= 10; i++) {
+                for (int i = 1; i <= 20; i++) {
                     //int i = 1;
                     String urldosen = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(7)";
                     String urlwinnykul = "#content > table.table.table-striped.well > tbody > tr:nth-child(" + i + ") > td:nth-child(3)";
