@@ -48,10 +48,10 @@ TextView txtMatkul, txtJenis, txtTanggal, txtJam, txtRuangan, txtCatatan;
         getSupportActionBar().setTitle("Detail Memo");
         txtMatkul.setText(matkul);
         txtJenis.setText(jenis);
-        txtTanggal.setText(tanggal);
-        txtJam.setText(jam);
-        txtRuangan.setText(ruangan);
-        txtCatatan.setText(catatan);
+        txtTanggal.setText("Tanggal: "+tanggal);
+        txtJam.setText("Jam: "+jam);
+        txtRuangan.setText("Ruangan: "+ruangan);
+        txtCatatan.setText("Catatan:\n"+catatan);
         final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

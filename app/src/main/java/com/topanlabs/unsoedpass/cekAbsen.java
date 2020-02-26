@@ -104,7 +104,14 @@ public class cekAbsen extends AppCompatActivity {
                 adapter = new absenAdapter(mahasiswaArrayList);
                 recyclerView.setAdapter(adapter);
                 //Log.d("raisan", mahasiswaArrayList.toString());
-                adapter.notifyDataSetChanged();
+                runOnUiThread(new Runnable() {
+                  @Override
+                  public void run() {
+                      adapter = new absenAdapter(mahasiswaArrayList);
+                      recyclerView.setAdapter(adapter);
+                      adapter.notifyDataSetChanged();
+                    }
+                });
                 for (int i = 0; i <= mahasiswaArrayList.size() - 1 ; i++) {
                     String hadirga= mahasiswaArrayList.get(i).getKehadiran();
                     Log.d("rairai","ke "+i +" "+hadirga);
@@ -123,6 +130,7 @@ public class cekAbsen extends AppCompatActivity {
 
             }
         });
+
             }
         //getmatkullist.execute(new String[]{"https://akademik.unsoed.ac.id/index.php?r=site/login"});
 
