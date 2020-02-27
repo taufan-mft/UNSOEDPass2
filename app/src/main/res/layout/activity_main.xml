@@ -8,13 +8,16 @@
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/scrollView4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/adView2"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -27,9 +30,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:textColor="@color/tulisan"
                     android:fontFamily="@font/sfprdr"
                     android:text="Halo, "
+                    android:textColor="@color/tulisan"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -39,11 +42,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:textColor="@color/tulisan"
-                    android:text="Taufan Muhammad!"
-                    android:textSize="22sp"
-
                     android:fontFamily="@font/sfprdb"
+                    android:text="Taufan Muhammad!"
+                    android:textColor="@color/tulisan"
+
+                    android:textSize="22sp"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,9 +57,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="6dp"
+                    android:fontFamily="@font/sfprdr"
                     android:text="Selamat pagi, mau ngapain hari ini?"
                     android:textColor="@color/tulisan"
-                    android:fontFamily="@font/sfprdr"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -67,9 +70,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/sfprdb"
                     android:text="Kuliah selanjutnya"
                     android:textColor="@color/tulisan"
-                    android:fontFamily="@font/sfprdb"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -130,6 +133,7 @@
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/winny2" />
+
                 <TextView
 
                     android:id="@+id/textViewas"
@@ -351,13 +355,13 @@
                     android:clickable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17" >
+                    app:layout_constraintTop_toBottomOf="@+id/textView17">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/beritarec"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"/>
+                        android:orientation="horizontal" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -454,4 +458,16 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-4802685768489188/9716519753"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

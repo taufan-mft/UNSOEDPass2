@@ -104,7 +104,11 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
                         myIntent.putExtra("repeat", true);
                         myIntent.putExtra("afterAction", "main");
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(pContext, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                        manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        } else {
+                            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        }
                         Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
                     }
                 }

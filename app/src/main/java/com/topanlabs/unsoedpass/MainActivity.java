@@ -45,10 +45,14 @@ import java.lang.String;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.jirbo.adcolony.AdColonyAdapter;
+import com.jirbo.adcolony.AdColonyBundleBuilder;
 import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
@@ -135,6 +139,9 @@ String nama;
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+        AdView mAdView = findViewById(R.id.adView2);
+        AdRequest adRequest = new AdRequest.Builder().addNetworkExtrasBundle(AdColonyAdapter.class, AdColonyBundleBuilder.build()).build();
+        mAdView.loadAd(adRequest);
         editor = mSettings.edit();
         String yourLocked = mSettings.getString("logged", "ya");
         String firstTime = mSettings.getString("pertama", "ya");

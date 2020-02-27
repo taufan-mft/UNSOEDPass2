@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -79,7 +80,7 @@ public class kelasPengganti extends AppCompatActivity {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this, R.style.AlertDialogTheme2);
             alertDialogBuilder.setTitle("Heads Up");
             String pesan = "Di Kelas Pengganti kamu bisa mencatat kelas pengganti yang akan datang. Info ditambahkan oleh ketua kelas. " +
-                    "Kamu akan mendapat reminder satu jam sebelum kuliah dimulai. Kelas pengganti yang akan datang juga ditampilkan pada Home dengan akhiran " +new String(Character.toChars(0x1F500)) + ".";
+                    "Kamu akan mendapat reminder satu jam sebelum kuliah dimulai. Kelas pengganti yang akan datang juga ditampilkan pada Home dengan akhiran " +new String(Character.toChars(0x1F500)) + ". Kelas pengganti akan otomatis terhapus satu hari setelah tanggal yang ditetapkan di Kelas Prngganti.";
             alertDialogBuilder
                     .setMessage(pesan)
                     //.setIcon(R.mipmap.ic_launcher)
@@ -612,7 +613,11 @@ void hapuskelas(){
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             requestCode++;
 
-            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            if (Build.VERSION.SDK_INT >= 23) {
+                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            } else {
+                manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
             //Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
 
         }

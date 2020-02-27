@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -89,7 +90,7 @@ public class memoList extends AppCompatActivity {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(memoList.this, R.style.AlertDialogTheme2);
             alertDialogBuilder.setTitle("Heads Up");
             String pesan = "Di Memo, kamu dapat mencatat tugas serta kuis yang akan datang. Info ditambahkan oleh ketua kelas. Kamu akan mendapat" +
-                    " notifikasi ketika ketua kelas menambahkan Memo baru. Kamu juga akan mendapatkan reminder Memo satu hari sebelum tanggal yang ada di Memo.";
+                    " notifikasi ketika ketua kelas menambahkan Memo baru. Kamu juga akan mendapatkan reminder Memo satu hari sebelum tanggal yang ada di Memo. Memo akan otomatis terhapus satu hari setelah tanggal yang ditetapkan di Memo.";
             alertDialogBuilder
                     .setMessage(pesan)
                     //.setIcon(R.mipmap.ic_launcher)
@@ -520,7 +521,11 @@ Log.d("zhafarin", "aku dipencet");
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 requestCode++;
 
-                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                } else {
+                    manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
                 //Log.d("aurel", "kuliah: " + namatkul + "Jam: " + jam + ":" + menit + "hari" + winul + " " + hari);
 
             }
