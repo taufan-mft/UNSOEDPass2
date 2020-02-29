@@ -56,11 +56,12 @@ MaterialButton btnTanggal, btnJam, btnSend;
         txtCatatan= findViewById(R.id.txtcatatan);
         txtTanggal = findViewById(R.id.txtTanggal);
         txtJam = findViewById(R.id.txtJam);
+        getSupportActionBar().setTitle("Tambah Memo");
         mSettings = getSharedPreferences("Settings", 0);
         editor = mSettings.edit();
         tokenkita = mSettings.getString("token","token");
         kodekelas = mSettings.getString("kodekelas","rai");
-        String[] COUNTRIES = new String[] {"Tugas", "Kuis"};
+        String[] COUNTRIES = new String[] {"Tugas", "Tugas Besar", "Kuis"};
         final String BASE_URL = "https://api1.myunsoed.com";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -208,7 +209,7 @@ MaterialButton btnTanggal, btnJam, btnSend;
 
         // set pesan dari dialog
         alertDialogBuilder
-                .setMessage("Pastiin tanggal, jam, serta semua isian gada yang kosong.")
+                .setMessage("Pastiin tanggal, jam, serta semua isian ngga ada yang kosong.")
                 //.setIcon(R.mipmap.ic_launcher)
                 .setCancelable(false)
                 .setPositiveButton("Oke" ,new DialogInterface.OnClickListener() {

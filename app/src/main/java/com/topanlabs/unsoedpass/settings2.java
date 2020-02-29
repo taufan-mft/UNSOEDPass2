@@ -16,7 +16,7 @@ import android.widget.Button;
 public class settings2 extends AppCompatActivity {
     SharedPreferences mSettings;
     SharedPreferences.Editor editor;
-    ConstraintLayout logout, btncall, btnkebijakan, btnSinkron, btnReminder;
+    ConstraintLayout logout, btncall, btnkebijakan, btnSinkron, btnReminder, btnSaran;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,7 @@ public class settings2 extends AppCompatActivity {
         btnkebijakan = findViewById(R.id.optKebijakan);
         btnSinkron = findViewById(R.id.optSinkron);
         btnReminder=findViewById(R.id.optReminder);
+        btnSaran = findViewById(R.id.optSaran);
         btnSinkron.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
@@ -43,6 +44,20 @@ public class settings2 extends AppCompatActivity {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 String url = "https://wa.me/62895425455070?text=Aku%20butuh%20bantuan%20mengenai%20MyUNSOED:";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+                //Intent i = new Intent(login.this, MainActivity.class);
+                //finish();  //Kill the activity from which you will go to next activity
+                //startActivity(i);
+            }
+
+        });
+        btnSaran.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                String url = "https://myunsoed.com/kontak/saran.php";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);

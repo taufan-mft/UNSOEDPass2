@@ -113,7 +113,7 @@ String nama;
     private static final int NOTIFICATION_ID = 0;
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
-    ConstraintLayout jadwalK, aha2,aha4, aha3, exam;
+    ConstraintLayout jadwalK, aha2,aha4, aha3, exam, teammaker;
     RecyclerView recyclerView, eventrec, pengumumanrec, beasiswarec;
     TextView todayMat, todayJam, todayRuangan, txtSalam;
     String tokenkita;
@@ -132,6 +132,7 @@ String nama;
         todayRuangan=findViewById(R.id.textRuangan);
         txtnama = findViewById(R.id.txtNamaK);
         txtSalam = findViewById(R.id.textView15);
+        teammaker = findViewById(R.id.teamMaker);
         updateGreetings();
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -169,23 +170,45 @@ String nama;
             startActivity(i);
             finish();
             return;
-        } else if(!versiapp.equals("2.0")){
-            Intent w = new Intent(MainActivity.this, logout.class);
+        } //else if(!versiapp.equals("2.0")){
+            //Intent w = new Intent(MainActivity.this, logout.class);
 
-            editor.putString("trialwarnabsen", "belum");
-            editor.putString("premium", "tidak");
-            editor.putString("logged", "ya");
-            editor.putString("nim","nim");
-            editor.putBoolean("warntrial3", false);
+            //editor.putString("trialwarnabsen", "belum");
+            //editor.putString("premium", "tidak");
+            //editor.putString("logged", "ya");
+            //editor.putString("nim","nim");
+            //editor.putBoolean("warntrial3", false);
+            //editor.apply();
+            //startActivity(w);
+            ///finish();
+            //return;
+        //}
+        if(!versiapp.equals("2.1.2")){
+            String yangbaru;
+            yangbaru = "Changelog v2.1.2:\n" +
+                    "- Perbaikan FC pada absen";
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme2);
+            alertDialogBuilder.setTitle("Terimakasih telah memperbarui MyUNSOED!");
+            alertDialogBuilder
+                    .setMessage(yangbaru)
+                    //.setIcon(R.mipmap.ic_launcher)
+                    .setCancelable(false)
+                    .setPositiveButton("Aku Mengerti", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+            ;
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            editor.putString("versiapp", "2.1.2");
             editor.apply();
-            startActivity(w);
-            finish();
-            return;
         }
         if (days > intervalSync && intervalSync != 0) {
             Intent i = new Intent(this, masukCapcay.class);
             startActivity(i);
             finish();
+            return;
         }
         jadwalK = findViewById(R.id.aha);
         aha2 = findViewById(R.id.aha2); //absensi
@@ -651,7 +674,7 @@ String nama;
             String salam= "Wah, gasik banget udah bangun.";
             txtSalam.setText(salam);
         }else if(timeOfDay >= 6 && timeOfDay < 12){
-            String salam= "Selamat pagi, mau ngapain hari ini?";
+            String salam= "Selamat pagi, mau ngapain hari ini? ";
             txtSalam.setText(salam);
         }else if(timeOfDay >= 12 && timeOfDay < 16){
             String salam= "Selamat siang, mau ngapain hari ini?";
@@ -668,8 +691,9 @@ String nama;
             txtSalam.setText(salam);
         }
     }
-
+    Boolean overtime = false;
     private void updJadwal() {
+
         minus = "ya";
     dariKelp = false;
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -733,6 +757,7 @@ String nama;
                             //
                         }
                         long difference = waktu2.getTime() - waktu1.getTime();
+
                         milisec2[i] = difference;
                     }
                     long min = Long.MAX_VALUE;
@@ -763,6 +788,13 @@ String nama;
                             //
                         }
                         long difference = waktu2.getTime() - waktu1.getTime();
+
+                            difference = difference + 300000;
+                            Log.d("nabilaaa", "masuk ga sih"+Long.toString(difference));
+                        if (difference > 0 & difference <300000) {
+                            overtime=true;
+                            Log.d("nabilaaa", "masuk ga sih"+Long.toString(difference));
+                        }
                         milisec[i] = difference;
                         Log.d("winal", Long.toString(difference));
 
@@ -810,8 +842,11 @@ String nama;
                                     todayJam.setText(kelp.get(indexKelp).getJam());
                                     todayRuangan.setText(kelp.get(indexKelp).getRuangan());
                                 } else {
-
-                                    todayMat.setText(win.get(index2).getNamakul());
+                                    if (overtime) {
+                                        todayMat.setText(win.get(index2).getNamakul()+" "+new String(Character.toChars(0x23F3)));
+                                    }else {
+                                        todayMat.setText(win.get(index2).getNamakul());
+                                    }
                                     Log.d("uitred", "disini");
                                     String jamentah = win.get(index2).getJam();
                                     if (jamentah.length() == 8) {

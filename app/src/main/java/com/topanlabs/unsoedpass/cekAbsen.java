@@ -101,8 +101,7 @@ public class cekAbsen extends AppCompatActivity {
             @Override
             public void run() {
                 mahasiswaArrayList = absenRepository.getDetailAbsen(namakul);
-                adapter = new absenAdapter(mahasiswaArrayList);
-                recyclerView.setAdapter(adapter);
+
                 //Log.d("raisan", mahasiswaArrayList.toString());
                 runOnUiThread(new Runnable() {
                   @Override
@@ -124,8 +123,13 @@ public class cekAbsen extends AppCompatActivity {
                     }
                     String p1 = "Jumlah absen: " + kehadiran;
                     String p2 = "Jumlah kehadiran: " + pertemuan;
-                    txtKehadiran.setText(p1);
-                    txtPertemuan.setText(p2);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtKehadiran.setText(p1);
+                            txtPertemuan.setText(p2);
+                        }
+                    });
                 }
 
             }

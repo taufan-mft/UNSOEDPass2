@@ -78,7 +78,12 @@ String kode, nim;
                                 call.enqueue(new Callback<Void>() {
                                     @Override
                                     public void onResponse(Call<Void> call, Response<Void> response) {
+                                        Context context = getApplicationContext();
+                                        CharSequence text = "Berhasil bergabung ke kelas. Fitur Memo dan Kelas Pengganti sudah terbuka.";
+                                        int duration = Toast.LENGTH_LONG;
 
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
 
 
                                         Log.d("raisan", "updatecuy");
@@ -99,7 +104,7 @@ String kode, nim;
 
                                     //showDialog();
                                 });
-                            Intent i = new Intent(kelasSubscriber.this, kelasPengganti.class);
+                            Intent i = new Intent(kelasSubscriber.this, MainActivity.class);
                             startActivity(i);
                             finish();
                             }

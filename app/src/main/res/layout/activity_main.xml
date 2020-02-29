@@ -287,6 +287,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true"
                         app:layout_constraintStart_toStartOf="parent"
@@ -310,6 +311,37 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Shop" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/teamMaker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        app:layout_constraintStart_toEndOf="@+id/exam"
+                        app:layout_constraintTop_toBottomOf="@id/aha">
+
+                        <LinearLayout
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="80dp"
+                                android:layout_height="50dp"
+                                android:scaleType="centerInside"
+                                app:srcCompat="@drawable/icon_team" />
+
+                            <TextView
+                                android:id="@+id/textView25"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Team Maker" />
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

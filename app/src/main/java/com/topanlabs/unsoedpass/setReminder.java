@@ -73,7 +73,7 @@ public class setReminder extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setingWin(true);
-                txtStatus.setText("Reminder aktif.");
+                txtStatus.setText("Reminder tidak aktif.");
                 Intent i = new Intent (setReminder.this, MainActivity.class);
                 startActivity(i);
                 finish();

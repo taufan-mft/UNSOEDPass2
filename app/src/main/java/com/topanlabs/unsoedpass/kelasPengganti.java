@@ -80,7 +80,7 @@ public class kelasPengganti extends AppCompatActivity {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(kelasPengganti.this, R.style.AlertDialogTheme2);
             alertDialogBuilder.setTitle("Heads Up");
             String pesan = "Di Kelas Pengganti kamu bisa mencatat kelas pengganti yang akan datang. Info ditambahkan oleh ketua kelas. " +
-                    "Kamu akan mendapat reminder satu jam sebelum kuliah dimulai. Kelas pengganti yang akan datang juga ditampilkan pada Home dengan akhiran " +new String(Character.toChars(0x1F500)) + ". Kelas pengganti akan otomatis terhapus satu hari setelah tanggal yang ditetapkan di Kelas Prngganti.";
+                    "Kamu akan mendapat reminder satu jam sebelum kuliah dimulai. Kelas pengganti yang akan datang juga ditampilkan pada Home dengan akhiran " +new String(Character.toChars(0x1F500)) + ". Kelas pengganti akan otomatis terhapus satu hari setelah tanggal yang ditetapkan di Kelas Pengganti.";
             alertDialogBuilder
                     .setMessage(pesan)
                     //.setIcon(R.mipmap.ic_launcher)
@@ -343,6 +343,12 @@ void hapuskelas(){
                 editor.putBoolean("firstKelas", true);
                 editor.putBoolean("firstKetuaKelas", true);
                 editor.apply();
+                Context context = getApplicationContext();
+                CharSequence text = "Kelas terhapus.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
 
             @Override
