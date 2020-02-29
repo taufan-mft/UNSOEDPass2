@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".memoDetail"></activity>
+        <activity android:name=".teammaker.teamResult"></activity>
+        <activity android:name=".teammaker.inputteam" />
+        <activity android:name=".memoDetail" />
         <activity android:name=".memoAdd" />
         <activity android:name=".memoList" />
 
@@ -25,25 +27,47 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4802685768489188~3534254786" />
 
-        <activity android:name=".beritaView"
+        <activity
+            android:name=".beritaView"
             android:screenOrientation="portrait" />
-        <activity android:name=".kelasSubscriber"
-         android:screenOrientation="portrait" />
-        <activity android:name=".tambahKelas"
-        android:screenOrientation="portrait" />
-        <activity android:name=".kelasPengganti" android:screenOrientation="portrait"  />
-        <activity android:name=".fiturBelumTersedia" android:screenOrientation="portrait"  />
-        <activity android:name=".absenSelector" android:screenOrientation="portrait" />
-        <activity android:name=".aboutScreen" android:screenOrientation="portrait"  />
-        <activity android:name=".kelasSelector" android:screenOrientation="portrait"  />
-        <activity android:name=".setReminder" android:screenOrientation="portrait"  />
-        <activity android:name=".masukCapcay" android:screenOrientation="portrait"  />
-        <activity android:name=".sinkronizer"  android:screenOrientation="portrait" />
-        <activity android:name=".sinkronisasi" android:screenOrientation="portrait"  />
+        <activity
+            android:name=".kelasSubscriber"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tambahKelas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".kelasPengganti"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fiturBelumTersedia"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".absenSelector"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".aboutScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".kelasSelector"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".setReminder"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".masukCapcay"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".sinkronizer"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".sinkronisasi"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SettingsActivity2"
             android:label="@string/title_activity_settings2" />
-        <activity android:name=".settings2"
+        <activity
+            android:name=".settings2"
             android:screenOrientation="portrait" />
         <activity
             android:name=".waitTransfer"

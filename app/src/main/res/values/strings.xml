@@ -50,4 +50,6 @@
     <string name="suportedbyn">Secure and hi-speed connection provided by Atha Media Prima. MyUNSOED diamankan oleh enkripsi 256 bit dengan TLS 1.3.</string>
     <string name="hidupmhs">Hidup Mahasiswa!\nJabat erat,\n@taufan_mft - Developer Tunggal MyUNSOED</string>
     <string name="inAppVersion">v2.1.2 (elizabeth). Topan Laboratories Intl. - topanlabs.com</string>
+
+    <string name="penjelasanTM">Team Maker berguna untuk membuat tim secara acak sesuai dengan jumlah tim yang diminta. Masukkan siapa saja anggota serta jumlah grup yang diinginkan, lalu tap Buat Team. Anggota akan otomatis disimpan untuk digunakan kembali dikemudian hari.</string>
 </resources>

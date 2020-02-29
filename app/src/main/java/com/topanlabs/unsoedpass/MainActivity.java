@@ -56,6 +56,7 @@ import com.jirbo.adcolony.AdColonyBundleBuilder;
 import com.topanlabs.unsoedpass.broadcast.AlarmReceiver;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelasRepository;
 import com.topanlabs.unsoedpass.kelaspenggantidb.kelaspengganti;
+import com.topanlabs.unsoedpass.teammaker.inputteam;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -216,6 +217,11 @@ String nama;
         aha3 = findViewById(R.id.aha3); //kelas pengganti
         exam = findViewById(R.id.exam); //jadwal ujian
 
+        teammaker.setOnClickListener((View v) -> {
+            Intent i = new Intent(this, inputteam.class);
+            startActivity(i);
+
+                });
         jadwalK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
