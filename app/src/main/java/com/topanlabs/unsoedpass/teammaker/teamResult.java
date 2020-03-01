@@ -29,6 +29,8 @@ TextView txt1;
         namaorang = (ArrayList<String>) getIntent().getSerializableExtra("anggota");
         Log.d("NABILAA",String.valueOf((Serializable) namaorang));
         int jumgrup = Integer.parseInt(getIntent().getStringExtra("jumlahgrup"));
+        getSupportActionBar().setTitle("Hasil Shuffle Team");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Collections.shuffle(namaorang);
         int minOrang = (namaorang.size() / jumgrup) ;
         jumgrup -=1;
@@ -66,7 +68,7 @@ TextView txt1;
         String pholder = "";
         for (int i =0; i <= lists.size()-1; i++) {
             Log.d("nabila", "ini i" + i);
-            pholder = pholder + "<br><b>Group " + Integer.toString(i+1)+"</b><br>";
+            pholder = pholder + "<br><b>Team " + Integer.toString(i+1)+"</b><br>";
             Log.d("pholder", pholder);
             for (int a =0; a <= lists.get(i).size()-1; a++){
                 // pholder = "Group " + Integer.toString(i+1)+"\n";
@@ -100,6 +102,9 @@ TextView txt1;
                 startActivity(shareIntent);
 
             return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
