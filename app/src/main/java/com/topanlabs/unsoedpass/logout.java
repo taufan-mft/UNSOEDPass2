@@ -39,6 +39,7 @@ public class logout extends AppCompatActivity {
         editor.putBoolean("isKetuaKelas", false);
         editor.putBoolean("reminderon", false);
         editor.putBoolean("firstMemo", true);
+        editor.putBoolean("firstTeam", true);
         editor.apply();
         OneSignal.removeExternalUserId();
         Intent i = new Intent(this, login.class);

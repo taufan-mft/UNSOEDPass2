@@ -184,10 +184,12 @@ String nama;
             ///finish();
             //return;
         //}
-        if(!versiapp.equals("2.1.2")){
+        if(!versiapp.equals("2.2.0")){
             String yangbaru;
-            yangbaru = "Changelog v2.1.2:\n" +
-                    "- Perbaikan FC pada absen";
+            yangbaru = "Changelog v2.2.0:\n" +
+                    "- FITUR BARU! Buat team presentasi, makalah, dan lainnya dengan Team Maker. Langsung aja tap Team Maker di Home.\n" +
+                    "- Penonaktifan reminder untuk Tugas Akhir, KKN, serta Pendadaran agar tidak mengganggu. Restart smartphone kemudian aktifkan ulang reminder di Settings.\n\n" +
+                    "Have a good day!";
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme2);
             alertDialogBuilder.setTitle("Terimakasih telah memperbarui MyUNSOED!");
             alertDialogBuilder
@@ -202,7 +204,7 @@ String nama;
             ;
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-            editor.putString("versiapp", "2.1.2");
+            editor.putString("versiapp", "2.2.0");
             editor.apply();
         }
         if (days > intervalSync && intervalSync != 0) {
