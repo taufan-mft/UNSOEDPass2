@@ -100,10 +100,13 @@ public class setReminder extends AppCompatActivity {
             Log.d("zhafarin","ini i nya "+i);
             AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             String namatkul = dataList.get(i).getNamakul();
+
             Log.d("zhafarin", "nama matkul: "+ namatkul);
             String hari = dataList.get(i).getHari().toLowerCase();
             int winul = Calendar.MONDAY;
-
+if (namatkul.toLowerCase().contains("nyata") || namatkul.toLowerCase().contains("pendadaran") || namatkul.toLowerCase().contains("tugas akhir")) {
+    continue;
+}
             switch (hari) {
                 case "senin":
                     winul = Calendar.MONDAY;
